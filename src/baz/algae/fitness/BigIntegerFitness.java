@@ -21,7 +21,7 @@ public class BigIntegerFitness implements IFitness {
 
 	@Override
 	public boolean equals( Object o ) {
-		IntegerFitness rhs = (IntegerFitness) o;
+		BigIntegerFitness rhs = (BigIntegerFitness) o;
 		return mValue.equals( rhs.mValue );
 	}
 
