@@ -1,0 +1,57 @@
+A member is made up of
+=> a genome
+=> fitness
+
+A Genome is made up of:
+=> one or more chromosomes
+
+A Chromosome is made up of
+=> a fixed number of alleles (although alleles are not identified individually by the framework)
+
+ChromosomeFactory
+=> creates random chromosomes
+=> creates empty chromosomes
+
+ChromosomeMutator
+=> mutates a single allele in a chromosome
+
+GenomeFactory
+=> creates random genomes (using a ChromosomeFactory)
+
+PhenotypeMapper
+=> transforms a Genome into a phenotype (Object? or IPhenotype?)
+
+FitnessTester
+=> measures the fitness of a phenotype
+
+Selector
+=> selects a member from a population (input only population size or whole population or some other population statistic?)
+
+Gamete
+=> Sex cell containing half the number of chromosomes
+=> Each chromosome made from crossover (and mutation) applied to each set of chromosomes
+=> Made by a single individual
+
+Breeding
+=> Combining of gametes to make a full genome 
+
+
+==================
+
+member => genome => sets of chromosomes - a set of chromosomes are homologous chromosomes
+each chromosome set contains chromosomes of the same length and allele type
+multiplicity of gamete chromosome sets * number of parents = multiplicity of member chromosome sets 
+
+Parameters
+=> PopulationSize*
+=> ElitismCount*
+=> CrossOverProbabilityPerAllele* (for each chromosome set?)
+=> MutationProbabilityPerAllele* (for each chromosome set?)
+=> Selector*
+
+ctor
+=> MultiplicityOfGenome
+=> NumberOfParents	(constraint: MultiplicityOfGenome % NumberofParents == 0)
+=> Array of chromosome factories
+=> Mapper (genome => phenotype)
+=> FitnessTester(phenotype => fitness) 
