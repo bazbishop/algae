@@ -40,12 +40,6 @@ public class StdLifeCycle {
 		mNumberOfMembersToOptimise = numberOfMembersToOptimise;
 	}
 
-	public void reset() {
-		mCurrentPopulation.clear();
-
-		mFinished = false;
-	}
-
 	public static IGenome[] getParentGenomes( Member[] parents ) {
 		IGenome[] parentGenomes = new IGenome[ parents.length ];
 
@@ -152,6 +146,12 @@ public class StdLifeCycle {
 
 	protected void sort() {
 		java.util.Collections.sort( mCurrentPopulation );
+	}
+
+	public void reset() {
+		mCurrentPopulation.clear();
+
+		mFinished = false;
 	}
 
 	public boolean initGeneration() {
