@@ -5,10 +5,10 @@ import algae.IChromosomeFactory;
 import algae.util.Rand;
 
 public class IntegerArrayChromosomeFactory implements IChromosomeFactory {
-	public IntegerArrayChromosomeFactory( int chromosomeLength, int maxAlleleValue, int minAlleleValue ) {
+	public IntegerArrayChromosomeFactory( int chromosomeLength, int minAlleleValue, int maxAlleleValue ) {
 		mChromosomeLength = chromosomeLength;
-		mMaxAlleleValue = maxAlleleValue;
 		mMinAlleleValue = minAlleleValue;
+		mMaxAlleleValue = maxAlleleValue;
 	}
 
 	public IChromosome createEmptyChromosome() {

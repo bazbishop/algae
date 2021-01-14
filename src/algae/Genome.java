@@ -4,7 +4,7 @@ package algae;
  * A set of chromosomes organised into homologous groups.
  * The genome might represent a complete organism or a gamete.
  */
-public class Genome {
+class Genome {
 
 	/**
 	 * Constructor
