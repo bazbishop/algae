@@ -1,6 +1,6 @@
 package algae;
 
-public class Member implements Comparable<Member> {
+class Member implements Comparable<Member> {
 	
 	public IFitness fitness;
 

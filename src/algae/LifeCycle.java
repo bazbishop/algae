@@ -1,6 +1,7 @@
 package algae;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import algae.util.Rand;
@@ -177,7 +178,7 @@ public class LifeCycle {
 	}
 
 	private void sort() {
-		java.util.Collections.sort(mCurrentPopulation);
+		Collections.sort(mCurrentPopulation, Collections.reverseOrder());
 	}
 
 	private List<Member> mCurrentPopulation;

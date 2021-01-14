@@ -1,0 +1,7 @@
+chromosome
+homologous
+chromosomes
+genome
+gamete
+fittest
+elite
