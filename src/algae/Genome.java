@@ -1,7 +1,17 @@
 package algae;
 
+/**
+ * A set of chromosomes organised into homologous groups.
+ * The genome might represent a complete organism or a gamete.
+ */
 public class Genome {
 
+	/**
+	 * Constructor
+	 * TODO Pass in the chromosomes here?
+	 * @param groupCount The number of homologous chromosome groups.
+	 * @param multiplicity The multiplicity of the homologous chromosome groups.
+	 */
 	public Genome(int groupCount, int multiplicity)
 	{
 		assert groupCount > 0;
@@ -13,6 +23,29 @@ public class Genome {
 		{
 			chromosomes[g] = new IChromosome[multiplicity];
 		}
+	}
+
+	public Genome(IChromosome[][] chromosomes)
+	{
+		assert chromosomes.length > 0;
+		// TODO more checking of the group sizes
+		
+		this.chromosomes = chromosomes;
+	}
+	
+	public IChromosome[][] chromosomes()
+	{
+		return chromosomes;
+	}
+	
+	public int groupCount()
+	{
+		return chromosomes.length;
+	}
+	
+	public int multiplicity()
+	{
+		return chromosomes[0].length;
 	}
 	
 	public IChromosome getChromosome(int groupIndex, int index)
@@ -47,6 +80,6 @@ public class Genome {
 		
 		return result;
 	}
-
+	
 	IChromosome[][] chromosomes;
 }
