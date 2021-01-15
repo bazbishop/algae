@@ -51,8 +51,20 @@ public class TestLifeCycle extends TestCase {
 			@Override
 			public Object createPhenotype(Genome genome) {
 				
-				var chr = (IntegerArrayChromosome) genome.chromosomes()[0][0];
-				return chr.mAlleles;
+//				var chr = (IntegerArrayChromosome) genome.chromosomes()[0][0];
+//				return chr.mAlleles;
+				
+				var chr1 = (IntegerArrayChromosome) genome.chromosomes()[0][0];
+				var chr2 = (IntegerArrayChromosome) genome.chromosomes()[0][1];
+				
+				var result = new int[chr1.mAlleles.length];
+				
+				for(int a = 0; a < result.length; ++a)
+				{
+					result[a] = chr1.mAlleles[a] + chr2.mAlleles[a];
+				}
+				return result;
+
 			}
 			
 		};
@@ -97,17 +109,18 @@ public class TestLifeCycle extends TestCase {
 			finished = lc.runGeneration();
 
 			var best = lc.getCurrentPopulation().get(0);
-			int fitness = ((IntegerFitness) best.fitness).mValue;
+			int fitness = ((IntegerFitness) best.fitness()).mValue;
 			
-			var chr = (IntegerArrayChromosome) best.genome.chromosomes()[0][0];
-			var a = chr.mAlleles[0];
-			var b = chr.mAlleles[1];
-			var c = chr.mAlleles[2];
-			var d = chr.mAlleles[3];
-			var e = chr.mAlleles[4];
+			var values = (int[]) phenoMapper.createPhenotype(best.genome());
+
+			var a = values[0];
+			var b = values[1];
+			var c = values[2];
+			var d = values[3];
+			var e = values[4];
 			
 			System.out.println("a=" + a + ", b=" + b + ", c=" + c + ", d=" + d + ", e=" + e + " | fitness=" + fitness);
-			
+		
 		}
 	}
 }

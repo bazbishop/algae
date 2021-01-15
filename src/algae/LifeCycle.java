@@ -113,7 +113,7 @@ public class LifeCycle {
 		var result = new Genome[parents.length];
 		
 		for(int p = 0; p < parents.length; ++p) {
-			result[p] = makeGamete(parents[p].genome);
+			result[p] = makeGamete(parents[p].genome());
 		}
 		
 		return result;
@@ -166,14 +166,20 @@ public class LifeCycle {
 	 * Measure the fitness of all members that don't have a fitness
 	 */
 	private void measureFitness() {
-		for (Member m : mCurrentPopulation) {
-			if (m.fitness == null) {
-				Object phenotype = phenotypeMapper.createPhenotype(m.genome);
-				m.fitness = fitnessTester.fitness(phenotype);
-			}
+		for (int m = 0; m < mCurrentPopulation.size(); ++m) {
+			var member = mCurrentPopulation.get(m);
+			if (member.fitness() == null) {
+				var genome = member.genome();
+				Object phenotype = phenotypeMapper.createPhenotype(member.genome());
+				var fitness = fitnessTester.fitness(phenotype);
+				
+				var testedMember = new Member(genome, fitness);
+				
+				mCurrentPopulation.set(m, testedMember);
 
-			if (m.fitness.isOptimal())
-				mFinished = true;
+				if (testedMember.fitness().isOptimal())
+					mFinished = true;
+			}
 		}
 	}
 
