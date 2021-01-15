@@ -1,16 +1,53 @@
 package algae;
 
-class Member implements Comparable<Member> {
+/**
+ * An individual in a population, which has a genome and a fitness after measurement.
+ */
+public class Member implements Comparable<Member> {
 	
-	public IFitness fitness;
+	/**
+	 * Constructor for before fitness testing.
+	 */
+	public Member( Genome genome ) {
+		assert genome != null;
+		
+		mGenome = genome;
+		mFitness = null;
+	}
 
-	public final Genome genome;
+	/**
+	 * Constructor for after fitness testing.
+	 */
+	public Member( Genome genome, IFitness fitness ) {
+		assert genome != null;
+		assert fitness != null;
 
-	public Member( Genome g ) {
-		genome = g;
+		mGenome = genome;
+		mFitness = fitness;
 	}
 
 	public int compareTo( Member rhs ) {
-		return fitness.compareTo( rhs.fitness );
+		return mFitness.compareTo( rhs.mFitness );
 	}
+
+	/**
+	 * Get the fitness.
+	 * @return The fitness value or null if it hasn't been tested yet.
+	 */
+	public IFitness fitness()
+	{
+		return mFitness;
+	};
+
+	/**
+	 * Get the member's genome.
+	 * @return The genome.
+	 */
+	public Genome genome()
+	{
+		return mGenome;
+	}
+	
+	private final IFitness mFitness;
+	private final Genome mGenome;
 }

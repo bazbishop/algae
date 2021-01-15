@@ -1,85 +1,97 @@
 package algae;
 
+import java.util.Arrays;
+
 /**
- * A set of chromosomes organised into homologous groups.
- * The genome might represent a complete organism or a gamete.
+ * A set of chromosomes organised into homologous groups. The genome might
+ * represent a complete organism or a gamete.
  */
-class Genome {
+public class Genome {
 
 	/**
-	 * Constructor
-	 * TODO Pass in the chromosomes here?
-	 * @param groupCount The number of homologous chromosome groups.
-	 * @param multiplicity The multiplicity of the homologous chromosome groups.
+	 * Constructor.
+	 * 
+	 * @param chromosomes The chromosomes organised into homologous groups.
 	 */
-	public Genome(int groupCount, int multiplicity)
-	{
-		assert groupCount > 0;
-		assert multiplicity > 0;
-		
-		chromosomes = new IChromosome[groupCount][];
-		
-		for(int g = 0; g < groupCount; ++g)
-		{
-			chromosomes[g] = new IChromosome[multiplicity];
-		}
+	public Genome(IChromosome[][] chromosomes) {
+		this.chromosomes = chromosomes;
+
+		assert validateChromosomes();
 	}
 
-	public Genome(IChromosome[][] chromosomes)
-	{
-		assert chromosomes.length > 0;
-		// TODO more checking of the group sizes
-		
-		this.chromosomes = chromosomes;
+	private boolean validateChromosomes() {
+		if (chromosomes == null)
+			return false;
+
+		if (chromosomes.length <= 0)
+			return false;
+
+		int len = chromosomes[0].length;
+		for (int c = 1; c < chromosomes.length; ++c) {
+			if (len != chromosomes[c].length)
+				return false;
+		}
+
+		return true;
 	}
-	
-	public IChromosome[][] chromosomes()
-	{
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.deepHashCode(chromosomes);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Genome other = (Genome) obj;
+		if (!Arrays.deepEquals(chromosomes, other.chromosomes))
+			return false;
+		return true;
+	}
+
+	/**
+	 * Get the chromosomes.
+	 * 
+	 * @return A 2D array of chromosomes organised by homologous groups and
+	 *         multiplicity.
+	 */
+	public IChromosome[][] chromosomes() {
 		return chromosomes;
 	}
-	
-	public int groupCount()
-	{
-		return chromosomes.length;
-	}
-	
-	public int multiplicity()
-	{
-		return chromosomes[0].length;
-	}
-	
-	public IChromosome getChromosome(int groupIndex, int index)
-	{
-		return chromosomes[groupIndex][index];
-	}
 
-	public void setChromosome(int groupIndex, int index, IChromosome chromosome)
-	{
-		chromosomes[groupIndex][index] = chromosome;
-	}
-	
-	public Genome combine(Genome other)
-	{
+	/**
+	 * Combine the chromosomes of two genomes, during
+	 * 
+	 * @param other The 'other' genome to combine with this one.
+	 * @return A new, merged genome.
+	 */
+	public Genome combine(Genome other) {
 		assert chromosomes.length == other.chromosomes.length;
 		assert chromosomes[0].length == other.chromosomes[0].length;
-		
+
 		int groupCount = chromosomes.length;
 		int multiplicityThis = chromosomes[0].length;
 		int multiplicityCombined = multiplicityThis * 2;
-		
-		Genome result = new Genome(groupCount, multiplicityCombined);
-		
-		for(int g = 0; g < groupCount; ++g)
-		{
-			for(int i = 0; i < multiplicityThis; ++i)
-			{
-				result.chromosomes[g][i] = chromosomes[g][i];
-				result.chromosomes[g][i + multiplicityThis] = other.chromosomes[g][i];
+
+		var result = new IChromosome[groupCount][multiplicityCombined];
+
+		for (int g = 0; g < groupCount; ++g) {
+			for (int i = 0; i < multiplicityThis; ++i) {
+				result[g][i] = chromosomes[g][i];
+				result[g][i + multiplicityThis] = other.chromosomes[g][i];
 			}
 		}
-		
-		return result;
+
+		return new Genome(result);
 	}
-	
-	IChromosome[][] chromosomes;
+
+	private final IChromosome[][] chromosomes;
 }
