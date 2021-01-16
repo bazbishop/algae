@@ -1,28 +1,28 @@
 package algae.fitness;
 
-import baz.algae.IFitness;
+import algae.IFitness;
 import java.math.BigInteger;
 
 public class BigIntegerFitness implements IFitness {
-	public BigIntegerFitness( BigInteger value, boolean finished ) {
+	public BigIntegerFitness(BigInteger value, boolean finished) {
 		mValue = value;
 		mFinished = finished;
 	}
 
-	public boolean isFinished() {
+	public boolean isOptimal() {
 		return mFinished;
 	}
 
-	public int compareTo( IFitness o ) {
+	public int compareTo(IFitness o) {
 		BigIntegerFitness rhs = (BigIntegerFitness) o;
 
-		return mValue.compareTo( rhs.mValue );
+		return mValue.compareTo(rhs.mValue);
 	}
 
 	@Override
-	public boolean equals( Object o ) {
+	public boolean equals(Object o) {
 		BigIntegerFitness rhs = (BigIntegerFitness) o;
-		return mValue.equals( rhs.mValue );
+		return mValue.equals(rhs.mValue);
 	}
 
 	@Override
