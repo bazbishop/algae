@@ -5,5 +5,5 @@ package algae;
  */
 public interface IPhenotypeMapper {
 
-	Object createPhenotype( Genome genome );
+	Object createPhenotype(Genome genome);
 }

@@ -8,5 +8,5 @@ public interface IChromosomeFactory {
 
 	IChromosome createEmptyChromosome();
 
-	void mutateAllele( IChromosome chromosome, int index );
+	void mutateAllele(IChromosome chromosome, int index);
 }

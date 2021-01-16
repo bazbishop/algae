@@ -12,27 +12,46 @@ import algae.util.Rand;
 public class LifeCycle {
 
 	public LifeCycle(IParameters parameters, int multiplicityOfGenome, int numberOfParents,
-			List<IChromosomeFactory> chromosomeFactories, IPhenotypeMapper phenotypeMapper,
-			IFitnessTester fitnessTester) {
+			CrossoverStrategy crossoverStrategy, List<IChromosomeFactory> chromosomeFactories,
+			IPhenotypeMapper phenotypeMapper, IFitnessTester fitnessTester) {
 		this.parameters = parameters;
+
 		this.multiplicityOfGenome = multiplicityOfGenome;
 		this.numberOfParents = numberOfParents;
-
-		assert multiplicityOfGenome % numberOfParents == 0;
+		this.crossoverStrategy = crossoverStrategy;
 
 		this.chromosomeFactories = chromosomeFactories;
 		this.phenotypeMapper = phenotypeMapper;
 		this.fitnessTester = fitnessTester;
 
+		validateCrossover();
+
 		mCurrentPopulation = new ArrayList<Member>(parameters.populationSize());
 	}
 
+	private void validateCrossover() {
+		if (numberOfParents < 1)
+			throw new IllegalArgumentException("Number of parents must be >= 1");
+
+		if (multiplicityOfGenome < 1)
+			throw new IllegalArgumentException("Multiplicity of genome must be >= 1");
+
+		if (crossoverStrategy == CrossoverStrategy.CrossoverGametes) {
+			if (multiplicityOfGenome % numberOfParents != 0)
+				throw new IllegalArgumentException(
+						"For gamete crossover strategy, the genome multiplicity must be a multiple of the number of parents");
+		}
+	}
+
 	/**
-	 * Initialise the population with random members and sort them according to fitness.
+	 * Initialise the population with random members and sort them according to
+	 * fitness.
+	 * 
 	 * @return true if an optimal member exists
 	 */
 	public boolean initGeneration() {
 		mFinished = false;
+		mGeneration = 0;
 
 		createRandomPopulation();
 		measureFitness();
@@ -43,6 +62,7 @@ public class LifeCycle {
 
 	/**
 	 * Breed a new generation and sort them according to fitness
+	 * 
 	 * @return true if an optimal member exists
 	 */
 	public boolean runGeneration() {
@@ -50,11 +70,13 @@ public class LifeCycle {
 		measureFitness();
 		sort();
 
+		++mGeneration;
 		return mFinished;
 	}
 
 	/**
 	 * Get the current population.
+	 * 
 	 * @return The list of members.
 	 */
 	public List<Member> getCurrentPopulation() {
@@ -63,10 +85,20 @@ public class LifeCycle {
 
 	/**
 	 * Get the value of the flag indicating whether an optimal member exists.
+	 * 
 	 * @return true if an optimal member exists
 	 */
 	public boolean isFinished() {
 		return mFinished;
+	}
+
+	/**
+	 * Get the generation number.
+	 * 
+	 * @return The generation number - 0 means initialised, but no breeding
+	 */
+	public int generation() {
+		return mGeneration;
 	}
 
 	/**
@@ -128,14 +160,30 @@ public class LifeCycle {
 			for (int homolog = 0; homolog < childChromosomes.length; ++homolog) {
 				var childHomologGroup = new IChromosome[multiplicityOfGenome];
 
-				int crossoversPerParent = multiplicityOfGenome / numberOfParents;
+				switch (crossoverStrategy) {
+				case CrossoverGametes:
+					int crossoversPerParent = multiplicityOfGenome / numberOfParents;
 
-				int index = 0;
-				for (int p = 0; p < numberOfParents; ++p) {
-					for (int i = 0; i < crossoversPerParent; ++i) {
-						childHomologGroup[index++] = crossover(preChildChromosomes[homolog], p * multiplicityOfGenome,
-								multiplicityOfGenome, chromosomeFactories.get(homolog), homolog);
+					int index = 0;
+					for (int p = 0; p < numberOfParents; ++p) {
+						for (int i = 0; i < crossoversPerParent; ++i) {
+							childHomologGroup[index++] = crossover(preChildChromosomes[homolog],
+									p * multiplicityOfGenome, multiplicityOfGenome, chromosomeFactories.get(homolog),
+									homolog);
+						}
 					}
+					break;
+
+				case CrossoverParents:
+					index = 0;
+					for (int p = 0; p < multiplicityOfGenome; ++p) {
+						childHomologGroup[index++] = crossover(preChildChromosomes[homolog], 0,
+								preChildChromosomes[homolog].length, chromosomeFactories.get(homolog), homolog);
+					}
+					break;
+
+				default:
+					throw new IllegalArgumentException("Unknown crossover strategy");
 				}
 
 				childChromosomes[homolog] = childHomologGroup;
@@ -148,11 +196,14 @@ public class LifeCycle {
 	}
 
 	/**
-	 * Derive a chromosome from the input chromosome array using crossover and mutation. 
-	 * @param input The pool of chromosomes
-	 * @param startIndex The starting index of chromosomes considered for crossover
-	 * @param count The number of chromosomes considered for crossover
-	 * @param factory The relevant chromosome factory 
+	 * Derive a chromosome from the input chromosome array using crossover and
+	 * mutation.
+	 * 
+	 * @param input        The pool of chromosomes
+	 * @param startIndex   The starting index of chromosomes considered for
+	 *                     crossover
+	 * @param count        The number of chromosomes considered for crossover
+	 * @param factory      The relevant chromosome factory
 	 * @param homologIndex The homolog index
 	 * @return The child chromosome
 	 */
@@ -212,10 +263,13 @@ public class LifeCycle {
 	private List<Member> mCurrentPopulation;
 
 	private boolean mFinished = false;
+	private int mGeneration = 0;
 
 	private final IParameters parameters;
+
 	private final int multiplicityOfGenome;
 	private final int numberOfParents;
+	private final CrossoverStrategy crossoverStrategy;
 
 	private final List<IChromosomeFactory> chromosomeFactories;
 	private final IPhenotypeMapper phenotypeMapper;
