@@ -41,13 +41,12 @@ public class TestRand extends TestCase {
 			assertTrue(counters[s] > 0.75 * repetitions / sectors);
 		}
 	}
-	
-	public void testNextInt()
-	{
+
+	public void testNextInt() {
 		final int sectors = 4;
 		final int repetitions = 1000;
 		final int range = 1000;
-		
+
 		var counters = new int[sectors];
 
 		for (int i = 0; i < repetitions; ++i) {
@@ -68,15 +67,14 @@ public class TestRand extends TestCase {
 		}
 	}
 
-	public void testNextNewInt()
-	{
+	public void testNextNewInt() {
 		final int repetitions = 1000;
 		final int range = 100;
-		
+
 		int previous = 0;
 
 		for (int i = 0; i < repetitions; ++i) {
-			int v = Rand.nextNewInt(range,previous);
+			int v = Rand.nextNewInt(range, previous);
 			assertTrue(v >= 0);
 			assertTrue(v < range);
 			assertTrue(v != previous);
@@ -87,31 +85,29 @@ public class TestRand extends TestCase {
 
 	public void testPercent() {
 
-		for( int probability = 0; probability<=100; ++probability)
-		{
+		for (int probability = 0; probability <= 100; ++probability) {
 			final int repetitions = 10000;
 			int count = 0;
-			for(int i = 0; i <repetitions;++i) {
-				if(Rand.percent(probability))
+			for (int i = 0; i < repetitions; ++i) {
+				if (Rand.percent(probability))
 					++count;
 			}
-			
+
 			double actual = 1.0 * count / repetitions;
-			assertEquals(probability/100.0, actual, 0.02);
+			assertEquals(probability / 100.0, actual, 0.02);
 		}
 	}
 
 	public void testTest() {
-		
-		for( double probability = 0.125; probability<1.0; probability += 0.125)
-		{
+
+		for (double probability = 0.125; probability < 1.0; probability += 0.125) {
 			final int repetitions = 10000;
 			int count = 0;
-			for(int i = 0; i <repetitions;++i) {
-				if(Rand.test(probability))
+			for (int i = 0; i < repetitions; ++i) {
+				if (Rand.test(probability))
 					++count;
 			}
-			
+
 			double actual = 1.0 * count / repetitions;
 			assertEquals(probability, actual, 0.02);
 		}
