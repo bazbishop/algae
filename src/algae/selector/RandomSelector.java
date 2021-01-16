@@ -3,35 +3,40 @@ package algae.selector;
 import algae.ISelector;
 import algae.util.Rand;
 
+/**
+ * A selector that biases towards fitter members, by selecting randomly and
+ * using the generated number to define a subset from which the next random
+ * number is generated.
+ */
 public class RandomSelector implements ISelector {
 	/**
-	 * The usual case, choose randomly twice, with no range limit for 2 parents.
+	 * Default constructor - choose randomly twice.
 	 */
 	public RandomSelector() {
 		mRepeat = 2;
-		mMaxRange = 0;
 	}
 
-	public RandomSelector( int repeat, int range ) {
+	/**
+	 * Constructor - select repeatedly from a subset of the given range
+	 * 
+	 * @param repeat
+	 */
+	public RandomSelector(int repeat) {
 		mRepeat = repeat;
-		mMaxRange = range;
 	}
 
-	public int select( int populationSize ) {
-		int range = populationSize;
-		if( mMaxRange > 0 )
-			range = Math.min( mMaxRange, range );
-
+	/**
+	 * Perform the selection on the given range.
+	 */
+	public int select(int range) {
 		int index = range - 1;
 
-		for( int r = 0; r < mRepeat; ++r ) {
-			index = Rand.nextInt( index + 1 );
+		for (int r = 0; r < mRepeat; ++r) {
+			index = Rand.nextInt(index + 1);
 		}
 
 		return index;
 	}
-
-	private final int mMaxRange;
 
 	private final int mRepeat;
 }
