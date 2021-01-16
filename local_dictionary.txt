@@ -7,3 +7,4 @@ fittest
 elite
 genomes
 homolog
+phenotype

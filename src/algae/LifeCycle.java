@@ -11,6 +11,20 @@ import algae.util.Rand;
  */
 public class LifeCycle {
 
+	/**
+	 * Constructor
+	 * 
+	 * @param parameters           The dynamic evolution parameters
+	 * @param multiplicityOfGenome The number of homologous chromosomes in each
+	 *                             chromosome group
+	 * @param numberOfParents      The number of parents required to breed a child
+	 * @param crossoverStrategy    The crossover strategy to use
+	 * @param chromosomeFactories  Chromosome factories with one factory per
+	 *                             homologous chromosome group
+	 * @param phenotypeMapper      A factory that can transform a genome into a
+	 *                             phenotype
+	 * @param fitnessTester        A component to measure the fitness of a phenotype
+	 */
 	public LifeCycle(IParameters parameters, int multiplicityOfGenome, int numberOfParents,
 			CrossoverStrategy crossoverStrategy, List<IChromosomeFactory> chromosomeFactories,
 			IPhenotypeMapper phenotypeMapper, IFitnessTester fitnessTester) {
@@ -126,7 +140,7 @@ public class LifeCycle {
 	}
 
 	/**
-	 * 
+	 * Breed the next generation using the specified crossover strategy.
 	 */
 	private void breedNextGeneration() {
 
