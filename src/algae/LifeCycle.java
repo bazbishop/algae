@@ -174,7 +174,7 @@ public class LifeCycle {
 					}
 					break;
 
-				case CrossoverParents:
+				case CrossoverAll:
 					index = 0;
 					for (int p = 0; p < multiplicityOfGenome; ++p) {
 						childHomologGroup[index++] = crossover(preChildChromosomes[homolog], 0,
