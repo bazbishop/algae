@@ -2,22 +2,22 @@ package algae.fitness;
 
 import junit.framework.TestCase;
 
-public class TestIntegerFitness extends TestCase {
+public class TestDoubleFitness extends TestCase {
 	public void testIsOptimal() {
-		var notFinished = new IntegerFitness(0, false);
+		var notFinished = new DoubleFitness(0, false);
 		assertEquals(notFinished.isOptimal(), false);
 
-		var finished = new IntegerFitness(0, true);
+		var finished = new DoubleFitness(0, true);
 		assertEquals(finished.isOptimal(), true);
 	}
 
 	public void testCompareTo() {
-		var less = new IntegerFitness(-5, false);
+		var less = new DoubleFitness(-5, false);
 
-		var middle1 = new IntegerFitness(2, false);
-		var middle2 = new IntegerFitness(2, false);
+		var middle1 = new DoubleFitness(2, false);
+		var middle2 = new DoubleFitness(2, false);
 
-		var more = new IntegerFitness(177, false);
+		var more = new DoubleFitness(177, false);
 
 		assertTrue(less.compareTo(middle1) < 0);
 		assertTrue(middle1.compareTo(middle1) == 0);
@@ -30,12 +30,12 @@ public class TestIntegerFitness extends TestCase {
 	}
 
 	public void testAttributes() {
-		IntegerFitness a = new IntegerFitness(17, false);
-		assertEquals(a.mValue, 17);
+		DoubleFitness a = new DoubleFitness(17, false);
+		assertEquals(a.mValue, 17.0);
 		assertEquals(a.isOptimal(), false);
 
-		IntegerFitness b = new IntegerFitness(-1, true);
-		assertEquals(b.mValue, -1);
+		DoubleFitness b = new DoubleFitness(-1, true);
+		assertEquals(b.mValue, -1.0);
 		assertEquals(b.isOptimal(), true);
 	}
 }

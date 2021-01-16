@@ -6,7 +6,7 @@ import java.util.List;
 import algae.chromosome.IntegerArrayChromosome;
 import algae.chromosome.IntegerArrayChromosomeFactory;
 import algae.fitness.IntegerFitness;
-import algae.selector.DoubleRandomSelector;
+import algae.selector.RandomSelector;
 import junit.framework.TestCase;
 
 public class TestLifeCycle_SimulatenousEquations extends TestCase {
@@ -45,7 +45,7 @@ public class TestLifeCycle_SimulatenousEquations extends TestCase {
 
 			@Override
 			public ISelector selector() {
-				return new DoubleRandomSelector();
+				return new RandomSelector();
 			}
 		};
 

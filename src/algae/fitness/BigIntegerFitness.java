@@ -3,6 +3,9 @@ package algae.fitness;
 import algae.IFitness;
 import java.math.BigInteger;
 
+/**
+ * Fitness measured using type 'BigInteger'.
+ */
 public class BigIntegerFitness implements IFitness {
 	public BigIntegerFitness(BigInteger value, boolean finished) {
 		mValue = value;
@@ -37,5 +40,5 @@ public class BigIntegerFitness implements IFitness {
 
 	public final BigInteger mValue;
 
-	public final boolean mFinished;
+	private final boolean mFinished;
 }

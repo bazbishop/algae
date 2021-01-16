@@ -3,10 +3,10 @@ package algae.fitness;
 import algae.IFitness;
 
 /**
- * Fitness measured using type 'int'.
+ * Fitness measured using type 'double'.
  */
-public class IntegerFitness implements IFitness {
-	public IntegerFitness( int value, boolean finished ) {
+public class DoubleFitness implements IFitness {
+	public DoubleFitness( double value, boolean finished ) {
 		mValue = value;
 		mFinished = finished;
 	}
@@ -17,7 +17,7 @@ public class IntegerFitness implements IFitness {
 	}
 
 	public int compareTo( IFitness o ) {
-		IntegerFitness rhs = (IntegerFitness) o;
+		DoubleFitness rhs = (DoubleFitness) o;
 
 		if( mValue < rhs.mValue )
 			return -1;
@@ -29,21 +29,21 @@ public class IntegerFitness implements IFitness {
 
 	@Override
 	public boolean equals( Object o ) {
-		IntegerFitness rhs = (IntegerFitness) o;
+		DoubleFitness rhs = (DoubleFitness) o;
 		return mValue == rhs.mValue;
 	}
 
 	@Override
 	public int hashCode() {
-		return mValue;
+		return Double.hashCode(mValue);
 	}
 
 	@Override
 	public String toString() {
-		return Integer.toString( mValue );
+		return Double.toString( mValue );
 	}
 
-	public final int mValue;
+	public final double mValue;
 
 	private final boolean mFinished;
 }
