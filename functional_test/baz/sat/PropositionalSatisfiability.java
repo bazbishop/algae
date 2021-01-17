@@ -7,20 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import baz.algae.GroupedLifeCycle;
-import baz.algae.IFitness;
-import baz.algae.IFitnessTester;
-import baz.algae.IGenome;
-import baz.algae.IPhenotypeMapper;
-import baz.algae.Member;
-import baz.algae.chromosome.CrossoverEngine;
-import baz.algae.chromosome.IChromosome;
-import baz.algae.chromosome.IntegerChromosome;
-import baz.algae.chromosome.IntegerChromosomeFactory;
-import baz.algae.chromosome.poly.PolyGenome;
-import baz.algae.chromosome.poly.PolyGenomeFactory;
-import baz.algae.fitness.IntegerFitness;
-import baz.algae.selector.DoubleRandomSelector;
+import algae.*;
+import algae.chromosome.*;
+import algae.fitness.*;
+import algae.selector.*;
 
 public class PropositionalSatisfiability
 {
@@ -29,7 +19,7 @@ public class PropositionalSatisfiability
 			mVariables = conjunction.getVariables();
 		}
 		
-		public Map<String,Boolean> createPhenotype(IGenome genome) {
+		public Map<String,Boolean> createPhenotype(Genome genome) {
 			// Calculate the variable assignments
 			 return computeMapping( mVariables, genome, 0 );
 		}
@@ -84,11 +74,11 @@ public class PropositionalSatisfiability
 		}
 	}
 
-	static Map<String,Boolean> computeMapping( Set<String> variables, IGenome genome, int chromosomeIndex )
+	static Map<String,Boolean> computeMapping( Set<String> variables, Genome genome, int chromosomeIndex )
 	{
-		IChromosome[] chromosomes = ((PolyGenome) genome).chomosomes();
+		IChromosome[] chromosomes = genome.chromosomes()[0];
 
-		IntegerChromosome ch = (IntegerChromosome) chromosomes[ chromosomeIndex ];
+		var ch = (IntegerArrayChromosome) chromosomes[ chromosomeIndex ];
 		
 		assert ch.length() == variables.size();
 
@@ -98,19 +88,14 @@ public class PropositionalSatisfiability
 		int a = 0;
 		for( String variable : variables )
 		{
-			mapping.put( variable, ch.mAlleles[ a++ ] != 0 );
+			mapping.put( variable, ch.alleles()[ a++ ] != 0 );
 		}
 		return mapping;
 	}
 	
-	private static IntegerChromosomeFactory chromosomeFactory;
-	private static PolyGenomeFactory genomeFactory;
+	private static IntegerArrayChromosomeFactory chromosomeFactory;
 	private static Tester tester;
 	private static Mapper mapper;
-
-//	static final int NUM_VARIABLES = 700;
-//	static final int LITERALS_PER_CLAUSE = 3;
-//	static final int NUM_CLAUSES = 2975;
 
 	static final int NUM_VARIABLES = 70;
 	static final int LITERALS_PER_CLAUSE = 3;
@@ -128,7 +113,7 @@ public class PropositionalSatisfiability
 		
 		int numVariables = conjunction.getVariables().size();
 
-		chromosomeFactory = new IntegerChromosomeFactory( numVariables, 1, 0 );
+		chromosomeFactory = new IntegerArrayChromosomeFactory( numVariables, 1, 0 );
 
 		genomeFactory = new PolyGenomeFactory(
 						2, // numParentsPerChild
@@ -153,7 +138,7 @@ public class PropositionalSatisfiability
 						mapper,
 						tester,
 						genomeFactory,
-						new DoubleRandomSelector(),
+						new RandomSelector(),
 						1, // elitismCount,
 		                NUM_GROUPS,
 		                MAX_GROUP_CYCLES );
@@ -170,8 +155,8 @@ public class PropositionalSatisfiability
 		for( int m = 0; m < POPULATION_SIZE; ++m )
 		{
 			Member member = pop.get( m );
-			IntegerFitness fitness = (IntegerFitness) member.fitness;
-			Map<String,Boolean> mapping = computeMapping( conjunction.getVariables(), member.genome, 0 );
+			IntegerFitness fitness = (IntegerFitness) member.fitness();
+			Map<String,Boolean> mapping = computeMapping( conjunction.getVariables(), member.genome(), 0 );
 
 			if( fitness.mValue == 0 )
 			{

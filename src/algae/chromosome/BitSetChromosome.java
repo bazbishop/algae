@@ -55,6 +55,5 @@ public class BitSetChromosome implements IChromosome {
 	}
 
 	private final BitSet mBits;
-
 	private final int mChromosomeLength;
 }
