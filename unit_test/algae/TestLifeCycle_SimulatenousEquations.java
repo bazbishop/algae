@@ -91,10 +91,10 @@ public class TestLifeCycle_SimulatenousEquations extends TestCase {
 				var chr1 = (IntegerArrayChromosome) genome.chromosomes()[0][0];
 				var chr2 = (IntegerArrayChromosome) genome.chromosomes()[0][1];
 
-				var result = new int[chr1.mAlleles.length];
+				var result = new int[chr1.alleles().length];
 
 				for (int a = 0; a < result.length; ++a) {
-					result[a] = chr1.mAlleles[a] + chr2.mAlleles[a];
+					result[a] = chr1.alleles()[a] + chr2.alleles()[a];
 				}
 				return result;
 
@@ -117,10 +117,10 @@ public class TestLifeCycle_SimulatenousEquations extends TestCase {
 				var chr1 = (IntegerArrayChromosome) genome.chromosomes()[0][0];
 				var chr2 = (IntegerArrayChromosome) genome.chromosomes()[0][1];
 
-				var result = new int[chr1.mAlleles.length];
+				var result = new int[chr1.alleles().length];
 
 				for (int a = 0; a < result.length; ++a) {
-					result[a] = chr1.mAlleles[a] + chr2.mAlleles[a];
+					result[a] = chr1.alleles()[a] + chr2.alleles()[a];
 				}
 				return result;
 
@@ -143,7 +143,7 @@ public class TestLifeCycle_SimulatenousEquations extends TestCase {
 
 				var chr1 = (IntegerArrayChromosome) genome.chromosomes()[0][0];
 
-				return chr1.mAlleles;
+				return chr1.alleles();
 			}
 
 		};

@@ -16,18 +16,18 @@ public class IntegerArrayChromosomeFactory implements IChromosomeFactory {
 	}
 
 	public IChromosome createRandomChromosome() {
-		final IntegerArrayChromosome ch = new IntegerArrayChromosome( mChromosomeLength );
-
+		var chromosome = new IntegerArrayChromosome( mChromosomeLength);
+		
 		for( int a = 0; a < mChromosomeLength; ++a )
-			ch.mAlleles[ a ] = randomAllele();
+			chromosome.alleles()[ a ] = randomAllele();
 
-		return ch;
+		return chromosome;
 	}
 
 	public void mutateAllele( IChromosome chromosome, int index ) {
 		IntegerArrayChromosome ch = (IntegerArrayChromosome) chromosome;
 
-		ch.mAlleles[ index ] = randomAllele();
+		ch.alleles()[ index ] = randomAllele();
 	}
 
 	protected int randomAllele() {
