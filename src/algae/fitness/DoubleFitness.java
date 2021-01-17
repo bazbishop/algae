@@ -6,7 +6,7 @@ import algae.IFitness;
  * Fitness measured using type 'double'.
  */
 public class DoubleFitness implements IFitness {
-	public DoubleFitness( double value, boolean finished ) {
+	public DoubleFitness(double value, boolean finished) {
 		mValue = value;
 		mFinished = finished;
 	}
@@ -16,19 +16,19 @@ public class DoubleFitness implements IFitness {
 		return mFinished;
 	}
 
-	public int compareTo( IFitness o ) {
+	public int compareTo(IFitness o) {
 		DoubleFitness rhs = (DoubleFitness) o;
 
-		if( mValue < rhs.mValue )
+		if (mValue < rhs.mValue)
 			return -1;
-		else if( mValue > rhs.mValue )
+		else if (mValue > rhs.mValue)
 			return 1;
 		else
 			return 0;
 	}
 
 	@Override
-	public boolean equals( Object o ) {
+	public boolean equals(Object o) {
 		DoubleFitness rhs = (DoubleFitness) o;
 		return mValue == rhs.mValue;
 	}
@@ -40,7 +40,7 @@ public class DoubleFitness implements IFitness {
 
 	@Override
 	public String toString() {
-		return Double.toString( mValue );
+		return Double.toString(mValue);
 	}
 
 	public final double mValue;
