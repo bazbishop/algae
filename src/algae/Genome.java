@@ -23,13 +23,37 @@ public class Genome {
 		if (chromosomes == null)
 			return false;
 
-		if (chromosomes.length <= 0)
+		int numGroups = chromosomes.length;
+
+		if (numGroups <= 0)
 			return false;
 
-		int len = chromosomes[0].length;
-		for (int c = 1; c < chromosomes.length; ++c) {
-			if (len != chromosomes[c].length)
+		// Check all chromosomes have the same multiplicity
+		int multiplicity = chromosomes[0].length;
+		for (int g = 1; g < numGroups; ++g) {
+			if (multiplicity != chromosomes[g].length)
 				return false;
+		}
+
+		// Check that each group is made up of the same chromosome type with the same
+		// length
+		for (int g = 0; g < numGroups; ++g) {
+			var group = chromosomes[g];
+
+			if (group.length <= 0)
+				return false;
+
+			var first = group[0];
+
+			if (first.length() <= 0)
+				return false;
+
+			for (int c = 1; c < group.length; ++c) {
+				if (first.getClass() != group[c].getClass())
+					return false;
+				if (first.length() != group[c].length())
+					return false;
+			}
 		}
 
 		return true;
@@ -42,21 +66,21 @@ public class Genome {
 
 	@Override
 	public boolean equals(Object obj) {
-		
+
 		if (this == obj)
 			return true;
 
 		if (obj == null)
 			return false;
-		
-		if(!(obj instanceof Genome))
+
+		if (!(obj instanceof Genome))
 			return false;
-		
+
 		Genome other = (Genome) obj;
-		
+
 		if (!Arrays.deepEquals(chromosomes, other.chromosomes))
 			return false;
-		
+
 		return true;
 	}
 

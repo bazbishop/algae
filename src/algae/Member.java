@@ -33,6 +33,7 @@ public class Member implements Comparable<Member> {
 
 	/**
 	 * Get the fitness.
+	 * 
 	 * @return The fitness value or null if it hasn't been tested yet.
 	 */
 	public IFitness fitness() {
@@ -41,6 +42,7 @@ public class Member implements Comparable<Member> {
 
 	/**
 	 * Get the member's genome.
+	 * 
 	 * @return The genome.
 	 */
 	public Genome genome() {
