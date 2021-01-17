@@ -4,42 +4,51 @@ import algae.IChromosome;
 import algae.IChromosomeFactory;
 import algae.util.Rand;
 
+/**
+ * A factory for creating IntegerArrayChromosome objects.
+ */
 public class IntegerArrayChromosomeFactory implements IChromosomeFactory {
-	public IntegerArrayChromosomeFactory( int chromosomeLength, int minAlleleValue, int maxAlleleValue ) {
+
+	/**
+	 * Constructor.
+	 * 
+	 * @param chromosomeLength The length of chromosomes to create
+	 * @param minAlleleValue   The minimum allele value
+	 * @param maxAlleleValue   The maximum allele value
+	 */
+	public IntegerArrayChromosomeFactory(int chromosomeLength, int minAlleleValue, int maxAlleleValue) {
 		mChromosomeLength = chromosomeLength;
 		mMinAlleleValue = minAlleleValue;
 		mMaxAlleleValue = maxAlleleValue;
 	}
 
 	public IChromosome createEmptyChromosome() {
-		return new IntegerArrayChromosome( mChromosomeLength );
+		return new IntegerArrayChromosome(mChromosomeLength);
 	}
 
 	public IChromosome createRandomChromosome() {
-		var chromosome = new IntegerArrayChromosome( mChromosomeLength);
-		
-		for( int a = 0; a < mChromosomeLength; ++a )
-			chromosome.alleles()[ a ] = randomAllele();
+		var chromosome = new IntegerArrayChromosome(mChromosomeLength);
+
+		for (int a = 0; a < mChromosomeLength; ++a)
+			chromosome.alleles()[a] = randomAllele();
 
 		return chromosome;
 	}
 
-	public void mutateAllele( IChromosome chromosome, int index ) {
+	public void mutateAllele(IChromosome chromosome, int index) {
 		IntegerArrayChromosome ch = (IntegerArrayChromosome) chromosome;
 
-		ch.alleles()[ index ] = randomAllele();
+		ch.alleles()[index] = randomAllele();
 	}
 
-	protected int randomAllele() {
+	private int randomAllele() {
 		final int range = mMaxAlleleValue - mMinAlleleValue;
-		int r = Rand.nextInt( range + 1 );
+		int r = Rand.nextInt(range + 1);
 
 		return r + mMinAlleleValue;
 	}
 
-	protected final int mChromosomeLength;
-
-	protected final int mMaxAlleleValue;
-
-	protected final int mMinAlleleValue;
+	private final int mChromosomeLength;
+	private final int mMaxAlleleValue;
+	private final int mMinAlleleValue;
 }

@@ -4,30 +4,39 @@ import java.util.Arrays;
 
 import algae.IChromosome;
 
+/**
+ * Chromosome modelled on an integer array.
+ */
 public class IntegerArrayChromosome implements IChromosome {
-	public IntegerArrayChromosome( int length ) {
-		mAlleles = new int[ length ];
+
+	/**
+	 * Constructor.
+	 * 
+	 * @param length The length of the chromosome
+	 */
+	public IntegerArrayChromosome(int length) {
+		mAlleles = new int[length];
 	}
 
 	@Override
 	public String toString() {
 		StringBuffer result = new StringBuffer();
 
-		for( int i = 0; i < mAlleles.length; ++i ) {
-			if( i > 0 )
-				result.append( ':' );
-			result.append( mAlleles[ i ] );
+		for (int i = 0; i < mAlleles.length; ++i) {
+			if (i > 0)
+				result.append(':');
+			result.append(mAlleles[i]);
 		}
 		return result.toString();
 	}
 
 	@Override
-	public boolean equals( Object o ) {
-		if( this == o )
+	public boolean equals(Object o) {
+		if (this == o)
 			return true;
 
 		IntegerArrayChromosome rhs = (IntegerArrayChromosome) o;
-		return Arrays.equals( mAlleles, rhs.mAlleles );
+		return Arrays.equals(mAlleles, rhs.mAlleles);
 	}
 
 	@Override
@@ -35,19 +44,24 @@ public class IntegerArrayChromosome implements IChromosome {
 		return mAlleles.hashCode();
 	}
 
-	public void copyAlleleTo( int index, IChromosome target ) {
+	public void copyAlleleTo(int index, IChromosome target) {
 		IntegerArrayChromosome rhs = (IntegerArrayChromosome) target;
 
-		rhs.mAlleles[ index ] = mAlleles[ index ];
+		rhs.mAlleles[index] = mAlleles[index];
 	}
 
 	public int length() {
 		return mAlleles.length;
 	}
-	
+
+	/**
+	 * Get the alleles.
+	 * 
+	 * @return The alleles as an integer array
+	 */
 	public int[] alleles() {
 		return mAlleles;
 	}
-	
+
 	private final int[] mAlleles;
 }
