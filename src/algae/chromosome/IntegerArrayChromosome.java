@@ -45,5 +45,9 @@ public class IntegerArrayChromosome implements IChromosome {
 		return mAlleles.length;
 	}
 	
-	public final int[] mAlleles;
+	public int[] alleles() {
+		return mAlleles;
+	}
+	
+	private final int[] mAlleles;
 }
