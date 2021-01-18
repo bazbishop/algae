@@ -36,7 +36,7 @@ class TestMember {
 		var m1 = new Member(mGenome);
 		var m2 = new Member(mGenome);
 		var m3 = new Member(mGenome);
-		
+
 		m1.setFitness(new IntegerFitness(1, false));
 		m2.setFitness(new IntegerFitness(2, false));
 		m3.setFitness(new IntegerFitness(3, false));
