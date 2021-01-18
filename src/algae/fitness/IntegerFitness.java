@@ -43,7 +43,11 @@ public class IntegerFitness implements IFitness {
 		return Integer.toString(mValue);
 	}
 
-	public final int mValue;
+	public Integer value() {
+		return mValue;
+	}
+
+	private final int mValue;
 
 	private final boolean mFinished;
 }

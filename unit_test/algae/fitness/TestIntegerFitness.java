@@ -36,11 +36,11 @@ class TestIntegerFitness {
 	@Test
 	void testAttributes() {
 		IntegerFitness a = new IntegerFitness(17, false);
-		assertEquals(a.mValue, 17);
+		assertEquals(a.value(), 17);
 		assertEquals(a.isOptimal(), false);
 
 		IntegerFitness b = new IntegerFitness(-1, true);
-		assertEquals(b.mValue, -1);
+		assertEquals(b.value(), -1);
 		assertEquals(b.isOptimal(), true);
 	}
 }

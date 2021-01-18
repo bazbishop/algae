@@ -37,11 +37,11 @@ class TestBigIntegerFitness {
 	@Test
 	void testAttributes() {
 		BigIntegerFitness a = new BigIntegerFitness(BigInteger.valueOf(17), false);
-		assertEquals(a.mValue, BigInteger.valueOf(17));
+		assertEquals(a.value(), BigInteger.valueOf(17));
 		assertEquals(a.isOptimal(), false);
 
 		BigIntegerFitness b = new BigIntegerFitness(BigInteger.valueOf(-1), true);
-		assertEquals(b.mValue, BigInteger.valueOf(-1));
+		assertEquals(b.value(), BigInteger.valueOf(-1));
 		assertEquals(b.isOptimal(), true);
 	}
 }

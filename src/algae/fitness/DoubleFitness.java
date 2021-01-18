@@ -43,7 +43,11 @@ public class DoubleFitness implements IFitness {
 		return Double.toString(mValue);
 	}
 
-	public final double mValue;
+	public Double value() {
+		return mValue;
+	}
+
+	private final double mValue;
 
 	private final boolean mFinished;
 }
