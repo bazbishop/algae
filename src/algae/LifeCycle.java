@@ -24,8 +24,9 @@ public class LifeCycle {
 	 * @param fitnessTester        A component to measure the fitness of a phenotype
 	 */
 	public LifeCycle(IParameters parameters, int multiplicityOfGenome, int numberOfParents,
-			CrossoverStrategy crossoverStrategy, List<IChromosomeFactory> chromosomeFactories,
-			IPhenotypeMapper phenotypeMapper, IFitnessTester fitnessTester) {
+			IPopulationFactory populationFactory, CrossoverStrategy crossoverStrategy,
+			List<IChromosomeFactory> chromosomeFactories, IPhenotypeMapper phenotypeMapper,
+			IFitnessTester fitnessTester) {
 		this.parameters = parameters;
 
 		this.multiplicityOfGenome = multiplicityOfGenome;
@@ -38,7 +39,8 @@ public class LifeCycle {
 
 		validateCrossover();
 
-		mCurrentPopulation = new Population(parameters.populationSize());
+		this.populationFactory = populationFactory;
+		mCurrentPopulation = populationFactory.createPopulation(parameters.populationSize());
 	}
 
 	private void validateCrossover() {
@@ -89,7 +91,7 @@ public class LifeCycle {
 	 * 
 	 * @return The list of members.
 	 */
-	public Population getCurrentPopulation() {
+	public IPopulation getCurrentPopulation() {
 		return mCurrentPopulation;
 	}
 
@@ -144,9 +146,12 @@ public class LifeCycle {
 		final var elitismCount = parameters.elitismCount();
 		final var selector = parameters.selector();
 
-		var nextGeneration = new Population(populationSize);
+		var nextGeneration = populationFactory.createPopulation(populationSize);
 
-		mCurrentPopulation.take(nextGeneration, elitismCount);
+		int numberOfSurvivors = Math.min(elitismCount, mCurrentPopulation.size());
+		for (int i = 0; i < numberOfSurvivors; ++i) {
+			nextGeneration.addMember(mCurrentPopulation.getMember(i));
+		}
 
 		// Bred members
 		while (nextGeneration.size() < populationSize) {
@@ -261,7 +266,7 @@ public class LifeCycle {
 		mCurrentPopulation.sort();
 	}
 
-	private Population mCurrentPopulation;
+	private IPopulation mCurrentPopulation;
 
 	private boolean mFinished = false;
 	private int mGeneration = 0;
@@ -272,6 +277,7 @@ public class LifeCycle {
 	private final int numberOfParents;
 	private final CrossoverStrategy crossoverStrategy;
 
+	private final IPopulationFactory populationFactory;
 	private final List<IChromosomeFactory> chromosomeFactories;
 	private final IPhenotypeMapper phenotypeMapper;
 	private final IFitnessTester fitnessTester;

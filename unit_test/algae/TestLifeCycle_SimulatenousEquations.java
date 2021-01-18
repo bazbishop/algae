@@ -6,6 +6,7 @@ import java.util.List;
 import algae.chromosome.IntegerArrayChromosome;
 import algae.chromosome.IntegerArrayChromosomeFactory;
 import algae.fitness.IntegerFitness;
+import algae.population.SimplePopulationFactory;
 import algae.selector.RandomSelector;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -106,8 +107,8 @@ class TestLifeCycle_SimulatenousEquations {
 
 		};
 
-		var lc = new LifeCycle(parameters, 2, 2, CrossoverStrategy.CrossoverGametes, chromosomeFactories, phenoMapper,
-				fitnessTester);
+		var lc = new LifeCycle(parameters, 2, 2, new SimplePopulationFactory(), CrossoverStrategy.CrossoverGametes,
+				chromosomeFactories, phenoMapper, fitnessTester);
 
 		runExperiment(lc, phenoMapper);
 	}
@@ -133,8 +134,8 @@ class TestLifeCycle_SimulatenousEquations {
 
 		};
 
-		var lc = new LifeCycle(parameters, 2, 2, CrossoverStrategy.CrossoverAll, chromosomeFactories, phenoMapper,
-				fitnessTester);
+		var lc = new LifeCycle(parameters, 2, 2, new SimplePopulationFactory(), CrossoverStrategy.CrossoverAll,
+				chromosomeFactories, phenoMapper, fitnessTester);
 
 		runExperiment(lc, phenoMapper);
 	}
@@ -154,8 +155,8 @@ class TestLifeCycle_SimulatenousEquations {
 
 		};
 
-		var lc = new LifeCycle(parameters, 1, 2, CrossoverStrategy.CrossoverAll, chromosomeFactories, phenoMapper,
-				fitnessTester);
+		var lc = new LifeCycle(parameters, 1, 2, new SimplePopulationFactory(), CrossoverStrategy.CrossoverAll,
+				chromosomeFactories, phenoMapper, fitnessTester);
 
 		runExperiment(lc, phenoMapper);
 	}
