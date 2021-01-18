@@ -10,6 +10,7 @@ import java.util.Set;
 import algae.*;
 import algae.chromosome.*;
 import algae.fitness.*;
+import algae.population.*;
 import algae.selector.*;
 
 public class PropositionalSatisfiability {
@@ -138,8 +139,8 @@ public class PropositionalSatisfiability {
 
 		var mapper = new Mapper(conjunction);
 
-		var lifeCycle = new LifeCycle(new Parameters(), 2, 2, CrossoverStrategy.CrossoverGametes, factories, mapper,
-				new Tester(conjunction));
+		var lifeCycle = new LifeCycle(new Parameters(), 2, 2, new SimplePopulationFactory(),
+				CrossoverStrategy.CrossoverGametes, factories, mapper, new Tester(conjunction));
 
 		boolean finished = lifeCycle.initGeneration();
 

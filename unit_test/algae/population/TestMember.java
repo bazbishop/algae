@@ -1,9 +1,11 @@
-package algae;
+package algae.population;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import algae.Genome;
+import algae.IChromosome;
 import algae.chromosome.IntegerArrayChromosome;
 import algae.fitness.IntegerFitness;
 
