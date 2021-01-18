@@ -6,4 +6,6 @@ package algae;
 public interface IFitness extends Comparable<IFitness> {
 	/** Indicates that the solution is correct/optimal and cannot be improved. */
 	boolean isOptimal();
+
+	Object value();
 }

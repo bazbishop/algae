@@ -38,7 +38,11 @@ public class BigIntegerFitness implements IFitness {
 		return mValue.toString();
 	}
 
-	public final BigInteger mValue;
+	public BigInteger value() {
+		return mValue;
+	}
+
+	private final BigInteger mValue;
 
 	private final boolean mFinished;
 }

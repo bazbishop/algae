@@ -165,7 +165,7 @@ public class PropositionalSatisfiability {
 			var fitness = (IntegerFitness) pop.getFitness(m);
 			Map<String, Boolean> mapping = computeMapping(conjunction.getVariables(), member, 0);
 
-			if (fitness.mValue == 0) {
+			if (fitness.value() == 0) {
 				if (uniqueSolutions.add(mapping))
 					System.out.println("Satified with: " + mapping);
 			} else {
@@ -173,7 +173,7 @@ public class PropositionalSatisfiability {
 				if (m > 10)
 					break;
 
-				System.out.println("Scored: " + fitness.mValue + " with: " + mapping);
+				System.out.println("Scored: " + fitness.value() + " with: " + mapping);
 			}
 		}
 

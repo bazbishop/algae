@@ -36,11 +36,11 @@ class TestDoubleFitness {
 	@Test
 	void testAttributes() {
 		DoubleFitness a = new DoubleFitness(17, false);
-		assertEquals(a.mValue, 17.0);
+		assertEquals(a.value(), 17.0);
 		assertEquals(a.isOptimal(), false);
 
 		DoubleFitness b = new DoubleFitness(-1, true);
-		assertEquals(b.mValue, -1.0);
+		assertEquals(b.value(), -1.0);
 		assertEquals(b.isOptimal(), true);
 	}
 }
