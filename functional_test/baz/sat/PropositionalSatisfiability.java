@@ -155,7 +155,7 @@ public class PropositionalSatisfiability {
 		if (solved)
 			System.out.println("**** SOLVED ****");
 
-		List<Member> pop = lifeCycle.getCurrentPopulation();
+		var pop = lifeCycle.getCurrentPopulation();
 
 		Set<Map<String, Boolean>> uniqueSolutions = new HashSet<Map<String, Boolean>>();
 		Set<Map<String, Boolean>> goodSolutions = new HashSet<Map<String, Boolean>>();

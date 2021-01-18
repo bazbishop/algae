@@ -12,11 +12,11 @@ public class TestLifeCycle {
 
 	@Test
 	void testInitGeneration() {
-		
+		fail();
 	}
 
 	@Test
 	void testRunGeneration() {
-		
+		fail();
 	}
 }

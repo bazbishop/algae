@@ -27,15 +27,19 @@ class TestMember {
 		var member = new Member(mGenome);
 		assertEquals(member.genome(), mGenome);
 
-		member = new Member(mGenome, mFitness);
+		member.setFitness(mFitness);
 		assertEquals(member.genome(), mGenome);
 	}
 
 	@Test
 	void testCompareTo() {
-		var m1 = new Member(mGenome, new IntegerFitness(1, false));
-		var m2 = new Member(mGenome, new IntegerFitness(2, false));
-		var m3 = new Member(mGenome, new IntegerFitness(3, false));
+		var m1 = new Member(mGenome);
+		var m2 = new Member(mGenome);
+		var m3 = new Member(mGenome);
+		
+		m1.setFitness(new IntegerFitness(1, false));
+		m2.setFitness(new IntegerFitness(2, false));
+		m3.setFitness(new IntegerFitness(3, false));
 
 		assertTrue(m1.compareTo(m2) < 0);
 		assertTrue(m2.compareTo(m1) > 0);
