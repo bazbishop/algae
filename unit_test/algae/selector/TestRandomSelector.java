@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TestRandomSelector {
 
 	@Test
-	public void testSelect() {
+	void testSelect() {
 		final int sectors = 10;
 		final int repetitions = 10000;
 		final int range = 1000;

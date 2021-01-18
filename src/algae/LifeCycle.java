@@ -1,7 +1,5 @@
 package algae;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import algae.util.Rand;
@@ -40,7 +38,7 @@ public class LifeCycle {
 
 		validateCrossover();
 
-		mCurrentPopulation = new ArrayList<Member>(parameters.populationSize());
+		mCurrentPopulation = new Population(parameters.populationSize());
 	}
 
 	private void validateCrossover() {
@@ -60,7 +58,6 @@ public class LifeCycle {
 	/**
 	 * Initialise the population with random members and sort them according to
 	 * fitness.
-	 * 
 	 * @return true if an optimal member exists
 	 */
 	public boolean initGeneration() {
@@ -69,20 +66,17 @@ public class LifeCycle {
 
 		createRandomPopulation();
 		measureFitness();
-		sort();
 
 		return mFinished;
 	}
 
 	/**
 	 * Breed a new generation and sort them according to fitness
-	 * 
 	 * @return true if an optimal member exists
 	 */
 	public boolean runGeneration() {
 		breedNextGeneration();
 		measureFitness();
-		sort();
 
 		++mGeneration;
 		return mFinished;
@@ -90,16 +84,14 @@ public class LifeCycle {
 
 	/**
 	 * Get the current population.
-	 * 
 	 * @return The list of members.
 	 */
-	public List<Member> getCurrentPopulation() {
+	public Population getCurrentPopulation() {
 		return mCurrentPopulation;
 	}
 
 	/**
 	 * Get the value of the flag indicating whether an optimal member exists.
-	 * 
 	 * @return true if an optimal member exists
 	 */
 	public boolean isFinished() {
@@ -108,7 +100,6 @@ public class LifeCycle {
 
 	/**
 	 * Get the generation number.
-	 * 
 	 * @return The generation number - 0 means initialised, but no breeding
 	 */
 	public int generation() {
@@ -148,15 +139,10 @@ public class LifeCycle {
 		final var elitismCount = parameters.elitismCount();
 		final var selector = parameters.selector();
 
-		List<Member> nextGeneration = new ArrayList<Member>(populationSize);
-
-		// Elite members
-		int m = 0;
-		for (; m < elitismCount; ++m)
-			nextGeneration.add(mCurrentPopulation.get(m));
+		var nextGeneration = mCurrentPopulation.take(elitismCount);
 
 		// Bred members
-		for (; m < populationSize; ++m) {
+		while(nextGeneration.size() < populationSize) {
 			final Member[] parents = new Member[numberOfParents];
 			for (int p = 0; p < numberOfParents; ++p)
 				parents[p] = mCurrentPopulation.get(selector.select(mCurrentPopulation.size()));
@@ -251,30 +237,24 @@ public class LifeCycle {
 	 */
 	private void measureFitness() {
 		for (int m = 0; m < mCurrentPopulation.size(); ++m) {
+			
 			var member = mCurrentPopulation.get(m);
+
 			if (member.fitness() == null) {
-				var genome = member.genome();
 				Object phenotype = phenotypeMapper.createPhenotype(member.genome());
 				var fitness = fitnessTester.fitness(phenotype);
+				
+				member.setFitness(fitness);
 
-				var testedMember = new Member(genome, fitness);
-
-				mCurrentPopulation.set(m, testedMember);
-
-				if (testedMember.fitness().isOptimal())
+				if (fitness.isOptimal())
 					mFinished = true;
 			}
 		}
+		
+		mCurrentPopulation.sort();
 	}
 
-	/**
-	 * Sort the members of the population according to their fitness.
-	 */
-	private void sort() {
-		Collections.sort(mCurrentPopulation, Collections.reverseOrder());
-	}
-
-	private List<Member> mCurrentPopulation;
+	private Population mCurrentPopulation;
 
 	private boolean mFinished = false;
 	private int mGeneration = 0;
