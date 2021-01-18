@@ -1,16 +1,19 @@
 package algae.chromosome;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class TestBitSetChromosome extends TestCase {
+class TestBitSetChromosome {
 
-	public void testConstructor() {
+	@Test
+	void testConstructor() {
 		var c = new BitSetChromosome(7);
 
 		assertEquals(7, c.length());
 	}
 
-	public void testEquality() {
+	@Test
+	void testEquality() {
 
 		var c1 = new BitSetChromosome(7);
 		var c2 = new BitSetChromosome(7);
@@ -29,7 +32,8 @@ public class TestBitSetChromosome extends TestCase {
 		assertFalse(c1.equals(c3));
 	}
 
-	public void testCopyAllele() {
+	@Test
+	void testCopyAllele() {
 
 		var c1 = new BitSetChromosome(7);
 		var c2 = new BitSetChromosome(7);

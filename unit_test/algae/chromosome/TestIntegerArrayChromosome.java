@@ -1,17 +1,20 @@
 package algae.chromosome;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class TestIntegerArrayChromosome extends TestCase {
+class TestIntegerArrayChromosome {
 
-	public void testConstructor() {
+	@Test
+	void testConstructor() {
 		var c = new IntegerArrayChromosome(7);
 
 		assertEquals(7, c.length());
 		assertEquals(7, c.alleles().length);
 	}
 
-	public void testEquality() {
+	@Test
+	void testEquality() {
 
 		var c1 = new IntegerArrayChromosome(7);
 		var c2 = new IntegerArrayChromosome(7);
@@ -30,7 +33,8 @@ public class TestIntegerArrayChromosome extends TestCase {
 		assertFalse(c1.equals(c3));
 	}
 
-	public void testCopyAllele() {
+	@Test
+	void testCopyAllele() {
 
 		var c1 = new IntegerArrayChromosome(7);
 		var c2 = new IntegerArrayChromosome(7);

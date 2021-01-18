@@ -7,16 +7,19 @@ import algae.chromosome.IntegerArrayChromosome;
 import algae.chromosome.IntegerArrayChromosomeFactory;
 import algae.fitness.IntegerFitness;
 import algae.selector.RandomSelector;
-import junit.framework.TestCase;
 
-public class TestLifeCycle_SimulatenousEquations extends TestCase {
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+class TestLifeCycle_SimulatenousEquations {
 
 	private List<IChromosomeFactory> chromosomeFactories;
 	private IParameters parameters;
 	private IFitnessTester fitnessTester;
 
-	@Override
-	protected void setUp() throws Exception {
+	@BeforeEach
+	void setUp() throws Exception {
 		var chromosomeFactory = new IntegerArrayChromosomeFactory(5, -10, 10);
 		chromosomeFactories = new ArrayList<IChromosomeFactory>();
 		chromosomeFactories.add(chromosomeFactory);
@@ -82,7 +85,8 @@ public class TestLifeCycle_SimulatenousEquations extends TestCase {
 
 	}
 
-	public void testMultiplicity2Parents2Gametes() {
+	@Test
+	void testMultiplicity2Parents2Gametes() {
 		var phenoMapper = new IPhenotypeMapper() {
 
 			@Override
@@ -108,7 +112,8 @@ public class TestLifeCycle_SimulatenousEquations extends TestCase {
 		runExperiment(lc, phenoMapper);
 	}
 
-	public void testMultiplicity2Parents2All() {
+	@Test
+	void testMultiplicity2Parents2All() {
 		var phenoMapper = new IPhenotypeMapper() {
 
 			@Override
@@ -134,7 +139,8 @@ public class TestLifeCycle_SimulatenousEquations extends TestCase {
 		runExperiment(lc, phenoMapper);
 	}
 
-	public void testMultiplicity1Parents2All() {
+	@Test
+	void testMultiplicity1Parents2All() {
 
 		var phenoMapper = new IPhenotypeMapper() {
 

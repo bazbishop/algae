@@ -1,10 +1,12 @@
 package algae.chromosome;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class TestIntegerArrayChromosomeFactory extends TestCase {
+class TestIntegerArrayChromosomeFactory {
 
-	public void testCreateEmpty() {
+	@Test
+	void testCreateEmpty() {
 		var f = new IntegerArrayChromosomeFactory(17, 10, 20);
 
 		var c = (IntegerArrayChromosome) f.createEmptyChromosome();
@@ -31,7 +33,8 @@ public class TestIntegerArrayChromosomeFactory extends TestCase {
 		assertTrue(different);
 	}
 
-	public void testMutateAllele() {
+	@Test
+	void testMutateAllele() {
 
 		var f = new IntegerArrayChromosomeFactory(17, 10, 20);
 
