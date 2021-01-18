@@ -1,15 +1,18 @@
 package algae;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 import algae.chromosome.IntegerArrayChromosome;
 import algae.fitness.IntegerFitness;
-import junit.framework.*;
 
-public class TestMember extends TestCase {
-	Genome mGenome;
-	IntegerFitness mFitness;
+class TestMember {
+	private Genome mGenome;
+	private IntegerFitness mFitness;
 
-	@Override
-	protected void setUp() throws Exception {
+	@BeforeEach
+	void setUp() throws Exception {
 		var c1 = new IntegerArrayChromosome(1);
 		var c2 = new IntegerArrayChromosome(1);
 		c1.alleles()[0] = 1;
@@ -19,7 +22,8 @@ public class TestMember extends TestCase {
 		mFitness = new IntegerFitness(17, false);
 	}
 
-	public void testGenome() {
+	@Test
+	void testGenome() {
 		var member = new Member(mGenome);
 		assertEquals(member.genome(), mGenome);
 
@@ -27,7 +31,8 @@ public class TestMember extends TestCase {
 		assertEquals(member.genome(), mGenome);
 	}
 
-	public void testCompareTo() {
+	@Test
+	void testCompareTo() {
 		var m1 = new Member(mGenome, new IntegerFitness(1, false));
 		var m2 = new Member(mGenome, new IntegerFitness(2, false));
 		var m3 = new Member(mGenome, new IntegerFitness(3, false));

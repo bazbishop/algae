@@ -1,11 +1,14 @@
 package algae.fitness;
 
 import java.math.BigInteger;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-import junit.framework.TestCase;
 
-public class TestBigIntegerFitness extends TestCase {
-	public void testIsOptimal() {
+class TestBigIntegerFitness {
+
+	@Test
+	void testIsOptimal() {
 		var notFinished = new BigIntegerFitness(BigInteger.valueOf(0), false);
 		assertEquals(notFinished.isOptimal(), false);
 
@@ -13,7 +16,8 @@ public class TestBigIntegerFitness extends TestCase {
 		assertEquals(finished.isOptimal(), true);
 	}
 
-	public void testCompareTo() {
+	@Test
+	void testCompareTo() {
 		var less = new BigIntegerFitness(BigInteger.valueOf(-5), false);
 
 		var middle1 = new BigIntegerFitness(BigInteger.valueOf(2), false);
@@ -31,7 +35,8 @@ public class TestBigIntegerFitness extends TestCase {
 		assertTrue(more.compareTo(middle2) > 0);
 	}
 
-	public void testAttributes() {
+	@Test
+	void testAttributes() {
 		BigIntegerFitness a = new BigIntegerFitness(BigInteger.valueOf(17), false);
 		assertEquals(a.mValue, BigInteger.valueOf(17));
 		assertEquals(a.isOptimal(), false);

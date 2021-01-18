@@ -1,9 +1,11 @@
 package algae.selector;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class TestRandomSelector extends TestCase {
+class TestRandomSelector {
 
+	@Test
 	public void testSelect() {
 		final int sectors = 10;
 		final int repetitions = 10000;

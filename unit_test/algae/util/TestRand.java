@@ -1,10 +1,12 @@
 package algae.util;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class TestRand extends TestCase {
+class TestRand {
 
-	public void testNextBoolean() {
+	@Test	
+	void testNextBoolean() {
 		boolean falseReturned = false;
 		boolean trueReturned = false;
 
@@ -19,7 +21,8 @@ public class TestRand extends TestCase {
 		assertTrue(trueReturned);
 	}
 
-	public void testNextDouble() {
+	@Test	
+	void testNextDouble() {
 		final int sectors = 4;
 		final int repetitions = 1000;
 		var counters = new int[sectors];
@@ -42,7 +45,8 @@ public class TestRand extends TestCase {
 		}
 	}
 
-	public void testNextInt() {
+	@Test	
+	void testNextInt() {
 		final int sectors = 4;
 		final int repetitions = 1000;
 		final int range = 1000;
@@ -67,6 +71,7 @@ public class TestRand extends TestCase {
 		}
 	}
 
+	@Test	
 	public void testNextNewInt() {
 		final int repetitions = 1000;
 		final int range = 100;
@@ -83,7 +88,8 @@ public class TestRand extends TestCase {
 		}
 	}
 
-	public void testPercent() {
+	@Test	
+	void testPercent() {
 
 		for (int probability = 0; probability <= 100; ++probability) {
 			final int repetitions = 10000;
@@ -98,7 +104,8 @@ public class TestRand extends TestCase {
 		}
 	}
 
-	public void testTest() {
+	@Test	
+	void testTest() {
 
 		for (double probability = 0.125; probability < 1.0; probability += 0.125) {
 			final int repetitions = 10000;

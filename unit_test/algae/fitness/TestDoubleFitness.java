@@ -1,9 +1,12 @@
 package algae.fitness;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class TestDoubleFitness extends TestCase {
-	public void testIsOptimal() {
+class TestDoubleFitness {
+
+	@Test
+	void testIsOptimal() {
 		var notFinished = new DoubleFitness(0, false);
 		assertEquals(notFinished.isOptimal(), false);
 
@@ -11,7 +14,8 @@ public class TestDoubleFitness extends TestCase {
 		assertEquals(finished.isOptimal(), true);
 	}
 
-	public void testCompareTo() {
+	@Test
+	void testCompareTo() {
 		var less = new DoubleFitness(-5, false);
 
 		var middle1 = new DoubleFitness(2, false);
@@ -29,7 +33,8 @@ public class TestDoubleFitness extends TestCase {
 		assertTrue(more.compareTo(middle2) > 0);
 	}
 
-	public void testAttributes() {
+	@Test
+	void testAttributes() {
 		DoubleFitness a = new DoubleFitness(17, false);
 		assertEquals(a.mValue, 17.0);
 		assertEquals(a.isOptimal(), false);

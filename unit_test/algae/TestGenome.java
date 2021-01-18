@@ -2,11 +2,13 @@ package algae;
 
 import algae.chromosome.BitSetChromosome;
 import algae.chromosome.IntegerArrayChromosome;
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
-public class TestGenome extends TestCase {
+class TestGenome {
 
-	public void testValidChromosomes() {
+	@Test
+	void testValidChromosomes() {
 		var chromosomes = makeChromosomes(4, 7);
 
 		var genome = new Genome(chromosomes);
@@ -45,7 +47,8 @@ public class TestGenome extends TestCase {
 		return chromosomes;
 	}
 
-	public void testInvalidChromosomes() {
+	@Test
+	void testInvalidChromosomes() {
 
 		// One group with wrong multiplicity
 		var chromosomes = makeChromosomes(4, 7);
@@ -87,7 +90,8 @@ public class TestGenome extends TestCase {
 		}
 	}
 
-	public void testEquality() {
+	@Test
+	void testEquality() {
 
 		var chromosomes = makeChromosomes(4, 7);
 		var genome1 = new Genome(chromosomes);
@@ -105,7 +109,8 @@ public class TestGenome extends TestCase {
 		assertFalse(genome1.equals(genome2));
 	}
 
-	public void testCombine() {
+	@Test
+	void testCombine() {
 
 		var chromosomes = makeChromosomes(4, 7);
 		var genome1 = new Genome(chromosomes);

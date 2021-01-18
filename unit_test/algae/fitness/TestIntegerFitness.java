@@ -1,9 +1,12 @@
 package algae.fitness;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class TestIntegerFitness extends TestCase {
-	public void testIsOptimal() {
+class TestIntegerFitness {
+
+	@Test
+	void testIsOptimal() {
 		var notFinished = new IntegerFitness(0, false);
 		assertEquals(notFinished.isOptimal(), false);
 
@@ -11,7 +14,8 @@ public class TestIntegerFitness extends TestCase {
 		assertEquals(finished.isOptimal(), true);
 	}
 
-	public void testCompareTo() {
+	@Test
+	void testCompareTo() {
 		var less = new IntegerFitness(-5, false);
 
 		var middle1 = new IntegerFitness(2, false);
@@ -29,7 +33,8 @@ public class TestIntegerFitness extends TestCase {
 		assertTrue(more.compareTo(middle2) > 0);
 	}
 
-	public void testAttributes() {
+	@Test
+	void testAttributes() {
 		IntegerFitness a = new IntegerFitness(17, false);
 		assertEquals(a.mValue, 17);
 		assertEquals(a.isOptimal(), false);
