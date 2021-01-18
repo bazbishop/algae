@@ -160,9 +160,9 @@ public class PropositionalSatisfiability {
 		Set<Map<String, Boolean>> uniqueSolutions = new HashSet<Map<String, Boolean>>();
 		Set<Map<String, Boolean>> goodSolutions = new HashSet<Map<String, Boolean>>();
 		for (int m = 0; m < pop.size(); ++m) {
-			Member member = pop.get(m);
-			IntegerFitness fitness = (IntegerFitness) member.fitness();
-			Map<String, Boolean> mapping = computeMapping(conjunction.getVariables(), member.genome(), 0);
+			var member = pop.getMember(m);
+			var fitness = (IntegerFitness) pop.getFitness(m);
+			Map<String, Boolean> mapping = computeMapping(conjunction.getVariables(), member, 0);
 
 			if (fitness.mValue == 0) {
 				if (uniqueSolutions.add(mapping))

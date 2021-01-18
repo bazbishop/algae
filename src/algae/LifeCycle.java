@@ -58,6 +58,7 @@ public class LifeCycle {
 	/**
 	 * Initialise the population with random members and sort them according to
 	 * fitness.
+	 * 
 	 * @return true if an optimal member exists
 	 */
 	public boolean initGeneration() {
@@ -72,6 +73,7 @@ public class LifeCycle {
 
 	/**
 	 * Breed a new generation and sort them according to fitness
+	 * 
 	 * @return true if an optimal member exists
 	 */
 	public boolean runGeneration() {
@@ -84,6 +86,7 @@ public class LifeCycle {
 
 	/**
 	 * Get the current population.
+	 * 
 	 * @return The list of members.
 	 */
 	public Population getCurrentPopulation() {
@@ -92,6 +95,7 @@ public class LifeCycle {
 
 	/**
 	 * Get the value of the flag indicating whether an optimal member exists.
+	 * 
 	 * @return true if an optimal member exists
 	 */
 	public boolean isFinished() {
@@ -100,6 +104,7 @@ public class LifeCycle {
 
 	/**
 	 * Get the generation number.
+	 * 
 	 * @return The generation number - 0 means initialised, but no breeding
 	 */
 	public int generation() {
@@ -126,7 +131,7 @@ public class LifeCycle {
 				chromosomes[f] = homologs;
 			}
 
-			mCurrentPopulation.add(new Member(new Genome(chromosomes)));
+			mCurrentPopulation.addMember(new Genome(chromosomes));
 		}
 	}
 
@@ -139,17 +144,19 @@ public class LifeCycle {
 		final var elitismCount = parameters.elitismCount();
 		final var selector = parameters.selector();
 
-		var nextGeneration = mCurrentPopulation.take(elitismCount);
+		var nextGeneration = new Population(populationSize);
+
+		mCurrentPopulation.take(nextGeneration, elitismCount);
 
 		// Bred members
-		while(nextGeneration.size() < populationSize) {
-			final Member[] parents = new Member[numberOfParents];
+		while (nextGeneration.size() < populationSize) {
+			final var parents = new Genome[numberOfParents];
 			for (int p = 0; p < numberOfParents; ++p)
-				parents[p] = mCurrentPopulation.get(selector.select(mCurrentPopulation.size()));
+				parents[p] = mCurrentPopulation.getMember(selector.select(mCurrentPopulation.size()));
 
-			Genome preChild = parents[0].genome();
+			Genome preChild = parents[0];
 			for (int p = 1; p < numberOfParents; ++p) {
-				preChild = preChild.combine(parents[p].genome());
+				preChild = preChild.combine(parents[p]);
 			}
 
 			var preChildChromosomes = preChild.chromosomes();
@@ -189,7 +196,7 @@ public class LifeCycle {
 				childChromosomes[homolog] = childHomologGroup;
 			}
 
-			nextGeneration.add(new Member(new Genome(childChromosomes)));
+			nextGeneration.addMember(new Genome(childChromosomes));
 		}
 
 		mCurrentPopulation = nextGeneration;
@@ -237,20 +244,20 @@ public class LifeCycle {
 	 */
 	private void measureFitness() {
 		for (int m = 0; m < mCurrentPopulation.size(); ++m) {
-			
-			var member = mCurrentPopulation.get(m);
 
-			if (member.fitness() == null) {
-				Object phenotype = phenotypeMapper.createPhenotype(member.genome());
+			if (mCurrentPopulation.getFitness(m) == null) {
+
+				var genome = mCurrentPopulation.getMember(m);
+				Object phenotype = phenotypeMapper.createPhenotype(genome);
 				var fitness = fitnessTester.fitness(phenotype);
-				
-				member.setFitness(fitness);
+
+				mCurrentPopulation.setFitness(m, fitness);
 
 				if (fitness.isOptimal())
 					mFinished = true;
 			}
 		}
-		
+
 		mCurrentPopulation.sort();
 	}
 

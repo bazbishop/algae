@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TestRand {
 
-	@Test	
+	@Test
 	void testNextBoolean() {
 		boolean falseReturned = false;
 		boolean trueReturned = false;
@@ -21,7 +21,7 @@ class TestRand {
 		assertTrue(trueReturned);
 	}
 
-	@Test	
+	@Test
 	void testNextDouble() {
 		final int sectors = 4;
 		final int repetitions = 1000;
@@ -45,7 +45,7 @@ class TestRand {
 		}
 	}
 
-	@Test	
+	@Test
 	void testNextInt() {
 		final int sectors = 4;
 		final int repetitions = 1000;
@@ -71,7 +71,7 @@ class TestRand {
 		}
 	}
 
-	@Test	
+	@Test
 	public void testNextNewInt() {
 		final int repetitions = 1000;
 		final int range = 100;
@@ -88,7 +88,7 @@ class TestRand {
 		}
 	}
 
-	@Test	
+	@Test
 	void testPercent() {
 
 		for (int probability = 0; probability <= 100; ++probability) {
@@ -104,7 +104,7 @@ class TestRand {
 		}
 	}
 
-	@Test	
+	@Test
 	void testTest() {
 
 		for (double probability = 0.125; probability < 1.0; probability += 0.125) {

@@ -166,10 +166,10 @@ class TestLifeCycle_SimulatenousEquations {
 		while (!finished) {
 			finished = lifeCycle.runGeneration();
 
-			var best = lifeCycle.getCurrentPopulation().get(0);
-			int fitness = ((IntegerFitness) best.fitness()).mValue;
+			var genome = lifeCycle.getCurrentPopulation().getMember(0);
+			int fitness = ((IntegerFitness) lifeCycle.getCurrentPopulation().getFitness(0)).mValue;
 
-			var values = (int[]) phenotypeMapper.createPhenotype(best.genome());
+			var values = (int[]) phenotypeMapper.createPhenotype(genome);
 
 			var a = values[0];
 			var b = values[1];
