@@ -49,9 +49,9 @@ public class SimplePopulation implements IPopulation {
 	}
 
 	@Override
-	public double discardRatio() {
+	public int discarded() {
 		// This population type never discards anything
-		return 0.0;
+		return 0;
 	}
 
 	@Override

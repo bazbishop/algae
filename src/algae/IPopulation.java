@@ -44,11 +44,11 @@ public interface IPopulation {
 	int size();
 
 	/**
-	 * The ratio of discarded members to accepted members, i.e. discards/accepts
+	 * The number of discarded members.
 	 * 
-	 * @return
+	 * @return The number of rejected attempts to insert a (duplicate) member
 	 */
-	double discardRatio();
+	int discarded();
 
 	/**
 	 * Sort members according to their fitness. The most fit will be stored at index

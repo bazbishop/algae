@@ -137,8 +137,8 @@ public class LifeCycle {
 		}
 
 		// Breed members
-		while (nextGeneration.size() < populationSize && nextGeneration.size()
-				* nextGeneration.discardRatio() < populationSize * parameters.getMaximumDiscardRatio()) {
+		while (nextGeneration.size() < populationSize
+				&& nextGeneration.discarded() < populationSize * parameters.getMaximumDiscardRatio()) {
 			final var parents = new Genome[numberOfParents];
 			for (int p = 0; p < numberOfParents; ++p)
 				parents[p] = mCurrentPopulation.getMember(selector.select(mCurrentPopulation.size()));
