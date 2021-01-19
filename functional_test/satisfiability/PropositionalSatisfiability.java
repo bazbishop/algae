@@ -1,4 +1,4 @@
-package baz.sat;
+package satisfiability;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,6 +9,7 @@ import java.util.Set;
 import algae.*;
 import algae.chromosome.*;
 import algae.fitness.*;
+import algae.population.UniquePopulationFactory;
 
 public class PropositionalSatisfiability {
 	static class Mapper implements IPhenotypeMapper {
@@ -46,7 +47,7 @@ public class PropositionalSatisfiability {
 			if (error < bestError)
 				bestError = error;
 
-			return new IntegerFitness(bestError, bestError == 0);
+			return new IntegerFitness(-bestError, bestError == 0);
 		}
 
 		int score(Disjunction disjunction, Map<String, Boolean> mapping) {
@@ -84,9 +85,9 @@ public class PropositionalSatisfiability {
 		return mapping;
 	}
 
-	static final int NUM_VARIABLES = 10;
+	static final int NUM_VARIABLES = 9;
 	static final int LITERALS_PER_CLAUSE = 3;
-	static final int NUM_CLAUSES = 6;
+	static final int NUM_CLAUSES = 50;
 
 	public static void main(String[] args) {
 		FormulaFactory factory = new FormulaFactory(NUM_VARIABLES, LITERALS_PER_CLAUSE, NUM_CLAUSES);
@@ -104,10 +105,14 @@ public class PropositionalSatisfiability {
 		var mapper = new Mapper(conjunction);
 
 		var parameters = new Parameters(factories, mapper, new Tester(conjunction));
+		parameters.setPopulationSize(100);
 		parameters.setGenomeMultiplicity(2);
+		parameters.setCrossoverStrategy(CrossoverStrategy.CrossoverGametes);
 		parameters.setNumberOfParents(2);
 		parameters.setCrossOverProbabilityPerAllele(0.02);
-		parameters.setMutationProbabilityPerAllele(0.0);
+		parameters.setMutationProbabilityPerAllele(0.01);
+		parameters.setPopulationFactory(new UniquePopulationFactory());
+		parameters.setMaximumDiscardRatio(2.0);
 
 		var lifeCycle = new LifeCycle(parameters);
 
@@ -124,6 +129,7 @@ public class PropositionalSatisfiability {
 
 		if (solved)
 			System.out.println("**** SOLVED ****");
+		System.out.println("Generations=" + lifeCycle.generation());
 
 		var pop = lifeCycle.getCurrentPopulation();
 

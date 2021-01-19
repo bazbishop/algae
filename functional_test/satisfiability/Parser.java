@@ -1,4 +1,4 @@
-package baz.sat;
+package satisfiability;
 
 import java.util.StringTokenizer;
 

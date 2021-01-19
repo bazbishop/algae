@@ -96,7 +96,7 @@ public class LifeCycle {
 		var chromosomeFactories = parameters.getChromosomeFactories();
 		var multiplicityOfGenome = parameters.getGenomeMultiplicity();
 
-		for (int m = mCurrentPopulation.size(); m < size; ++m) {
+		while (mCurrentPopulation.size() < size) {
 			var chromosomes = new IChromosome[chromosomeFactories.length][];
 
 			// Create a complete genome
@@ -137,7 +137,9 @@ public class LifeCycle {
 		}
 
 		// Breed members
-		while (nextGeneration.size() < populationSize) {
+		while (nextGeneration.size() < populationSize &&
+				nextGeneration.size() * nextGeneration.discardRatio() <
+				populationSize * parameters.getMaximumDiscardRatio()) {
 			final var parents = new Genome[numberOfParents];
 			for (int p = 0; p < numberOfParents; ++p)
 				parents[p] = mCurrentPopulation.getMember(selector.select(mCurrentPopulation.size()));
