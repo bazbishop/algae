@@ -23,35 +23,39 @@ public class LifeCycle {
 	 *                             phenotype
 	 * @param fitnessTester        A component to measure the fitness of a phenotype
 	 */
-	public LifeCycle(IParameters parameters, int multiplicityOfGenome, int numberOfParents,
-			IPopulationFactory populationFactory, CrossoverStrategy crossoverStrategy,
-			List<IChromosomeFactory> chromosomeFactories, IPhenotypeMapper phenotypeMapper,
-			IFitnessTester fitnessTester) {
-		this.parameters = parameters;
-
-		this.multiplicityOfGenome = multiplicityOfGenome;
-		this.numberOfParents = numberOfParents;
-		this.crossoverStrategy = crossoverStrategy;
-
-		this.chromosomeFactories = chromosomeFactories;
-		this.phenotypeMapper = phenotypeMapper;
-		this.fitnessTester = fitnessTester;
-
+	/*
+	 * public LifeCycle(IParameters parameters, int multiplicityOfGenome, int
+	 * numberOfParents, IPopulationFactory populationFactory, CrossoverStrategy
+	 * crossoverStrategy, List<IChromosomeFactory> chromosomeFactories,
+	 * IPhenotypeMapper phenotypeMapper, IFitnessTester fitnessTester) {
+	 * this.parameters = parameters;
+	 * 
+	 * this.multiplicityOfGenome = multiplicityOfGenome; this.numberOfParents =
+	 * numberOfParents; this.crossoverStrategy = crossoverStrategy;
+	 * 
+	 * this.chromosomeFactories = chromosomeFactories; this.phenotypeMapper =
+	 * phenotypeMapper; this.fitnessTester = fitnessTester;
+	 * 
+	 * validateCrossover();
+	 * 
+	 * this.populationFactory = populationFactory; }
+	 */
+	public LifeCycle(Parameters controlParameters) {
+		this.controlParameters = controlParameters;
 		validateCrossover();
-
-		this.populationFactory = populationFactory;
-		mCurrentPopulation = populationFactory.createPopulation(parameters.populationSize());
+		mCurrentPopulation = controlParameters.getPopulationFactory()
+				.createPopulation(controlParameters.getPopulationSize());
 	}
 
 	private void validateCrossover() {
-		if (numberOfParents < 1)
+		if (controlParameters.getNumberOfParents() < 1)
 			throw new IllegalArgumentException("Number of parents must be >= 1");
 
-		if (multiplicityOfGenome < 1)
+		if (controlParameters.getGenomeMultiplicity() < 1)
 			throw new IllegalArgumentException("Multiplicity of genome must be >= 1");
 
-		if (crossoverStrategy == CrossoverStrategy.CrossoverGametes) {
-			if (multiplicityOfGenome % numberOfParents != 0)
+		if (controlParameters.getCrossoverStrategy() == CrossoverStrategy.CrossoverGametes) {
+			if (controlParameters.getGenomeMultiplicity() % controlParameters.getNumberOfParents() != 0)
 				throw new IllegalArgumentException(
 						"For gamete crossover strategy, the genome multiplicity must be a multiple of the number of parents");
 		}
@@ -117,17 +121,19 @@ public class LifeCycle {
 	 * Create missing members randomly.
 	 */
 	private void createRandomPopulation() {
-		int size = parameters.populationSize();
+		int size = controlParameters.getPopulationSize();
+		var chromosomeFactories = controlParameters.getChromosomeFactories();
+		var multiplicityOfGenome = controlParameters.getGenomeMultiplicity();
 
 		for (int m = mCurrentPopulation.size(); m < size; ++m) {
-			var chromosomes = new IChromosome[chromosomeFactories.size()][];
+			var chromosomes = new IChromosome[chromosomeFactories.length][];
 
 			// Create a complete genome
-			for (int f = 0; f < chromosomeFactories.size(); ++f) {
+			for (int f = 0; f < chromosomeFactories.length; ++f) {
 				var homologs = new IChromosome[multiplicityOfGenome];
 
 				for (int c = 0; c < multiplicityOfGenome; ++c) {
-					homologs[c] = chromosomeFactories.get(f).createRandomChromosome();
+					homologs[c] = chromosomeFactories[f].createRandomChromosome();
 				}
 
 				chromosomes[f] = homologs;
@@ -142,18 +148,24 @@ public class LifeCycle {
 	 */
 	private void breedNextGeneration() {
 
-		final var populationSize = parameters.populationSize();
-		final var elitismCount = parameters.elitismCount();
-		final var selector = parameters.selector();
+		validateCrossover();
 
-		var nextGeneration = populationFactory.createPopulation(populationSize);
+		final var populationSize = controlParameters.getPopulationSize();
+		final var elitismCount = controlParameters.getElitismCount();
+		final var selector = controlParameters.getSelector();
+		final var numberOfParents = controlParameters.getNumberOfParents();
+		final var multiplicityOfGenome = controlParameters.getGenomeMultiplicity();
+		final var chromosomeFactories = controlParameters.getChromosomeFactories();
+		final var crossoverStrategy = controlParameters.getCrossoverStrategy();
+
+		var nextGeneration = controlParameters.getPopulationFactory().createPopulation(populationSize);
 
 		int numberOfSurvivors = Math.min(elitismCount, mCurrentPopulation.size());
 		for (int i = 0; i < numberOfSurvivors; ++i) {
 			nextGeneration.addMember(mCurrentPopulation.getMember(i));
 		}
 
-		// Bred members
+		// Breed members
 		while (nextGeneration.size() < populationSize) {
 			final var parents = new Genome[numberOfParents];
 			for (int p = 0; p < numberOfParents; ++p)
@@ -165,7 +177,7 @@ public class LifeCycle {
 			}
 
 			var preChildChromosomes = preChild.chromosomes();
-			assert preChildChromosomes.length == chromosomeFactories.size();
+			assert preChildChromosomes.length == chromosomeFactories.length;
 
 			var childChromosomes = new IChromosome[preChildChromosomes.length][];
 
@@ -180,7 +192,7 @@ public class LifeCycle {
 					for (int p = 0; p < numberOfParents; ++p) {
 						for (int i = 0; i < crossoversPerParent; ++i) {
 							childHomologGroup[index++] = crossover(preChildChromosomes[homolog],
-									p * multiplicityOfGenome, multiplicityOfGenome, chromosomeFactories.get(homolog),
+									p * multiplicityOfGenome, multiplicityOfGenome, chromosomeFactories[homolog],
 									homolog);
 						}
 					}
@@ -190,7 +202,7 @@ public class LifeCycle {
 					index = 0;
 					for (int p = 0; p < multiplicityOfGenome; ++p) {
 						childHomologGroup[index++] = crossover(preChildChromosomes[homolog], 0,
-								preChildChromosomes[homolog].length, chromosomeFactories.get(homolog), homolog);
+								preChildChromosomes[homolog].length, chromosomeFactories[homolog], homolog);
 					}
 					break;
 
@@ -229,14 +241,14 @@ public class LifeCycle {
 		for (int allele = 0; allele < len; ++allele) {
 			input[c + startIndex].copyAlleleTo(allele, result);
 
-			if (Rand.test(parameters.crossOverProbabilityPerAllele(homologIndex))) {
+			if (Rand.test(controlParameters.getCrossOverProbabilityPerAllele())) {
 				if (count == 2)
 					c = c == 0 ? 1 : 0;
 				else
 					c = Rand.nextNewInt(count, c);
 			}
 
-			if (Rand.test(parameters.mutationProbabilityPerAllele(homologIndex)))
+			if (Rand.test(controlParameters.getMutationProbabilityPerAllele()))
 				factory.mutateAllele(result, allele);
 
 		}
@@ -248,6 +260,9 @@ public class LifeCycle {
 	 * Measure the fitness of all members that don't have a fitness
 	 */
 	private void measureFitness() {
+		var phenotypeMapper = controlParameters.getPhenotypeMapper();
+		var fitnessTester = controlParameters.getFitnessTester();
+
 		for (int m = 0; m < mCurrentPopulation.size(); ++m) {
 
 			if (mCurrentPopulation.getFitness(m) == null) {
@@ -271,14 +286,15 @@ public class LifeCycle {
 	private boolean mFinished = false;
 	private int mGeneration = 0;
 
-	private final IParameters parameters;
-
-	private final int multiplicityOfGenome;
-	private final int numberOfParents;
-	private final CrossoverStrategy crossoverStrategy;
-
-	private final IPopulationFactory populationFactory;
-	private final List<IChromosomeFactory> chromosomeFactories;
-	private final IPhenotypeMapper phenotypeMapper;
-	private final IFitnessTester fitnessTester;
+	private final Parameters controlParameters;
+	/*
+	 * private final IParameters parameters;
+	 * 
+	 * private final int multiplicityOfGenome; private final int numberOfParents;
+	 * private final CrossoverStrategy crossoverStrategy;
+	 * 
+	 * private final IPopulationFactory populationFactory; private final
+	 * List<IChromosomeFactory> chromosomeFactories; private final IPhenotypeMapper
+	 * phenotypeMapper; private final IFitnessTester fitnessTester;
+	 */
 }

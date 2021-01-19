@@ -16,45 +16,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class TestLifeCycle_SimulatenousEquations {
 
 	private List<IChromosomeFactory> chromosomeFactories;
-	private IParameters parameters;
 	private IFitnessTester fitnessTester;
+	private Parameters controlParameters;
 
 	@BeforeEach
 	void setUp() throws Exception {
-		var chromosomeFactory = new IntegerArrayChromosomeFactory(5, -10, 10);
-		chromosomeFactories = new ArrayList<IChromosomeFactory>();
-		chromosomeFactories.add(chromosomeFactory);
-
-		parameters = new IParameters() {
-
-			@Override
-			public int populationSize() {
-				return 10000;
-			}
-
-			@Override
-			public int elitismCount() {
-				return 0;
-			}
-
-			@Override
-			public double crossOverProbabilityPerAllele(int chromosomeSetIndex) {
-				return .1;
-			}
-
-			@Override
-			public double mutationProbabilityPerAllele(int chromosomeSetIndex) {
-				return .05;
-			}
-
-			@Override
-			public ISelector selector() {
-				return new RandomSelector();
-			}
-		};
+		var chromosomeFactories = new IChromosomeFactory[] { new IntegerArrayChromosomeFactory(5, -10, 10) };
 
 		fitnessTester = new IFitnessTester() {
-
 			@Override
 			public IFitness fitness(Object phenotype) {
 
@@ -81,9 +50,20 @@ class TestLifeCycle_SimulatenousEquations {
 
 				return new IntegerFitness(-sq, sq == 0);
 			}
-
 		};
 
+		var dummyMapper = new IPhenotypeMapper() {
+			@Override
+			public Object createPhenotype(Genome genome) {
+				return null;
+			}
+		};
+
+		controlParameters = new Parameters(chromosomeFactories, dummyMapper, fitnessTester);
+
+		controlParameters.setPopulationSize(10000);
+		controlParameters.setCrossOverProbabilityPerAllele(0.1);
+		controlParameters.setMutationProbabilityPerAllele(0.05);
 	}
 
 	@Test
@@ -104,11 +84,14 @@ class TestLifeCycle_SimulatenousEquations {
 				return result;
 
 			}
-
 		};
 
-		var lc = new LifeCycle(parameters, 2, 2, new SimplePopulationFactory(), CrossoverStrategy.CrossoverGametes,
-				chromosomeFactories, phenoMapper, fitnessTester);
+		controlParameters.setPhenotypeMapper(phenoMapper);
+		controlParameters.setGenomeMultiplicity(2);
+		controlParameters.setNumberOfParents(2);
+		controlParameters.setCrossoverStrategy(CrossoverStrategy.CrossoverGametes);
+
+		var lc = new LifeCycle(controlParameters);
 
 		runExperiment(lc, phenoMapper);
 	}
@@ -134,8 +117,12 @@ class TestLifeCycle_SimulatenousEquations {
 
 		};
 
-		var lc = new LifeCycle(parameters, 2, 2, new SimplePopulationFactory(), CrossoverStrategy.CrossoverAll,
-				chromosomeFactories, phenoMapper, fitnessTester);
+		controlParameters.setPhenotypeMapper(phenoMapper);
+		controlParameters.setGenomeMultiplicity(2);
+		controlParameters.setNumberOfParents(2);
+		controlParameters.setCrossoverStrategy(CrossoverStrategy.CrossoverAll);
+
+		var lc = new LifeCycle(controlParameters);
 
 		runExperiment(lc, phenoMapper);
 	}
@@ -155,8 +142,12 @@ class TestLifeCycle_SimulatenousEquations {
 
 		};
 
-		var lc = new LifeCycle(parameters, 1, 2, new SimplePopulationFactory(), CrossoverStrategy.CrossoverAll,
-				chromosomeFactories, phenoMapper, fitnessTester);
+		controlParameters.setPhenotypeMapper(phenoMapper);
+		controlParameters.setGenomeMultiplicity(1);
+		controlParameters.setNumberOfParents(2);
+		controlParameters.setCrossoverStrategy(CrossoverStrategy.CrossoverAll);
+
+		var lc = new LifeCycle(controlParameters);
 
 		runExperiment(lc, phenoMapper);
 	}

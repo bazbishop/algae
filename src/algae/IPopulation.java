@@ -44,6 +44,12 @@ public interface IPopulation {
 	int size();
 
 	/**
+	 * 
+	 * @return
+	 */
+	double discardRatio();
+
+	/**
 	 * Sort members according to their fitness. The most fit will be stored at index
 	 * zero The least fit will be stored at index size()-1.
 	 */
