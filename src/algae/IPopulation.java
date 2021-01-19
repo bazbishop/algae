@@ -45,6 +45,7 @@ public interface IPopulation {
 
 	/**
 	 * The ratio of discarded members to accepted members, i.e. discards/accepts
+	 * 
 	 * @return
 	 */
 	double discardRatio();
