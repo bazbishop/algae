@@ -284,7 +284,7 @@ public class Parameters {
 	private int populationSize = 100;
 	private int genomeMultiplicity = 2;
 	private int numberOfParents = 2;
-	private CrossoverStrategy crossoverStrategy = CrossoverStrategy.CrossoverGametes;
+	private CrossoverStrategy crossoverStrategy = CrossoverStrategy.CrossoverAll;
 	private int elitismCount = 0;
 	private double maximumDiscardRatio = 1.0;
 	private IPopulationFactory populationFactory = new SimplePopulationFactory();

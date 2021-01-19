@@ -3,6 +3,7 @@ package algae;
 import algae.chromosome.IntegerArrayChromosome;
 import algae.chromosome.IntegerArrayChromosomeFactory;
 import algae.fitness.IntegerFitness;
+import algae.population.UniquePopulationFactory;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -76,7 +77,6 @@ class TestLifeCycle_SimulatenousEquations {
 					result[a] = chr1.alleles()[a] + chr2.alleles()[a];
 				}
 				return result;
-
 			}
 		};
 
@@ -106,9 +106,7 @@ class TestLifeCycle_SimulatenousEquations {
 					result[a] = chr1.alleles()[a] + chr2.alleles()[a];
 				}
 				return result;
-
 			}
-
 		};
 
 		controlParameters.setPhenotypeMapper(phenoMapper);
@@ -133,7 +131,6 @@ class TestLifeCycle_SimulatenousEquations {
 
 				return chr1.alleles();
 			}
-
 		};
 
 		controlParameters.setPhenotypeMapper(phenoMapper);
@@ -143,6 +140,32 @@ class TestLifeCycle_SimulatenousEquations {
 
 		var lc = new LifeCycle(controlParameters);
 
+		runExperiment(lc, phenoMapper);
+	}
+
+	@Test
+	void testMultiplicity1_Parents2_Gametes_Unique() {
+		var phenoMapper = new IPhenotypeMapper() {
+
+			@Override
+			public Object createPhenotype(Genome genome) {
+
+				var chr1 = (IntegerArrayChromosome) genome.chromosomes()[0][0];
+				return chr1.alleles();
+			}
+		};
+
+		controlParameters.setPhenotypeMapper(phenoMapper);
+		controlParameters.setGenomeMultiplicity(1);
+		controlParameters.setNumberOfParents(2);
+		controlParameters.setCrossoverStrategy(CrossoverStrategy.CrossoverAll);
+		
+		controlParameters.setPopulationSize(1000);
+		controlParameters.setPopulationFactory(new UniquePopulationFactory());
+		controlParameters.setMaximumDiscardRatio(2.0);
+
+		var lc = new LifeCycle(controlParameters);
+		
 		runExperiment(lc, phenoMapper);
 	}
 

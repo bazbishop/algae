@@ -34,13 +34,9 @@ Parameters - dynamic control over a running experiment
 => CrossOverProbabilityPerAllele (for each chromosome set?)
 => MutationProbabilityPerAllele (for each chromosome set?)
 => Selector
-
-
-LifeCycle
-=> complete set of components for an experiment
 => MultiplicityOfGenome is constant
 => NumberOfParents is constant
-=> Constraint: MultiplicityOfGenome % NumberofParents == 0
+=> Constraint: MultiplicityOfGenome % NumberofParents == 0 (if crossover using gametes)
 => Array of chromosome factories
 => PhenotypeMapper (genome => phenotype)
 => FitnessTester(phenotype => fitness) 

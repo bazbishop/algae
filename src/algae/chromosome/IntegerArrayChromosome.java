@@ -41,7 +41,7 @@ public class IntegerArrayChromosome implements IChromosome {
 
 	@Override
 	public int hashCode() {
-		return mAlleles.hashCode();
+		return Arrays.hashCode(mAlleles);
 	}
 
 	public void copyAlleleTo(int index, IChromosome target) {

@@ -19,6 +19,27 @@ class Member implements Comparable<Member> {
 		mFitness = null;
 	}
 
+	@Override
+	public int hashCode() {
+		return 37 + mGenome.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+
+		if (obj == null)
+			return false;
+		
+		if (!(obj instanceof Member))
+			return false;
+		
+		Member other = (Member) obj;
+		
+		return mGenome.equals(other.mGenome);
+	}
+
 	public int compareTo(Member rhs) {
 		return mFitness.compareTo(rhs.mFitness);
 	}

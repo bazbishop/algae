@@ -1,7 +1,7 @@
 /**
  * 
  */
-package baz.sat;
+package satisfiability;
 
 import java.util.ArrayList;
 import java.util.HashSet;

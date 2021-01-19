@@ -1,7 +1,7 @@
 /**
  * 
  */
-package baz.sat;
+package satisfiability;
 
 public class Term {
 	public Term(String variableName, boolean positive) {
