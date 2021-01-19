@@ -1,13 +1,8 @@
 package algae;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import algae.chromosome.IntegerArrayChromosome;
 import algae.chromosome.IntegerArrayChromosomeFactory;
 import algae.fitness.IntegerFitness;
-import algae.population.SimplePopulationFactory;
-import algae.selector.RandomSelector;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +10,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TestLifeCycle_SimulatenousEquations {
 
-	private List<IChromosomeFactory> chromosomeFactories;
 	private IFitnessTester fitnessTester;
 	private Parameters controlParameters;
 
