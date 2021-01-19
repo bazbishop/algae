@@ -29,7 +29,7 @@ public class UniquePopulation implements IPopulation {
 	@Override
 	public void addMember(Genome genome) {
 		var member = new Member(genome);
-		if(memberSet.add(genome))
+		if (memberSet.add(genome))
 			memberList.add(member);
 		else
 			++countDiscarded;
@@ -57,7 +57,7 @@ public class UniquePopulation implements IPopulation {
 
 	@Override
 	public double discardRatio() {
-		if(memberList.size() == 0)
+		if (memberList.size() == 0)
 			return 0.0;
 		else
 			return (1.0 * countDiscarded) / memberList.size();

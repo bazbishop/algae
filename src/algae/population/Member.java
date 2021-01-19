@@ -31,12 +31,12 @@ class Member implements Comparable<Member> {
 
 		if (obj == null)
 			return false;
-		
+
 		if (!(obj instanceof Member))
 			return false;
-		
+
 		Member other = (Member) obj;
-		
+
 		return mGenome.equals(other.mGenome);
 	}
 

@@ -159,13 +159,13 @@ class TestLifeCycle_SimulatenousEquations {
 		controlParameters.setGenomeMultiplicity(1);
 		controlParameters.setNumberOfParents(2);
 		controlParameters.setCrossoverStrategy(CrossoverStrategy.CrossoverAll);
-		
+
 		controlParameters.setPopulationSize(1000);
 		controlParameters.setPopulationFactory(new UniquePopulationFactory());
 		controlParameters.setMaximumDiscardRatio(2.0);
 
 		var lc = new LifeCycle(controlParameters);
-		
+
 		runExperiment(lc, phenoMapper);
 	}
 
