@@ -1,7 +1,5 @@
 package algae;
 
-import java.util.List;
-
 import algae.util.Rand;
 
 /**
@@ -10,52 +8,25 @@ import algae.util.Rand;
 public class LifeCycle {
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 * 
-	 * @param parameters           The dynamic evolution parameters
-	 * @param multiplicityOfGenome The number of homologous chromosomes in each
-	 *                             chromosome group
-	 * @param numberOfParents      The number of parents required to breed a child
-	 * @param crossoverStrategy    The crossover strategy to use
-	 * @param chromosomeFactories  Chromosome factories with one factory per
-	 *                             homologous chromosome group
-	 * @param phenotypeMapper      A factory that can transform a genome into a
-	 *                             phenotype
-	 * @param fitnessTester        A component to measure the fitness of a phenotype
+	 * @param parameters Parameters controlling the evolution process
 	 */
-	/*
-	 * public LifeCycle(IParameters parameters, int multiplicityOfGenome, int
-	 * numberOfParents, IPopulationFactory populationFactory, CrossoverStrategy
-	 * crossoverStrategy, List<IChromosomeFactory> chromosomeFactories,
-	 * IPhenotypeMapper phenotypeMapper, IFitnessTester fitnessTester) {
-	 * this.parameters = parameters;
-	 * 
-	 * this.multiplicityOfGenome = multiplicityOfGenome; this.numberOfParents =
-	 * numberOfParents; this.crossoverStrategy = crossoverStrategy;
-	 * 
-	 * this.chromosomeFactories = chromosomeFactories; this.phenotypeMapper =
-	 * phenotypeMapper; this.fitnessTester = fitnessTester;
-	 * 
-	 * validateCrossover();
-	 * 
-	 * this.populationFactory = populationFactory; }
-	 */
-	public LifeCycle(Parameters controlParameters) {
-		this.controlParameters = controlParameters;
+	public LifeCycle(Parameters parameters) {
+		this.parameters = parameters;
 		validateCrossover();
-		mCurrentPopulation = controlParameters.getPopulationFactory()
-				.createPopulation(controlParameters.getPopulationSize());
+		mCurrentPopulation = parameters.getPopulationFactory().createPopulation(parameters.getPopulationSize());
 	}
 
 	private void validateCrossover() {
-		if (controlParameters.getNumberOfParents() < 1)
+		if (parameters.getNumberOfParents() < 1)
 			throw new IllegalArgumentException("Number of parents must be >= 1");
 
-		if (controlParameters.getGenomeMultiplicity() < 1)
+		if (parameters.getGenomeMultiplicity() < 1)
 			throw new IllegalArgumentException("Multiplicity of genome must be >= 1");
 
-		if (controlParameters.getCrossoverStrategy() == CrossoverStrategy.CrossoverGametes) {
-			if (controlParameters.getGenomeMultiplicity() % controlParameters.getNumberOfParents() != 0)
+		if (parameters.getCrossoverStrategy() == CrossoverStrategy.CrossoverGametes) {
+			if (parameters.getGenomeMultiplicity() % parameters.getNumberOfParents() != 0)
 				throw new IllegalArgumentException(
 						"For gamete crossover strategy, the genome multiplicity must be a multiple of the number of parents");
 		}
@@ -121,9 +92,9 @@ public class LifeCycle {
 	 * Create missing members randomly.
 	 */
 	private void createRandomPopulation() {
-		int size = controlParameters.getPopulationSize();
-		var chromosomeFactories = controlParameters.getChromosomeFactories();
-		var multiplicityOfGenome = controlParameters.getGenomeMultiplicity();
+		int size = parameters.getPopulationSize();
+		var chromosomeFactories = parameters.getChromosomeFactories();
+		var multiplicityOfGenome = parameters.getGenomeMultiplicity();
 
 		for (int m = mCurrentPopulation.size(); m < size; ++m) {
 			var chromosomes = new IChromosome[chromosomeFactories.length][];
@@ -150,15 +121,15 @@ public class LifeCycle {
 
 		validateCrossover();
 
-		final var populationSize = controlParameters.getPopulationSize();
-		final var elitismCount = controlParameters.getElitismCount();
-		final var selector = controlParameters.getSelector();
-		final var numberOfParents = controlParameters.getNumberOfParents();
-		final var multiplicityOfGenome = controlParameters.getGenomeMultiplicity();
-		final var chromosomeFactories = controlParameters.getChromosomeFactories();
-		final var crossoverStrategy = controlParameters.getCrossoverStrategy();
+		final var populationSize = parameters.getPopulationSize();
+		final var elitismCount = parameters.getElitismCount();
+		final var selector = parameters.getSelector();
+		final var numberOfParents = parameters.getNumberOfParents();
+		final var multiplicityOfGenome = parameters.getGenomeMultiplicity();
+		final var chromosomeFactories = parameters.getChromosomeFactories();
+		final var crossoverStrategy = parameters.getCrossoverStrategy();
 
-		var nextGeneration = controlParameters.getPopulationFactory().createPopulation(populationSize);
+		var nextGeneration = parameters.getPopulationFactory().createPopulation(populationSize);
 
 		int numberOfSurvivors = Math.min(elitismCount, mCurrentPopulation.size());
 		for (int i = 0; i < numberOfSurvivors; ++i) {
@@ -241,14 +212,14 @@ public class LifeCycle {
 		for (int allele = 0; allele < len; ++allele) {
 			input[c + startIndex].copyAlleleTo(allele, result);
 
-			if (Rand.test(controlParameters.getCrossOverProbabilityPerAllele())) {
+			if (Rand.test(parameters.getCrossOverProbabilityPerAllele())) {
 				if (count == 2)
 					c = c == 0 ? 1 : 0;
 				else
 					c = Rand.nextNewInt(count, c);
 			}
 
-			if (Rand.test(controlParameters.getMutationProbabilityPerAllele()))
+			if (Rand.test(parameters.getMutationProbabilityPerAllele()))
 				factory.mutateAllele(result, allele);
 
 		}
@@ -260,8 +231,8 @@ public class LifeCycle {
 	 * Measure the fitness of all members that don't have a fitness
 	 */
 	private void measureFitness() {
-		var phenotypeMapper = controlParameters.getPhenotypeMapper();
-		var fitnessTester = controlParameters.getFitnessTester();
+		var phenotypeMapper = parameters.getPhenotypeMapper();
+		var fitnessTester = parameters.getFitnessTester();
 
 		for (int m = 0; m < mCurrentPopulation.size(); ++m) {
 
@@ -286,15 +257,5 @@ public class LifeCycle {
 	private boolean mFinished = false;
 	private int mGeneration = 0;
 
-	private final Parameters controlParameters;
-	/*
-	 * private final IParameters parameters;
-	 * 
-	 * private final int multiplicityOfGenome; private final int numberOfParents;
-	 * private final CrossoverStrategy crossoverStrategy;
-	 * 
-	 * private final IPopulationFactory populationFactory; private final
-	 * List<IChromosomeFactory> chromosomeFactories; private final IPhenotypeMapper
-	 * phenotypeMapper; private final IFitnessTester fitnessTester;
-	 */
+	private final Parameters parameters;
 }
