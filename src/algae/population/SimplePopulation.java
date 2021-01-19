@@ -49,6 +49,12 @@ public class SimplePopulation implements IPopulation {
 	}
 
 	@Override
+	public double discardRatio() {
+		// This population type never discards anything
+		return 0.0;
+	}
+
+	@Override
 	public void sort() {
 		Collections.sort(members, Collections.reverseOrder());
 	}

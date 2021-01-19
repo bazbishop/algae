@@ -8,3 +8,5 @@ elite
 genomes
 homolog
 phenotype
+genotype
+mapper

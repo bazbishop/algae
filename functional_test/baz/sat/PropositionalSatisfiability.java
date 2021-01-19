@@ -1,6 +1,5 @@
 package baz.sat;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -10,8 +9,6 @@ import java.util.Set;
 import algae.*;
 import algae.chromosome.*;
 import algae.fitness.*;
-import algae.population.*;
-import algae.selector.*;
 
 public class PropositionalSatisfiability {
 	static class Mapper implements IPhenotypeMapper {
@@ -70,34 +67,6 @@ public class PropositionalSatisfiability {
 		}
 	}
 
-	static class Parameters implements IParameters {
-
-		@Override
-		public int populationSize() {
-			return 10000;
-		}
-
-		@Override
-		public int elitismCount() {
-			return 0;
-		}
-
-		@Override
-		public double crossOverProbabilityPerAllele(int chromosomeSetIndex) {
-			return 0.02;
-		}
-
-		@Override
-		public double mutationProbabilityPerAllele(int chromosomeSetIndex) {
-			return 0.0;
-		}
-
-		@Override
-		public ISelector selector() {
-			return new RandomSelector();
-		}
-	};
-
 	static Map<String, Boolean> computeMapping(Set<String> variables, Genome genome, int chromosomeIndex) {
 		IChromosome[] chromosomes = genome.chromosomes()[0];
 
@@ -115,8 +84,6 @@ public class PropositionalSatisfiability {
 		return mapping;
 	}
 
-	private static BitSetChromosomeFactory chromosomeFactory;
-
 	static final int NUM_VARIABLES = 10;
 	static final int LITERALS_PER_CLAUSE = 3;
 	static final int NUM_CLAUSES = 6;
@@ -132,15 +99,17 @@ public class PropositionalSatisfiability {
 
 		int numVariables = conjunction.getVariables().size();
 
-		chromosomeFactory = new BitSetChromosomeFactory(numVariables);
-
-		List<IChromosomeFactory> factories = new ArrayList<IChromosomeFactory>();
-		factories.add(chromosomeFactory);
+		var factories = new IChromosomeFactory[] { new BitSetChromosomeFactory(numVariables) };
 
 		var mapper = new Mapper(conjunction);
 
-		var lifeCycle = new LifeCycle(new Parameters(), 2, 2, new SimplePopulationFactory(),
-				CrossoverStrategy.CrossoverGametes, factories, mapper, new Tester(conjunction));
+		var parameters = new Parameters(factories, mapper, new Tester(conjunction));
+		parameters.setGenomeMultiplicity(2);
+		parameters.setNumberOfParents(2);
+		parameters.setCrossOverProbabilityPerAllele(0.02);
+		parameters.setMutationProbabilityPerAllele(0.0);
+
+		var lifeCycle = new LifeCycle(parameters);
 
 		boolean finished = lifeCycle.initGeneration();
 
