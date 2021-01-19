@@ -163,6 +163,7 @@ class TestLifeCycle_SimulatenousEquations {
 		controlParameters.setPopulationSize(1000);
 		controlParameters.setPopulationFactory(new UniquePopulationFactory());
 		controlParameters.setMaximumDiscardRatio(2.0);
+		controlParameters.setMutationProbabilityPerAllele(0.01);
 
 		var lc = new LifeCycle(controlParameters);
 
@@ -175,6 +176,11 @@ class TestLifeCycle_SimulatenousEquations {
 		while (!finished) {
 			finished = lifeCycle.runGeneration();
 
+			/*
+			 * var size = lifeCycle.getCurrentPopulation().size(); var discarded =
+			 * lifeCycle.getCurrentPopulation().discarded(); var generation =
+			 * lifeCycle.generation();
+			 */
 			var genome = lifeCycle.getCurrentPopulation().getMember(0);
 			int fitness = (int) lifeCycle.getCurrentPopulation().getFitness(0).value();
 
@@ -186,7 +192,8 @@ class TestLifeCycle_SimulatenousEquations {
 			var d = values[3];
 			var e = values[4];
 
-			System.out.println("a=" + a + ", b=" + b + ", c=" + c + ", d=" + d + ", e=" + e + " | fitness=" + fitness);
+			System.out.println("generation: " + lifeCycle.generation() + ", a=" + a + ", b=" + b + ", c=" + c + ", d="
+					+ d + ", e=" + e + " | fitness=" + fitness);
 
 			if (lifeCycle.generation() > 1000)
 				fail("Experiment is not converging.");

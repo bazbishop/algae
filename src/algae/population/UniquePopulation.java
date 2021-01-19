@@ -56,11 +56,8 @@ public class UniquePopulation implements IPopulation {
 	}
 
 	@Override
-	public double discardRatio() {
-		if (memberList.size() == 0)
-			return 0.0;
-		else
-			return (1.0 * countDiscarded) / memberList.size();
+	public int discarded() {
+		return countDiscarded;
 	}
 
 	@Override
