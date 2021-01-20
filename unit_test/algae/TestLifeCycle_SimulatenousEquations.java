@@ -3,6 +3,7 @@ package algae;
 import algae.chromosome.IntegerArrayChromosome;
 import algae.chromosome.IntegerArrayChromosomeFactory;
 import algae.fitness.IntegerFitness;
+import algae.operators.MultipleMutation;
 import algae.population.UniquePopulationFactory;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -58,7 +59,7 @@ class TestLifeCycle_SimulatenousEquations {
 
 		controlParameters.setPopulationSize(10000);
 		controlParameters.setCrossOverProbabilityPerAllele(0.1);
-		controlParameters.setMutationProbabilityPerAllele(0.05);
+		controlParameters.setMutationOperator(new MultipleMutation(0.05));
 	}
 
 	@Test
@@ -163,7 +164,7 @@ class TestLifeCycle_SimulatenousEquations {
 		controlParameters.setPopulationSize(1000);
 		controlParameters.setPopulationFactory(new UniquePopulationFactory());
 		controlParameters.setMaximumDiscardRatio(2.0);
-		controlParameters.setMutationProbabilityPerAllele(0.01);
+		controlParameters.setMutationOperator(new MultipleMutation(0.01));
 
 		var lc = new LifeCycle(controlParameters);
 

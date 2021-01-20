@@ -1,5 +1,6 @@
 package algae;
 
+import algae.operators.MultipleMutation;
 import algae.population.SimplePopulationFactory;
 import algae.selector.RandomSelector;
 
@@ -115,24 +116,6 @@ public class Parameters {
 	 */
 	public void setCrossOverProbabilityPerAllele(double crossOverProbabilityPerAllele) {
 		this.crossOverProbabilityPerAllele = crossOverProbabilityPerAllele;
-	}
-
-	/**
-	 * The mutation probability per allele for the given chromosome set.
-	 * 
-	 * @return The probability in the range [0.0, 1.0]
-	 */
-	public double getMutationProbabilityPerAllele() {
-		return mutationProbabilityPerAllele;
-	}
-
-	/**
-	 * The mutation probability per allele for the given chromosome set.
-	 * 
-	 * @param mutationProbabilityPerAllele The probability in the range [0.0, 1.0]
-	 */
-	public void setMutationProbabilityPerAllele(double mutationProbabilityPerAllele) {
-		this.mutationProbabilityPerAllele = mutationProbabilityPerAllele;
 	}
 
 	/**
@@ -279,6 +262,24 @@ public class Parameters {
 		this.chromosomeFactories = new IChromosomeFactory[] { chromosomeFactory };
 	}
 
+	/**
+	 * The mutation operator used during breeding.
+	 * 
+	 * @return The mutation operator
+	 */
+	public IMutationOperator getMutationOperator() {
+		return mutationOperator;
+	}
+
+	/**
+	 * The mutation operator used during breeding.
+	 * 
+	 * @param mutationOperator The mutation operator
+	 */
+	public void setMutationOperator(IMutationOperator mutationOperator) {
+		this.mutationOperator = mutationOperator;
+	}
+
 	// Can be defaulted
 
 	private int populationSize = 100;
@@ -287,10 +288,11 @@ public class Parameters {
 	private CrossoverStrategy crossoverStrategy = CrossoverStrategy.CrossoverAll;
 	private int elitismCount = 0;
 	private double maximumDiscardRatio = 1.0;
+	private double crossOverProbabilityPerAllele = 0.02;
+
 	private IPopulationFactory populationFactory = new SimplePopulationFactory();
 	private ISelector selector = new RandomSelector();
-	private double crossOverProbabilityPerAllele = 0.02;
-	private double mutationProbabilityPerAllele = 0.01;
+	private IMutationOperator mutationOperator = new MultipleMutation(0.01);
 
 	// Required
 

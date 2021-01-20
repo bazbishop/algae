@@ -123,11 +123,13 @@ public class LifeCycle {
 
 		final var populationSize = parameters.getPopulationSize();
 		final var elitismCount = parameters.getElitismCount();
-		final var selector = parameters.getSelector();
 		final var numberOfParents = parameters.getNumberOfParents();
 		final var multiplicityOfGenome = parameters.getGenomeMultiplicity();
-		final var chromosomeFactories = parameters.getChromosomeFactories();
 		final var crossoverStrategy = parameters.getCrossoverStrategy();
+
+		final var selector = parameters.getSelector();
+		final var mutator = parameters.getMutationOperator();
+		final var chromosomeFactories = parameters.getChromosomeFactories();
 
 		var nextGeneration = parameters.getPopulationFactory().createPopulation(populationSize);
 
@@ -139,15 +141,19 @@ public class LifeCycle {
 		// Breed members
 		while (nextGeneration.size() < populationSize
 				&& nextGeneration.discarded() < populationSize * parameters.getMaximumDiscardRatio()) {
+
+			// === SELECTION ===
 			final var parents = new Genome[numberOfParents];
 			for (int p = 0; p < numberOfParents; ++p)
 				parents[p] = mCurrentPopulation.getMember(selector.select(mCurrentPopulation.size()));
 
+			// === COMBINATION ===
 			Genome preChild = parents[0];
 			for (int p = 1; p < numberOfParents; ++p) {
 				preChild = preChild.combine(parents[p]);
 			}
 
+			// === CROSSOVER ===
 			var preChildChromosomes = preChild.chromosomes();
 			assert preChildChromosomes.length == chromosomeFactories.length;
 
@@ -163,9 +169,12 @@ public class LifeCycle {
 					int index = 0;
 					for (int p = 0; p < numberOfParents; ++p) {
 						for (int i = 0; i < crossoversPerParent; ++i) {
-							childHomologGroup[index++] = crossover(preChildChromosomes[homolog],
-									p * multiplicityOfGenome, multiplicityOfGenome, chromosomeFactories[homolog],
-									homolog);
+							var chromosome = crossover(preChildChromosomes[homolog], p * multiplicityOfGenome,
+									multiplicityOfGenome, chromosomeFactories[homolog], homolog);
+
+							mutator.apply(chromosome, chromosomeFactories[homolog]);
+
+							childHomologGroup[index++] = chromosome;
 						}
 					}
 					break;
@@ -173,8 +182,12 @@ public class LifeCycle {
 				case CrossoverAll:
 					index = 0;
 					for (int p = 0; p < multiplicityOfGenome; ++p) {
-						childHomologGroup[index++] = crossover(preChildChromosomes[homolog], 0,
-								preChildChromosomes[homolog].length, chromosomeFactories[homolog], homolog);
+						var chromosome = crossover(preChildChromosomes[homolog], 0, preChildChromosomes[homolog].length,
+								chromosomeFactories[homolog], homolog);
+
+						mutator.apply(chromosome, chromosomeFactories[homolog]);
+
+						childHomologGroup[index++] = chromosome;
 					}
 					break;
 
@@ -219,9 +232,6 @@ public class LifeCycle {
 				else
 					c = Rand.nextNewInt(count, c);
 			}
-
-			if (Rand.test(parameters.getMutationProbabilityPerAllele()))
-				factory.mutateAllele(result, allele);
 		}
 
 		return result;
