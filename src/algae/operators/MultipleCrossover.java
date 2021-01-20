@@ -33,7 +33,7 @@ public class MultipleCrossover implements ICrossoverOperator {
 		for (int allele = 0; allele < len; ++allele) {
 			input[c].copyAlleleTo(allele, result);
 
-			if (count > 1 && allele > 0 && Rand.test(crossOverProbabilityPerAllele)) {
+			if (count > 1 && allele != len - 1 && Rand.test(crossOverProbabilityPerAllele)) {
 				if (count == 2)
 					c = c == 0 ? 1 : 0;
 				else
