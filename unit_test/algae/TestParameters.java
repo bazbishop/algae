@@ -40,6 +40,12 @@ class TestParameters {
 		}
 	};
 
+	IMutationOperator mutator = new IMutationOperator() {
+		@Override
+		public void apply(IChromosome chromosome, IChromosomeFactory factory) {
+		}
+	};
+
 	@BeforeEach
 	void setup() {
 		factories = new IChromosomeFactory[] { new IntegerArrayChromosomeFactory(1, 0, 10) };
@@ -65,9 +71,6 @@ class TestParameters {
 		parameters.setCrossOverProbabilityPerAllele(0.5);
 		assertEquals(0.5, parameters.getCrossOverProbabilityPerAllele());
 
-		parameters.setMutationProbabilityPerAllele(0.25);
-		assertEquals(0.25, parameters.getMutationProbabilityPerAllele());
-
 		parameters.setSelector(selector);
 		assertEquals(selector, parameters.getSelector());
 
@@ -76,6 +79,10 @@ class TestParameters {
 
 		parameters.setFitnessTest(tester);
 		assertEquals(tester, parameters.getFitnessTester());
+
+		parameters.setMutationOperator(mutator);
+		;
+		assertEquals(mutator, parameters.getMutationOperator());
 
 		parameters.setGenomeMultiplicity(5);
 		assertEquals(5, parameters.getGenomeMultiplicity());
