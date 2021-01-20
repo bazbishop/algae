@@ -18,11 +18,11 @@ public class BitSetChromosomeFactory implements IChromosomeFactory {
 		mChromosomeLength = chromosomeLength;
 	}
 
-	public IChromosome createEmptyChromosome() {
+	public BitSetChromosome createEmptyChromosome() {
 		return new BitSetChromosome(mChromosomeLength);
 	}
 
-	public IChromosome createRandomChromosome() {
+	public BitSetChromosome createRandomChromosome() {
 		final BitSetChromosome ch = new BitSetChromosome(mChromosomeLength);
 
 		for (int a = 0; a < mChromosomeLength; ++a) {

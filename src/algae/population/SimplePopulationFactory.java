@@ -1,6 +1,5 @@
 package algae.population;
 
-import algae.IPopulation;
 import algae.IPopulationFactory;
 
 /**
@@ -9,7 +8,7 @@ import algae.IPopulationFactory;
 public class SimplePopulationFactory implements IPopulationFactory {
 
 	@Override
-	public IPopulation createPopulation(int intendedSize) {
+	public SimplePopulation createPopulation(int intendedSize) {
 
 		return new SimplePopulation(intendedSize);
 	}

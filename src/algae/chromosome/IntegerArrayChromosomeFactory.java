@@ -22,11 +22,11 @@ public class IntegerArrayChromosomeFactory implements IChromosomeFactory {
 		mMaxAlleleValue = maxAlleleValue;
 	}
 
-	public IChromosome createEmptyChromosome() {
+	public IntegerArrayChromosome createEmptyChromosome() {
 		return new IntegerArrayChromosome(mChromosomeLength);
 	}
 
-	public IChromosome createRandomChromosome() {
+	public IntegerArrayChromosome createRandomChromosome() {
 		var chromosome = new IntegerArrayChromosome(mChromosomeLength);
 
 		for (int a = 0; a < mChromosomeLength; ++a)
