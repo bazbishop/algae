@@ -27,13 +27,13 @@ public class SingleCrossover implements ICrossoverOperator {
 		int len = result.length();
 		int count = input.length;
 
-		int copyFrom1 = Rand.nextInt(count);
+		int copyFrom1 = count == 1 ? 0 : Rand.nextInt(count);
 		int copyFrom2 = copyFrom1;
 
 		int switchAt = -1;
-		if (Rand.test(crossOverProbability)) {
+		if (count > 1 && len > 1 && Rand.test(crossOverProbability)) {
 
-			switchAt = Rand.nextInt(len - 1) + 1;
+			switchAt = len == 2 ? 1 : Rand.nextInt(len - 1) + 1;
 
 			if (count == 2)
 				copyFrom2 = copyFrom1 == 0 ? 1 : 0;

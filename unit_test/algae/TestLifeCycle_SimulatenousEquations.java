@@ -65,11 +65,10 @@ class TestLifeCycle_SimulatenousEquations {
 
 	@Test
 	void testMultiplicity2Parents2Gametes() {
-		var phenoMapper = new IPhenotypeMapper() {
 
+		var phenoMapper = new IPhenotypeMapper() {
 			@Override
 			public Object createPhenotype(Genome genome) {
-
 				var chr1 = (IntegerArrayChromosome) genome.chromosomes()[0][0];
 				var chr2 = (IntegerArrayChromosome) genome.chromosomes()[0][1];
 
@@ -94,11 +93,10 @@ class TestLifeCycle_SimulatenousEquations {
 
 	@Test
 	void testMultiplicity2Parents2All() {
-		var phenoMapper = new IPhenotypeMapper() {
 
+		var phenoMapper = new IPhenotypeMapper() {
 			@Override
 			public Object createPhenotype(Genome genome) {
-
 				var chr1 = (IntegerArrayChromosome) genome.chromosomes()[0][0];
 				var chr2 = (IntegerArrayChromosome) genome.chromosomes()[0][1];
 
@@ -125,7 +123,6 @@ class TestLifeCycle_SimulatenousEquations {
 	void testMultiplicity1Parents2All() {
 
 		var phenoMapper = new IPhenotypeMapper() {
-
 			@Override
 			public Object createPhenotype(Genome genome) {
 
@@ -139,6 +136,29 @@ class TestLifeCycle_SimulatenousEquations {
 		controlParameters.setGenomeMultiplicity(1);
 		controlParameters.setNumberOfParents(2);
 		controlParameters.setCrossoverStrategy(CrossoverStrategy.CrossoverAll);
+		controlParameters.setMutationOperator(new MultipleMutation(0.2));
+
+		var lc = new LifeCycle(controlParameters);
+
+		runExperiment(lc, phenoMapper);
+	}
+
+	@Test
+	void testMultiplicity1Parents1All() {
+
+		var phenoMapper = new IPhenotypeMapper() {
+			@Override
+			public Object createPhenotype(Genome genome) {
+				var chr1 = (IntegerArrayChromosome) genome.chromosomes()[0][0];
+				return chr1.alleles();
+			}
+		};
+
+		controlParameters.setPhenotypeMapper(phenoMapper);
+		controlParameters.setGenomeMultiplicity(1);
+		controlParameters.setNumberOfParents(1);
+		controlParameters.setCrossoverStrategy(CrossoverStrategy.CrossoverAll);
+		controlParameters.setMutationOperator(new MultipleMutation(0.2));
 
 		var lc = new LifeCycle(controlParameters);
 
@@ -148,7 +168,6 @@ class TestLifeCycle_SimulatenousEquations {
 	@Test
 	void testMultiplicity1_Parents2_Gametes_Unique() {
 		var phenoMapper = new IPhenotypeMapper() {
-
 			@Override
 			public Object createPhenotype(Genome genome) {
 
@@ -178,11 +197,6 @@ class TestLifeCycle_SimulatenousEquations {
 		while (!finished) {
 			finished = lifeCycle.runGeneration();
 
-			/*
-			 * var size = lifeCycle.getCurrentPopulation().size(); var discarded =
-			 * lifeCycle.getCurrentPopulation().discarded(); var generation =
-			 * lifeCycle.generation();
-			 */
 			var genome = lifeCycle.getCurrentPopulation().getMember(0);
 			int fitness = (int) lifeCycle.getCurrentPopulation().getFitness(0).value();
 
