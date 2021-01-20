@@ -1,7 +1,5 @@
 package algae;
 
-import algae.util.Rand;
-
 /**
  * A life-cycle manager.
  */

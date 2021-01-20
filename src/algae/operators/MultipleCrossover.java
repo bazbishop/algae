@@ -28,12 +28,12 @@ public class MultipleCrossover implements ICrossoverOperator {
 		int len = result.length();
 		int count = input.length;
 
-		int c = Rand.nextInt(count);
+		int c = count == 1 ? 0 : Rand.nextInt(count);
 
 		for (int allele = 0; allele < len; ++allele) {
 			input[c].copyAlleleTo(allele, result);
 
-			if (Rand.test(crossOverProbabilityPerAllele)) {
+			if (count > 1 && allele > 0 && Rand.test(crossOverProbabilityPerAllele)) {
 				if (count == 2)
 					c = c == 0 ? 1 : 0;
 				else
