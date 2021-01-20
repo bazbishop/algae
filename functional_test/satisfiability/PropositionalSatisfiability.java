@@ -9,6 +9,7 @@ import java.util.Set;
 import algae.*;
 import algae.chromosome.*;
 import algae.fitness.*;
+import algae.operators.MultipleCrossover;
 import algae.operators.MultipleMutation;
 import algae.population.UniquePopulationFactory;
 
@@ -110,7 +111,7 @@ public class PropositionalSatisfiability {
 		parameters.setGenomeMultiplicity(2);
 		parameters.setCrossoverStrategy(CrossoverStrategy.CrossoverGametes);
 		parameters.setNumberOfParents(2);
-		parameters.setCrossOverProbabilityPerAllele(0.02);
+		parameters.setCrossoverOperator(new MultipleCrossover(0.02));
 		parameters.setMutationOperator(new MultipleMutation(0.01));
 		parameters.setPopulationFactory(new UniquePopulationFactory());
 		parameters.setMaximumDiscardRatio(2.0);

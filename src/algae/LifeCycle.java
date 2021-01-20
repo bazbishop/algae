@@ -129,6 +129,7 @@ public class LifeCycle {
 
 		final var selector = parameters.getSelector();
 		final var mutator = parameters.getMutationOperator();
+		final var crossover = parameters.getCrossoverOperator();
 		final var chromosomeFactories = parameters.getChromosomeFactories();
 
 		var nextGeneration = parameters.getPopulationFactory().createPopulation(populationSize);
@@ -169,8 +170,13 @@ public class LifeCycle {
 					int index = 0;
 					for (int p = 0; p < numberOfParents; ++p) {
 						for (int i = 0; i < crossoversPerParent; ++i) {
-							var chromosome = crossover(preChildChromosomes[homolog], p * multiplicityOfGenome,
-									multiplicityOfGenome, chromosomeFactories[homolog], homolog);
+							var input = new IChromosome[multiplicityOfGenome];
+							// for(int j = p * multiplicityOfGenome; j < (p+1) * multiplicityOfGenome;++j) {
+							for (int j = 0; j < multiplicityOfGenome; ++j) {
+								input[j] = preChildChromosomes[homolog][p * multiplicityOfGenome + j];
+							}
+
+							var chromosome = crossover.apply(input, chromosomeFactories[homolog]);
 
 							mutator.apply(chromosome, chromosomeFactories[homolog]);
 
@@ -182,8 +188,7 @@ public class LifeCycle {
 				case CrossoverAll:
 					index = 0;
 					for (int p = 0; p < multiplicityOfGenome; ++p) {
-						var chromosome = crossover(preChildChromosomes[homolog], 0, preChildChromosomes[homolog].length,
-								chromosomeFactories[homolog], homolog);
+						var chromosome = crossover.apply(preChildChromosomes[homolog], chromosomeFactories[homolog]);
 
 						mutator.apply(chromosome, chromosomeFactories[homolog]);
 
@@ -202,39 +207,6 @@ public class LifeCycle {
 		}
 
 		mCurrentPopulation = nextGeneration;
-	}
-
-	/**
-	 * Derive a chromosome from the input chromosome array using crossover and
-	 * mutation.
-	 * 
-	 * @param input        The pool of chromosomes
-	 * @param startIndex   The starting index of chromosomes considered for
-	 *                     crossover
-	 * @param count        The number of chromosomes considered for crossover
-	 * @param factory      The relevant chromosome factory
-	 * @param homologIndex The homolog index
-	 * @return The child chromosome
-	 */
-	private IChromosome crossover(IChromosome[] input, int startIndex, int count, IChromosomeFactory factory,
-			int homologIndex) {
-		var result = factory.createEmptyChromosome();
-		int len = result.length();
-
-		int c = Rand.nextInt(count);
-
-		for (int allele = 0; allele < len; ++allele) {
-			input[c + startIndex].copyAlleleTo(allele, result);
-
-			if (Rand.test(parameters.getCrossOverProbabilityPerAllele())) {
-				if (count == 2)
-					c = c == 0 ? 1 : 0;
-				else
-					c = Rand.nextNewInt(count, c);
-			}
-		}
-
-		return result;
 	}
 
 	/**

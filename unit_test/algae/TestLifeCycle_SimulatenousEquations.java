@@ -3,6 +3,7 @@ package algae;
 import algae.chromosome.IntegerArrayChromosome;
 import algae.chromosome.IntegerArrayChromosomeFactory;
 import algae.fitness.IntegerFitness;
+import algae.operators.MultipleCrossover;
 import algae.operators.MultipleMutation;
 import algae.population.UniquePopulationFactory;
 
@@ -58,7 +59,7 @@ class TestLifeCycle_SimulatenousEquations {
 		controlParameters = new Parameters(chromosomeFactories, dummyMapper, fitnessTester);
 
 		controlParameters.setPopulationSize(10000);
-		controlParameters.setCrossOverProbabilityPerAllele(0.1);
+		controlParameters.setCrossoverOperator(new MultipleCrossover(0.1));
 		controlParameters.setMutationOperator(new MultipleMutation(0.05));
 	}
 

@@ -1,5 +1,6 @@
 package algae;
 
+import algae.operators.MultipleCrossover;
 import algae.operators.MultipleMutation;
 import algae.population.SimplePopulationFactory;
 import algae.selector.RandomSelector;
@@ -97,25 +98,6 @@ public class Parameters {
 	 */
 	public double getMaximumDiscardRatio() {
 		return maximumDiscardRatio;
-	}
-
-	/**
-	 * The crossover probability per allele. (This is likely to move to
-	 * IChromosomeFactory in the near future.)
-	 * 
-	 * @return The probability in the range [0.0, 1.0]
-	 */
-	public double getCrossOverProbabilityPerAllele() {
-		return crossOverProbabilityPerAllele;
-	}
-
-	/**
-	 * The crossover probability per allele.
-	 * 
-	 * @param crossOverProbabilityPerAllele The probability in the range [0.0, 1.0]
-	 */
-	public void setCrossOverProbabilityPerAllele(double crossOverProbabilityPerAllele) {
-		this.crossOverProbabilityPerAllele = crossOverProbabilityPerAllele;
 	}
 
 	/**
@@ -280,6 +262,24 @@ public class Parameters {
 		this.mutationOperator = mutationOperator;
 	}
 
+	/**
+	 * The crossover operator used during breeding.
+	 * 
+	 * @return The crossover operator
+	 */
+	public ICrossoverOperator getCrossoverOperator() {
+		return crossoverOperator;
+	}
+
+	/**
+	 * The crossover operator used during breeding.
+	 * 
+	 * @param crossoverOperator The crossover operator
+	 */
+	public void setCrossoverOperator(ICrossoverOperator crossoverOperator) {
+		this.crossoverOperator = crossoverOperator;
+	}
+
 	// Can be defaulted
 
 	private int populationSize = 100;
@@ -288,11 +288,11 @@ public class Parameters {
 	private CrossoverStrategy crossoverStrategy = CrossoverStrategy.CrossoverAll;
 	private int elitismCount = 0;
 	private double maximumDiscardRatio = 1.0;
-	private double crossOverProbabilityPerAllele = 0.02;
 
 	private IPopulationFactory populationFactory = new SimplePopulationFactory();
 	private ISelector selector = new RandomSelector();
 	private IMutationOperator mutationOperator = new MultipleMutation(0.01);
+	private ICrossoverOperator crossoverOperator = new MultipleCrossover(0.02);
 
 	// Required
 
