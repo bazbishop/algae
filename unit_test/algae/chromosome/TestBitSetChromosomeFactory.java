@@ -46,8 +46,7 @@ class TestBitSetChromosomeFactory {
 		int countSetBits = 0;
 		for (int i = 0; i < c.length(); ++i) {
 			if (c.alleles().get(i))
-				;
-			++countSetBits;
+				++countSetBits;
 		}
 		assertEquals(50, countSetBits);
 
@@ -55,8 +54,7 @@ class TestBitSetChromosomeFactory {
 		countSetBits = 0;
 		for (int i = 0; i < c.length(); ++i) {
 			if (c.alleles().get(i))
-				;
-			++countSetBits;
+				++countSetBits;
 		}
 
 		for (int i = 0; i < c.length(); ++i) {
@@ -66,8 +64,7 @@ class TestBitSetChromosomeFactory {
 		int countUnsetBits = 0;
 		for (int i = 0; i < c.length(); ++i) {
 			if (!c.alleles().get(i))
-				;
-			++countUnsetBits;
+				++countUnsetBits;
 		}
 
 		assertEquals(countSetBits, countUnsetBits);

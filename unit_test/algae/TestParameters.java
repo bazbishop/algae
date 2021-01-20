@@ -46,6 +46,13 @@ class TestParameters {
 		}
 	};
 
+	ICrossoverOperator crossover = new ICrossoverOperator() {
+		@Override
+		public IChromosome apply(IChromosome[] input, IChromosomeFactory factory) {
+			return null;
+		}
+	};
+
 	@BeforeEach
 	void setup() {
 		factories = new IChromosomeFactory[] { new IntegerArrayChromosomeFactory(1, 0, 10) };
@@ -68,9 +75,6 @@ class TestParameters {
 		parameters.setMaximumDiscardRatio(8.0);
 		assertEquals(8, parameters.getMaximumDiscardRatio());
 
-		parameters.setCrossOverProbabilityPerAllele(0.5);
-		assertEquals(0.5, parameters.getCrossOverProbabilityPerAllele());
-
 		parameters.setSelector(selector);
 		assertEquals(selector, parameters.getSelector());
 
@@ -81,8 +85,10 @@ class TestParameters {
 		assertEquals(tester, parameters.getFitnessTester());
 
 		parameters.setMutationOperator(mutator);
-		;
 		assertEquals(mutator, parameters.getMutationOperator());
+
+		parameters.setCrossoverOperator(crossover);
+		assertEquals(crossover, parameters.getCrossoverOperator());
 
 		parameters.setGenomeMultiplicity(5);
 		assertEquals(5, parameters.getGenomeMultiplicity());
