@@ -10,8 +10,30 @@ import algae.selector.RandomSelector;
  */
 public class Parameters {
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param chromosomeFactories The array of chromosome factories
+	 * @param phenotypeMapper     The mapper from genotype to phenotype
+	 * @param fitnessTester       The fitness tester
+	 */
 	public Parameters(IChromosomeFactory[] chromosomeFactories, IPhenotypeMapper phenotypeMapper,
 			IFitnessTester fitnessTester) {
+		setChromosomeFactories(chromosomeFactories);
+		setPhenotypeMapper(phenotypeMapper);
+		setFitnessTest(fitnessTester);
+	}
+
+	/**
+	 * Convenience constructor when only one chromosome factory is used.
+	 * 
+	 * @param chromosomeFactory The chromosome factory
+	 * @param phenotypeMapper   The mapper from genotype to phenotype
+	 * @param fitnessTester     The fitness tester
+	 */
+	public Parameters(IChromosomeFactory chromosomeFactory, IPhenotypeMapper phenotypeMapper,
+			IFitnessTester fitnessTester) {
+		var chromosomeFactories = new IChromosomeFactory[] { chromosomeFactory };
 		setChromosomeFactories(chromosomeFactories);
 		setPhenotypeMapper(phenotypeMapper);
 		setFitnessTest(fitnessTester);
