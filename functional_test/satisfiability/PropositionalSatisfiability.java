@@ -19,6 +19,7 @@ public class PropositionalSatisfiability {
 			mVariables = conjunction.getVariables();
 		}
 
+		@Override
 		public Map<String, Boolean> createPhenotype(Genome genome) {
 			// Calculate the variable assignments
 			return computeMapping(mVariables, genome, 0);
@@ -34,6 +35,7 @@ public class PropositionalSatisfiability {
 
 		final Conjunction mConjunction;
 
+		@Override
 		public IFitness fitness(Object phenotype) {
 			@SuppressWarnings("unchecked")
 			Map<String, Boolean> mapping = (Map<String, Boolean>) phenotype;

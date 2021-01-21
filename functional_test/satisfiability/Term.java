@@ -9,6 +9,7 @@ public class Term {
 		this.positive = positive;
 	}
 
+	@Override
 	public String toString() {
 		if (positive)
 			return variableName;

@@ -18,10 +18,12 @@ public class BitSetChromosomeFactory implements IChromosomeFactory {
 		mChromosomeLength = chromosomeLength;
 	}
 
+	@Override
 	public BitSetChromosome createEmptyChromosome() {
 		return new BitSetChromosome(mChromosomeLength);
 	}
 
+	@Override
 	public BitSetChromosome createRandomChromosome() {
 		final BitSetChromosome ch = new BitSetChromosome(mChromosomeLength);
 
@@ -32,6 +34,7 @@ public class BitSetChromosomeFactory implements IChromosomeFactory {
 		return ch;
 	}
 
+	@Override
 	public void mutateAllele(IChromosome chromosome, int index) {
 		BitSetChromosome ch = (BitSetChromosome) chromosome;
 

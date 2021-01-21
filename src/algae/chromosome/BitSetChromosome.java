@@ -19,12 +19,14 @@ public class BitSetChromosome implements IChromosome {
 		mBits = new BitSet();
 	}
 
+	@Override
 	public void copyAlleleTo(int index, IChromosome target) {
 		BitSetChromosome rhs = (BitSetChromosome) target;
 
 		rhs.mBits.set(index, mBits.get(index));
 	}
 
+	@Override
 	public int length() {
 		return mChromosomeLength;
 	}
@@ -50,6 +52,7 @@ public class BitSetChromosome implements IChromosome {
 	 * 
 	 * @return The alleles
 	 */
+	@Override
 	public BitSet alleles() {
 		return mBits;
 	}

@@ -167,10 +167,11 @@ public class MersenneTwisterFast implements Cloneable {
 	/*
 	 * We're overriding all internal data, to my knowledge, so this should be okay
 	 */
+	@Override
 	public Object clone() throws CloneNotSupportedException {
 		final MersenneTwisterFast f = (MersenneTwisterFast) (super.clone());
-		f.mt = (int[]) (mt.clone());
-		f.mag01 = (int[]) (mag01.clone());
+		f.mt = (mt.clone());
+		f.mag01 = (mag01.clone());
 		return f;
 	}
 
@@ -436,7 +437,7 @@ public class MersenneTwisterFast implements Cloneable {
 		y ^= (y << 15) & TEMPERING_MASK_C; // TEMPERING_SHIFT_T(y)
 		y ^= (y >>> 18); // TEMPERING_SHIFT_L(y)
 
-		return (boolean) ((y >>> 31) != 0);
+		return (y >>> 31) != 0;
 	}
 
 	/**
@@ -676,7 +677,7 @@ public class MersenneTwisterFast implements Cloneable {
 		z ^= (z << 15) & TEMPERING_MASK_C; // TEMPERING_SHIFT_T(z)
 		z ^= (z >>> 18); // TEMPERING_SHIFT_L(z)
 
-		return (((long) y) << 32) + (long) z;
+		return (((long) y) << 32) + z;
 	}
 
 	/**
@@ -744,7 +745,7 @@ public class MersenneTwisterFast implements Cloneable {
 			z ^= (z << 15) & TEMPERING_MASK_C; // TEMPERING_SHIFT_T(z)
 			z ^= (z >>> 18); // TEMPERING_SHIFT_L(z)
 
-			bits = (((((long) y) << 32) + (long) z) >>> 1);
+			bits = (((((long) y) << 32) + z) >>> 1);
 			val = bits % n;
 		} while (bits - val + (n - 1) < 0);
 		return val;
@@ -1073,7 +1074,7 @@ public class MersenneTwisterFast implements Cloneable {
 		System.out.println("Output of MersenneTwisterFast with new (2002/1/26) seeding mechanism");
 		for (j = 0; j < 1000; j++) {
 			// first, convert the int from signed to "unsigned"
-			long l = (long) r.nextInt();
+			long l = r.nextInt();
 			if (l < 0)
 				l += 4294967296L; // max int value
 			String s = String.valueOf(l);
@@ -1122,7 +1123,7 @@ public class MersenneTwisterFast implements Cloneable {
 		System.out.println("\nGrab 1000 booleans of increasing probability using nextBoolean(double)");
 		r = new MersenneTwisterFast(SEED);
 		for (j = 0; j < 1000; j++) {
-			System.out.print(r.nextBoolean((double) (j / 999.0)) + " ");
+			System.out.print(r.nextBoolean(j / 999.0) + " ");
 			if (j % 8 == 7)
 				System.out.println();
 		}
@@ -1132,7 +1133,7 @@ public class MersenneTwisterFast implements Cloneable {
 		System.out.println("\nGrab 1000 booleans of increasing probability using nextBoolean(float)");
 		r = new MersenneTwisterFast(SEED);
 		for (j = 0; j < 1000; j++) {
-			System.out.print(r.nextBoolean((float) (j / 999.0f)) + " ");
+			System.out.print(r.nextBoolean(j / 999.0f) + " ");
 			if (j % 8 == 7)
 				System.out.println();
 		}

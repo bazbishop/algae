@@ -21,6 +21,7 @@ public class Conjunction {
 		return result;
 	}
 
+	@Override
 	public String toString() {
 		StringBuilder result = new StringBuilder();
 

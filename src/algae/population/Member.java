@@ -39,6 +39,7 @@ class Member implements Comparable<Member> {
 		return mGenome.equals(other.mGenome);
 	}
 
+	@Override
 	public int compareTo(Member rhs) {
 		return mFitness.compareTo(rhs.mFitness);
 	}

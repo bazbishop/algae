@@ -16,6 +16,7 @@ public class DoubleFitness implements IFitness {
 		return mFinished;
 	}
 
+	@Override
 	public int compareTo(IFitness o) {
 		DoubleFitness rhs = (DoubleFitness) o;
 
@@ -43,6 +44,7 @@ public class DoubleFitness implements IFitness {
 		return Double.toString(mValue);
 	}
 
+	@Override
 	public Double value() {
 		return mValue;
 	}

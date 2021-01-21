@@ -12,10 +12,12 @@ public class BigIntegerFitness implements IFitness {
 		mFinished = finished;
 	}
 
+	@Override
 	public boolean isOptimal() {
 		return mFinished;
 	}
 
+	@Override
 	public int compareTo(IFitness o) {
 		BigIntegerFitness rhs = (BigIntegerFitness) o;
 
@@ -38,6 +40,7 @@ public class BigIntegerFitness implements IFitness {
 		return mValue.toString();
 	}
 
+	@Override
 	public BigInteger value() {
 		return mValue;
 	}

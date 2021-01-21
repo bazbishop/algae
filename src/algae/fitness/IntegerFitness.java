@@ -16,6 +16,7 @@ public class IntegerFitness implements IFitness {
 		return mFinished;
 	}
 
+	@Override
 	public int compareTo(IFitness o) {
 		IntegerFitness rhs = (IntegerFitness) o;
 
@@ -43,6 +44,7 @@ public class IntegerFitness implements IFitness {
 		return Integer.toString(mValue);
 	}
 
+	@Override
 	public Integer value() {
 		return mValue;
 	}

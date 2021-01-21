@@ -21,6 +21,7 @@ public class Disjunction {
 		return result;
 	}
 
+	@Override
 	public String toString() {
 		StringBuilder result = new StringBuilder();
 		result.append('[');
