@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import algae.chromosome.BitSetChromosome;
 import algae.chromosome.BitSetChromosomeFactory;
 
 class TestSingleMutation {
@@ -21,17 +20,17 @@ class TestSingleMutation {
 		int sumMaybe = 0;
 
 		for (int i = 0; i < 100; ++i) {
-			var c = (BitSetChromosome) factory.createEmptyChromosome();
+			var c = factory.createEmptyChromosome();
 			never.apply(c, factory);
 			assertEquals(0, c.alleles().cardinality());
 
-			c = (BitSetChromosome) factory.createEmptyChromosome();
+			c = factory.createEmptyChromosome();
 			sometimes.apply(c, factory);
 			int count = c.alleles().cardinality();
 			assertTrue(count == 0 || count == 1);
 			sumMaybe += c.alleles().cardinality();
 
-			c = (BitSetChromosome) factory.createEmptyChromosome();
+			c = factory.createEmptyChromosome();
 			always.apply(c, factory);
 			assertEquals(1, c.alleles().cardinality());
 		}

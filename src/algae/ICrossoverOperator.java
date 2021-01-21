@@ -1,8 +1,7 @@
 package algae;
 
 /**
- * Crossover operation to create a new chromosome from 2 or more chromosome
- * parenets.
+ * Crossover operation to create a new chromosome from 2 or more chromosome parenets.
  */
 public interface ICrossoverOperator {
 

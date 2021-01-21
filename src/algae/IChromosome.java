@@ -19,4 +19,10 @@ public interface IChromosome {
 	 * @param target The target chromosome
 	 */
 	void copyAlleleTo(int index, IChromosome target);
+
+	/**
+	 * Get the alleles in whatever type they are contained (array, collection, etc).
+	 * @return The alleles stored in this chromosome
+	 */
+	Object alleles();
 }

@@ -4,9 +4,8 @@ import algae.ISelector;
 import algae.util.Rand;
 
 /**
- * A selector that biases towards fitter members, by selecting randomly and
- * using the generated number to define a subset from which the next random
- * number is generated.
+ * A selector that biases towards fitter members, by selecting randomly and using the generated number to define a
+ * subset from which the next random number is generated.
  */
 public class RandomSelector implements ISelector {
 	/**

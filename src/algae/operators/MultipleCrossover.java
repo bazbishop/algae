@@ -13,9 +13,8 @@ public class MultipleCrossover implements ICrossoverOperator {
 	/**
 	 * Constructor.
 	 * 
-	 * @param crossOverProbabilityPerAllele The probability at the encoding of every
-	 *                                      allele that crossover might occur in the
-	 *                                      range [0.0, 1.0]
+	 * @param crossOverProbabilityPerAllele The probability at the encoding of every allele that crossover might occur in
+	 *                                      the range [0.0, 1.0]
 	 */
 	public MultipleCrossover(double crossOverProbabilityPerAllele) {
 		this.crossOverProbabilityPerAllele = crossOverProbabilityPerAllele;

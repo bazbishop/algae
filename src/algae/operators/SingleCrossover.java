@@ -13,8 +13,7 @@ public class SingleCrossover implements ICrossoverOperator {
 	/**
 	 * Constructor.
 	 * 
-	 * @param crossOverProbability The probability of a crossover occurring during
-	 *                             the operation in the range [0.0, 1.0]
+	 * @param crossOverProbability The probability of a crossover occurring during the operation in the range [0.0, 1.0]
 	 */
 	public SingleCrossover(double crossOverProbability) {
 		this.crossOverProbability = crossOverProbability;

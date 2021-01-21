@@ -208,8 +208,8 @@ class TestLifeCycle_SimulatenousEquations {
 			var d = values[3];
 			var e = values[4];
 
-			System.out.println("generation: " + lifeCycle.generation() + ", a=" + a + ", b=" + b + ", c=" + c + ", d="
-					+ d + ", e=" + e + " | fitness=" + fitness);
+			System.out.println(
+					"generation: " + lifeCycle.generation() + ", a=" + a + ", b=" + b + ", c=" + c + ", d=" + d + ", e=" + e + " | fitness=" + fitness);
 
 			if (lifeCycle.generation() > 1000)
 				fail("Experiment is not converging.");

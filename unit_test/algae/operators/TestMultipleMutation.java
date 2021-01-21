@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import algae.chromosome.BitSetChromosome;
 import algae.chromosome.BitSetChromosomeFactory;
 
 class TestMultipleMutation {
@@ -19,16 +18,16 @@ class TestMultipleMutation {
 		var factory = new BitSetChromosomeFactory(100);
 
 		for (int i = 0; i < 100; ++i) {
-			var c = (BitSetChromosome) factory.createEmptyChromosome();
+			var c = factory.createEmptyChromosome();
 			never.apply(c, factory);
 			assertEquals(0, c.alleles().cardinality());
 
-			c = (BitSetChromosome) factory.createEmptyChromosome();
+			c = factory.createEmptyChromosome();
 			sometimes.apply(c, factory);
 			int count = c.alleles().cardinality();
 			assertTrue(count > 5 && count < 95);
 
-			c = (BitSetChromosome) factory.createEmptyChromosome();
+			c = factory.createEmptyChromosome();
 			always.apply(c, factory);
 			assertEquals(100, c.alleles().cardinality());
 		}

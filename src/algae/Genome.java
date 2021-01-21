@@ -3,8 +3,7 @@ package algae;
 import java.util.Arrays;
 
 /**
- * A set of chromosomes organised into homologous groups. The genome might
- * represent a complete organism or a gamete.
+ * A set of chromosomes organised into homologous groups. The genome might represent a complete organism or a gamete.
  */
 public class Genome {
 
@@ -87,8 +86,7 @@ public class Genome {
 	/**
 	 * Get the chromosomes.
 	 * 
-	 * @return A 2D array of chromosomes organised by homologous groups and
-	 *         multiplicity.
+	 * @return A 2D array of chromosomes organised by homologous groups and multiplicity.
 	 */
 	public IChromosome[][] chromosomes() {
 		return chromosomes;

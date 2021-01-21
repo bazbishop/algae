@@ -65,7 +65,7 @@ public class TestLifeCycle {
 	class Mapper implements IPhenotypeMapper {
 
 		@Override
-		public Object createPhenotype(Genome genome) {
+		public Integer createPhenotype(Genome genome) {
 			var c = (IntegerArrayChromosome) genome.chromosomes()[0][0];
 			int v = c.alleles()[0];
 			return v;
