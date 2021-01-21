@@ -9,13 +9,13 @@ class TestIntegerArrayChromosomeFactory {
 	void testCreateEmpty() {
 		var f = new IntegerArrayChromosomeFactory(17, 10, 20);
 
-		var c = (IntegerArrayChromosome) f.createEmptyChromosome();
+		var c = f.createEmptyChromosome();
 		assertEquals(17, c.length());
 
 		for (int i = 0; i < c.length(); ++i)
 			assertEquals(0, c.alleles()[i]);
 
-		c = (IntegerArrayChromosome) f.createRandomChromosome();
+		c = f.createRandomChromosome();
 		assertEquals(17, c.length());
 
 		boolean different = false;
@@ -38,7 +38,7 @@ class TestIntegerArrayChromosomeFactory {
 
 		var f = new IntegerArrayChromosomeFactory(17, 10, 20);
 
-		var c = (IntegerArrayChromosome) f.createEmptyChromosome();
+		var c = f.createEmptyChromosome();
 		assertEquals(17, c.length());
 
 		for (int i = 0; i < c.length(); ++i) {

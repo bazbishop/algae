@@ -9,13 +9,13 @@ class TestBitSetChromosomeFactory {
 	void testCreateEmpty() {
 		var f = new BitSetChromosomeFactory(17);
 
-		var c = (BitSetChromosome) f.createEmptyChromosome();
+		var c = f.createEmptyChromosome();
 		assertEquals(17, c.length());
 
 		for (int i = 0; i < c.length(); ++i)
 			assertFalse(c.alleles().get(i));
 
-		c = (BitSetChromosome) f.createRandomChromosome();
+		c = f.createRandomChromosome();
 		assertEquals(17, c.length());
 
 		boolean different = false;
@@ -36,7 +36,7 @@ class TestBitSetChromosomeFactory {
 
 		var f = new BitSetChromosomeFactory(50);
 
-		var c = (BitSetChromosome) f.createEmptyChromosome();
+		var c = f.createEmptyChromosome();
 		assertEquals(50, c.length());
 
 		for (int i = 0; i < c.length(); ++i) {
@@ -50,7 +50,7 @@ class TestBitSetChromosomeFactory {
 		}
 		assertEquals(50, countSetBits);
 
-		c = (BitSetChromosome) f.createRandomChromosome();
+		c = f.createRandomChromosome();
 		countSetBits = 0;
 		for (int i = 0; i < c.length(); ++i) {
 			if (c.alleles().get(i))

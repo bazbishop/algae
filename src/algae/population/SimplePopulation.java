@@ -16,8 +16,7 @@ public class SimplePopulation implements IPopulation {
 	/**
 	 * Constructor.
 	 * 
-	 * @param intendedSize The number of members to be managed by this Population
-	 *                     instance
+	 * @param intendedSize The number of members to be managed by this Population instance
 	 */
 	public SimplePopulation(int intendedSize) {
 		members = new ArrayList<Member>(intendedSize);

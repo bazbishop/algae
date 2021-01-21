@@ -25,14 +25,12 @@ public class LifeCycle {
 
 		if (parameters.getCrossoverStrategy() == CrossoverStrategy.CrossoverGametes) {
 			if (parameters.getGenomeMultiplicity() % parameters.getNumberOfParents() != 0)
-				throw new IllegalArgumentException(
-						"For gamete crossover strategy, the genome multiplicity must be a multiple of the number of parents");
+				throw new IllegalArgumentException("For gamete crossover strategy, the genome multiplicity must be a multiple of the number of parents");
 		}
 	}
 
 	/**
-	 * Initialise the population with random members and sort them according to
-	 * fitness.
+	 * Initialise the population with random members and sort them according to fitness.
 	 * 
 	 * @return true if an optimal member exists
 	 */
@@ -138,8 +136,7 @@ public class LifeCycle {
 		}
 
 		// Breed members
-		while (nextGeneration.size() < populationSize
-				&& nextGeneration.discarded() < populationSize * parameters.getMaximumDiscardRatio()) {
+		while (nextGeneration.size() < populationSize && nextGeneration.discarded() < populationSize * parameters.getMaximumDiscardRatio()) {
 
 			// === SELECTION ===
 			final var parents = new Genome[numberOfParents];

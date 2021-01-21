@@ -17,8 +17,7 @@ public class Parameters {
 	 * @param phenotypeMapper     The mapper from genotype to phenotype
 	 * @param fitnessTester       The fitness tester
 	 */
-	public Parameters(IChromosomeFactory[] chromosomeFactories, IPhenotypeMapper phenotypeMapper,
-			IFitnessTester fitnessTester) {
+	public Parameters(IChromosomeFactory[] chromosomeFactories, IPhenotypeMapper phenotypeMapper, IFitnessTester fitnessTester) {
 		setChromosomeFactories(chromosomeFactories);
 		setPhenotypeMapper(phenotypeMapper);
 		setFitnessTest(fitnessTester);
@@ -31,8 +30,7 @@ public class Parameters {
 	 * @param phenotypeMapper   The mapper from genotype to phenotype
 	 * @param fitnessTester     The fitness tester
 	 */
-	public Parameters(IChromosomeFactory chromosomeFactory, IPhenotypeMapper phenotypeMapper,
-			IFitnessTester fitnessTester) {
+	public Parameters(IChromosomeFactory chromosomeFactory, IPhenotypeMapper phenotypeMapper, IFitnessTester fitnessTester) {
 		var chromosomeFactories = new IChromosomeFactory[] { chromosomeFactory };
 		setChromosomeFactories(chromosomeFactories);
 		setPhenotypeMapper(phenotypeMapper);
@@ -101,8 +99,7 @@ public class Parameters {
 	}
 
 	/**
-	 * The maximum allowed ratio of discarded members compared to accepted members
-	 * when loading a population.
+	 * The maximum allowed ratio of discarded members compared to accepted members when loading a population.
 	 * 
 	 * @param maximumDiscardRatio The maximum discard ratio - must be non-negative
 	 */
@@ -113,8 +110,7 @@ public class Parameters {
 	}
 
 	/**
-	 * The maximum allowed ratio of discarded members compared to accepted members
-	 * when loading a population.
+	 * The maximum allowed ratio of discarded members compared to accepted members when loading a population.
 	 * 
 	 * @return The maximum discard ratio - non-negative
 	 */
@@ -257,8 +253,7 @@ public class Parameters {
 	}
 
 	/**
-	 * The factory for creating chromosomes when only one homologous group is
-	 * required in the genome.
+	 * The factory for creating chromosomes when only one homologous group is required in the genome.
 	 * 
 	 * @param chromosomeFactories The chromosome factories
 	 */

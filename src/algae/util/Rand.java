@@ -76,8 +76,7 @@ public class Rand {
 	/**
 	 * Test for an event with the given probability.
 	 * 
-	 * @param percentage The percentage probability of the event happening in the
-	 *                   range [0, 100]
+	 * @param percentage The percentage probability of the event happening in the range [0, 100]
 	 * @return
 	 */
 	public static boolean percent(final int percentage) {

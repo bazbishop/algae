@@ -4,8 +4,7 @@ import algae.Genome;
 import algae.IFitness;
 
 /**
- * An individual in a population, which has a genome and a fitness after
- * measurement.
+ * An individual in a population, which has a genome and a fitness after measurement.
  */
 class Member implements Comparable<Member> {
 
