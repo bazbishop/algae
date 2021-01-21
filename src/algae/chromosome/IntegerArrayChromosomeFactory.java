@@ -22,10 +22,12 @@ public class IntegerArrayChromosomeFactory implements IChromosomeFactory {
 		mMaxAlleleValue = maxAlleleValue;
 	}
 
+	@Override
 	public IntegerArrayChromosome createEmptyChromosome() {
 		return new IntegerArrayChromosome(mChromosomeLength);
 	}
 
+	@Override
 	public IntegerArrayChromosome createRandomChromosome() {
 		var chromosome = new IntegerArrayChromosome(mChromosomeLength);
 
@@ -35,6 +37,7 @@ public class IntegerArrayChromosomeFactory implements IChromosomeFactory {
 		return chromosome;
 	}
 
+	@Override
 	public void mutateAllele(IChromosome chromosome, int index) {
 		IntegerArrayChromosome ch = (IntegerArrayChromosome) chromosome;
 

@@ -44,12 +44,14 @@ public class IntegerArrayChromosome implements IChromosome {
 		return Arrays.hashCode(mAlleles);
 	}
 
+	@Override
 	public void copyAlleleTo(int index, IChromosome target) {
 		IntegerArrayChromosome rhs = (IntegerArrayChromosome) target;
 
 		rhs.mAlleles[index] = mAlleles[index];
 	}
 
+	@Override
 	public int length() {
 		return mAlleles.length;
 	}
@@ -59,6 +61,7 @@ public class IntegerArrayChromosome implements IChromosome {
 	 * 
 	 * @return The alleles as an integer array
 	 */
+	@Override
 	public int[] alleles() {
 		return mAlleles;
 	}

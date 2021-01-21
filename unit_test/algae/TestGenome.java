@@ -131,7 +131,7 @@ class TestGenome {
 
 			for (int c = 0; c < group.length; ++c) {
 
-				var chromosome = (IChromosome) group[c];
+				var chromosome = group[c];
 
 				assertEquals(g + 1, chromosome.length());
 
