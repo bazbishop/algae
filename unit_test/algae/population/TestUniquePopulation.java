@@ -44,38 +44,48 @@ class TestUniquePopulation {
 		var population = new UniquePopulation(10);
 		assertEquals(0, population.size());
 		assertEquals(0, population.discarded());
+		assertFalse(population.isSorted());
 
 		population.addMember(g1);
 		assertEquals(1, population.size());
 		assertEquals(0, population.discarded());
+		assertFalse(population.isSorted());
 
 		population.addMember(g2);
 		assertEquals(2, population.size());
 		assertEquals(0, population.discarded());
+		assertFalse(population.isSorted());
 
 		population.addMember(g3);
 		assertEquals(2, population.size());
 		assertEquals(1, population.discarded());
+		assertFalse(population.isSorted());
 
 		population.addMember(g1);
 		assertEquals(2, population.size());
 		assertEquals(2, population.discarded());
+		assertFalse(population.isSorted());
 	}
 
 	@Test
 	void testFitness() {
 		var population = new UniquePopulation(10);
+		assertFalse(population.isSorted());
 
 		population.addMember(g1);
 		population.addMember(g2);
+		assertFalse(population.isSorted());
 
 		population.setFitness(0, f1);
 		population.setFitness(1, f2);
+		assertFalse(population.isSorted());
 
 		assertEquals(f1, population.getFitness(0));
 		assertEquals(f2, population.getFitness(1));
+		assertFalse(population.isSorted());
 
 		population.sort();
+		assertTrue(population.isSorted());
 
 		assertEquals(f2, population.getFitness(0));
 		assertEquals(f1, population.getFitness(1));

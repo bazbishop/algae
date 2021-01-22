@@ -44,22 +44,27 @@ class TestSimplePopulation {
 		var population = new SimplePopulation(10);
 		assertEquals(0, population.size());
 		assertEquals(0, population.discarded());
+		assertFalse(population.isSorted());
 
 		population.addMember(g1);
 		assertEquals(1, population.size());
 		assertEquals(0, population.discarded());
+		assertFalse(population.isSorted());
 
 		population.addMember(g2);
 		assertEquals(2, population.size());
 		assertEquals(0, population.discarded());
+		assertFalse(population.isSorted());
 
 		population.addMember(g3);
 		assertEquals(3, population.size());
 		assertEquals(0, population.discarded());
+		assertFalse(population.isSorted());
 
 		population.addMember(g1);
 		assertEquals(4, population.size());
 		assertEquals(0, population.discarded());
+		assertFalse(population.isSorted());
 	}
 
 	@Test
@@ -70,18 +75,22 @@ class TestSimplePopulation {
 		population.addMember(g2);
 		population.addMember(g3);
 		population.addMember(g3);
+		assertFalse(population.isSorted());
 
 		population.setFitness(0, f1);
 		population.setFitness(1, f2);
 		population.setFitness(2, f1);
 		population.setFitness(3, f2);
+		assertFalse(population.isSorted());
 
 		assertEquals(f1, population.getFitness(0));
 		assertEquals(f2, population.getFitness(1));
 		assertEquals(f1, population.getFitness(2));
 		assertEquals(f2, population.getFitness(3));
+		assertFalse(population.isSorted());
 
 		population.sort();
+		assertTrue(population.isSorted());
 
 		assertEquals(f2, population.getFitness(0));
 		assertEquals(f2, population.getFitness(1));

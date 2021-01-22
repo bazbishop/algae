@@ -55,4 +55,10 @@ public interface IPopulation {
 	 * index size()-1.
 	 */
 	void sort();
+
+	/**
+	 * Flag that indicates if the population has been sorted by their fitness.
+	 * @return true if the members in the population have been sorted
+	 */
+	boolean isSorted();
 }
