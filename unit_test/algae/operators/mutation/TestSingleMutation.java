@@ -1,4 +1,4 @@
-package algae.operators;
+package algae.operators.mutation;
 
 import static org.junit.jupiter.api.Assertions.*;
 

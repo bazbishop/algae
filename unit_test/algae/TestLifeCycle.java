@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import algae.chromosome.IntegerArrayChromosome;
 import algae.fitness.IntegerFitness;
-import algae.operators.NoMutation;
+import algae.operators.mutation.NoMutation;
 import algae.population.SimplePopulationFactory;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -1,4 +1,4 @@
-package algae.operators;
+package algae.operators.crossover;
 
 import static org.junit.jupiter.api.Assertions.*;
 

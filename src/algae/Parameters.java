@@ -1,7 +1,7 @@
 package algae;
 
-import algae.operators.MultipleCrossover;
-import algae.operators.MultipleMutation;
+import algae.operators.crossover.MultipleCrossover;
+import algae.operators.mutation.MultipleMutation;
 import algae.population.SimplePopulationFactory;
 import algae.selector.RandomSelector;
 

@@ -1,4 +1,4 @@
-package algae.operators;
+package algae.operators.mutation;
 
 import algae.IChromosome;
 import algae.IChromosomeFactory;
@@ -6,7 +6,7 @@ import algae.IMutationOperator;
 import algae.util.Rand;
 
 /**
- * Mutation operator that applies the same probability for mutation to every mutate allele in a chromosome.
+ * Mutation operator that applies the same probability for mutation to every allele in a chromosome.
  */
 public class MultipleMutation implements IMutationOperator {
 
