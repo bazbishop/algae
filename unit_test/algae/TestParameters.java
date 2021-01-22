@@ -14,7 +14,7 @@ class TestParameters {
 
 	ISelector selector = new ISelector() {
 		@Override
-		public int select(int populationSize) {
+		public int select(IPopulation population) {
 			return 0;
 		}
 	};

@@ -8,8 +8,8 @@ public interface ISelector {
 	/**
 	 * Return the index of a member from the population
 	 * 
-	 * @param populationSize The size of the population ready for selection.
+	 * @param population The population from which to select members.
 	 * @return The selected member index.
 	 */
-	int select(int populationSize);
+	int select(IPopulation population);
 }

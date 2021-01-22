@@ -6,7 +6,6 @@ import algae.fitness.IntegerFitness;
 import algae.operators.MultipleCrossover;
 import algae.operators.MultipleMutation;
 import algae.population.UniquePopulationFactory;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,7 +16,7 @@ class TestLifeCycle_SimulatenousEquations {
 	private Parameters controlParameters;
 
 	@BeforeEach
-	void setUp() throws Exception {
+	void setUp() {
 		var chromosomeFactories = new IChromosomeFactory[] { new IntegerArrayChromosomeFactory(5, -10, 10) };
 
 		fitnessTester = new IFitnessTester() {

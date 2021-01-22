@@ -25,6 +25,7 @@ public class SimplePopulation implements IPopulation {
 	@Override
 	public void addMember(Genome genome) {
 		members.add(new Member(genome));
+		sorted = false;
 	}
 
 	@Override
@@ -56,7 +57,14 @@ public class SimplePopulation implements IPopulation {
 	@Override
 	public void sort() {
 		Collections.sort(members, Collections.reverseOrder());
+		sorted = true;
+	}
+
+	@Override
+	public boolean isSorted() {
+		return sorted;
 	}
 
 	private final List<Member> members;
+	private boolean sorted = false;
 }

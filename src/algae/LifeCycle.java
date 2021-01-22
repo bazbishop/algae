@@ -141,7 +141,7 @@ public class LifeCycle {
 			// === SELECTION ===
 			final var parents = new Genome[numberOfParents];
 			for (int p = 0; p < numberOfParents; ++p)
-				parents[p] = mCurrentPopulation.getMember(selector.select(mCurrentPopulation.size()));
+				parents[p] = mCurrentPopulation.getMember(selector.select(mCurrentPopulation));
 
 			// === COMBINATION ===
 			Genome preChild = parents[0];
