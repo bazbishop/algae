@@ -9,8 +9,8 @@ import java.util.Set;
 import algae.*;
 import algae.chromosome.*;
 import algae.fitness.*;
-import algae.operators.MultipleCrossover;
-import algae.operators.MultipleMutation;
+import algae.operators.crossover.MultipleCrossover;
+import algae.operators.mutation.MultipleMutation;
 import algae.population.UniquePopulationFactory;
 
 public class PropositionalSatisfiability {
