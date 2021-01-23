@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="algae" default="dist" basedir=".">
+  <description>
+    Build and test the algae project
+  </description>
+  
+  <!--
+  All paths are relative to the base directory
+  
+  Inputs:
+  src               project source files (*.java)
+  test              unit test source files (*.java)
+  lib               jar files necessary to build the project and/or compile unit tests
+  
+  Outputs:
+  build             root directory of all build targets
+  build-main        compiled source files (*.class)
+  build-dist        the output jar file (*.jar)
+  build-test        compiled unit test files (*.class)
+  build-report      junit report output
+  -->
+  
+  <!-- ===== INITIALISE ===== -->
+
+  <property name="src" location="src"/>
+  <property name="test" location="unit_test"/>
+  <property name="lib" location="lib"/>
+
+  <property name="build" location="build"/>
+  <property name="build-main" location="${build}/main"/>
+  <property name="build-dist" location="${build}/dist"/>
+  <property name="build-test" location="${build}/test"/>
+  <property name="build-report" location="${build}/report"/>
+
+
+  <target name="init">
+    <echo message="Ant version:  ${ant.version}"/>
+    <echo message="Java version: ${java.version}"/>
+    <tstamp/>
+    <mkdir dir="${build}"/>
+  </target>
+
+  <!-- ====== COMPILE and DIST ====== -->
+
+  <target name="compile" depends="init" description="compile the source">
+    <mkdir dir="${build-main}"/>
+    <javac srcdir="${src}" destdir="${build-main}" includeantruntime="false"/>
+  </target>
+
+  <target name="dist" depends="compile" description="generate the distribution">
+    <mkdir dir="${build-dist}"/>
+    <jar jarfile="${build-dist}/algae-${DSTAMP}.jar" basedir="${build-main}"/>
+  </target>
+  
+  <!-- ====== UNIT TESTS ====== -->
+
+  <path id="test.classpath">
+    <pathelement path="${build-test}"/>
+    <pathelement path="${build-main}"/>
+    <fileset dir="${lib}" />
+    <fileset dir="${ant.home}/lib" includes="*.jar" />
+  </path>
+
+  <target name="compile-unit-test" depends="compile" description="compile the unit tests">
+    <mkdir dir="${build-test}"/>
+    <javac srcdir="${test}" classpathref="test.classpath" destdir="${build-test}" includeantruntime="false"/>
+  </target>
+
+   <target name="test.junit.launcher" depends="compile-unit-test">
+    <mkdir dir="${build-report}"/>
+    <junitlauncher haltOnFailure="true" printSummary="true">
+      <classpath refid="test.classpath"/>
+      <testclasses outputdir="${build-report}">
+        <fileset dir="${build-test}">
+          <include name="**/Test*.class"/>
+        </fileset>
+        <listener type="legacy-xml" sendSysOut="true" sendSysErr="true"/>
+        <listener type="legacy-plain" sendSysOut="true" />
+      </testclasses>
+    </junitlauncher>
+  </target>
+    
+  <!-- ===== CLEAN UP ===== -->
+
+  <target name="clean" description="clean up">
+    <delete dir="${build}"/>
+  </target>
+</project>
