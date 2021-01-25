@@ -39,7 +39,7 @@ public class PropositionalSatisfiability {
 		public IFitness fitness(Object phenotype) {
 			@SuppressWarnings("unchecked")
 			Map<String, Boolean> mapping = (Map<String, Boolean>) phenotype;
-			int bestError = 99999999;
+			int bestError = Integer.MAX_VALUE;
 
 			// Calculate the variable assignments
 			// Measure the fitness
@@ -89,16 +89,19 @@ public class PropositionalSatisfiability {
 		return mapping;
 	}
 
-	static final int NUM_VARIABLES = 9;
+	static final int NUM_VARIABLES = 120;
 	static final int LITERALS_PER_CLAUSE = 3;
-	static final int NUM_CLAUSES = 50;
+	static final int NUM_CLAUSES = 16000;
 
 	public static void main(String[] args) {
+		System.out.println("Creating formula...");
+
 		FormulaFactory factory = new FormulaFactory(NUM_VARIABLES, LITERALS_PER_CLAUSE, NUM_CLAUSES);
 		String expression = factory.makeFormula();
 
-		System.out.println("Checking satisfiability of: ");
+		System.out.println("Attempting to solve: ");
 		System.out.println(expression);
+		
 		Parser parser = new Parser();
 		Conjunction conjunction = parser.parse(expression);
 
@@ -125,9 +128,12 @@ public class PropositionalSatisfiability {
 		while (!finished) {
 			finished = lifeCycle.runGeneration();
 
+			System.out.print('.');
+			
 			if (lifeCycle.generation() > 1000)
 				break;
 		}
+		System.out.println();
 
 		boolean solved = lifeCycle.isFinished();
 

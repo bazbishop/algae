@@ -60,7 +60,7 @@
   <path id="test.classpath">
     <pathelement path="${build-test}"/>
     <pathelement path="${build-main}"/>
-    <fileset dir="${lib}" />
+    <fileset dir="${lib}" includes="*.jar" />
     <fileset dir="${ant.home}/lib" includes="*.jar" />
   </path>
 
