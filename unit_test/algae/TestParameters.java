@@ -66,7 +66,6 @@ class TestParameters {
 		assertEquals(77, parameters.getPopulationSize());
 
 		parameters.setPopulationFactory(populationFactory);
-		;
 		assertEquals(populationFactory, parameters.getPopulationFactory());
 
 		parameters.setElitismCount(3);
@@ -75,6 +74,11 @@ class TestParameters {
 		parameters.setMaximumDiscardRatio(8.0);
 		assertEquals(8, parameters.getMaximumDiscardRatio());
 
+		parameters.setSortPopulation(true);
+		assertTrue(parameters.getSortPopulation());
+		parameters.setSortPopulation(false);
+		assertFalse(parameters.getSortPopulation());
+		
 		parameters.setSelector(selector);
 		assertEquals(selector, parameters.getSelector());
 

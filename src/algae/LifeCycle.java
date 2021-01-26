@@ -226,7 +226,9 @@ public class LifeCycle {
 			}
 		}
 
-		mCurrentPopulation.sort();
+		if(parameters.getSortPopulation()) {
+			mCurrentPopulation.sort();
+		}
 	}
 
 	private IPopulation mCurrentPopulation;
