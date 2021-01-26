@@ -119,6 +119,22 @@ public class Parameters {
 	}
 
 	/**
+	 * Flag that indicates whether the population should be sorted by fitness after creation and breeding.
+	 * @return The value of the sort population flag
+	 */
+	public boolean getSortPopulation() {
+		return sortPopulation;
+	}
+
+	/**
+	 * Flag that indicates whether the population should be sorted by fitness after creation and breeding.
+	 * @param sortPopulation The value of the sort population flag
+	 */
+	public void setSortPopulation(boolean sortPopulation) {
+		this.sortPopulation = sortPopulation;
+	}
+
+	/**
 	 * The selector for choosing the parents of the next generation.
 	 * 
 	 * @return The parent selector
@@ -300,14 +316,19 @@ public class Parameters {
 	// Can be defaulted
 
 	private int populationSize = 100;
+	
 	private int genomeMultiplicity = 2;
 	private int numberOfParents = 2;
 	private CrossoverStrategy crossoverStrategy = CrossoverStrategy.CrossoverAll;
+	
 	private int elitismCount = 0;
+	
 	private double maximumDiscardRatio = 1.0;
-
 	private IPopulationFactory populationFactory = new SimplePopulationFactory();
+
+	private boolean sortPopulation = true;
 	private ISelector selector = new RandomSelector();
+	
 	private IMutationOperator mutationOperator = new MultipleMutation(0.01);
 	private ICrossoverOperator crossoverOperator = new MultipleCrossover(0.02);
 
