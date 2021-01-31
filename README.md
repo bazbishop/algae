@@ -11,8 +11,8 @@ The process for using this library is as follows:
 1. Implement a phenotype mapper that uses values (alleles) from the chromosomes in the genome and constructs a potential solution to the problem
 1. Implement a fitness tester that measures the ability of the candidate solution to solve the problem
 1. Construct a `Parameters` instance with: a chromosome factory, phenotype mapper and a fitness tester
-1. Set any other values in the `Parameters` instance if the default value is not suitable
-1. Instantiate a `LifeCycle` with the `Parameter` instance
+1. Set any other values in the `Parameters` instance if the default value is not desirable
+1. Instantiate a `LifeCycle` with the `Parameters` instance
 1. Call the method `initGeneration()` and then repeatedly call `runGeneration()`
 1. If/when the return value from either of the above two methods is true then an optimal solution has been found.
 
