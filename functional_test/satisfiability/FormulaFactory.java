@@ -7,7 +7,19 @@ import java.util.List;
 
 import algae.util.Rand;
 
+/**
+ * Make a satisfiable propositional formula made up of a conjunction (logical AND)
+ * of many disjunctions (logical OR). Each disjunction contains a boolean variables
+ * each with a possible negation operator (!).
+ */
 public class FormulaFactory {
+	
+	/**
+	 * Constructor
+	 * @param numVariables The total number of boolean variables to use
+	 * @param literalsPerClause The number of literal (variables) per clause (disjunction)
+	 * @param numClauses The number of clauses (disjunctions)
+	 */
 	public FormulaFactory(int numVariables, int literalsPerClause, int numClauses) {
 
 		mNumVariables = numVariables;
@@ -15,6 +27,50 @@ public class FormulaFactory {
 		mNumClauses = numClauses;
 	}
 	
+	/**
+	 * Make a formula.
+	 * @return A formula of the form [a,b,!c][!d,!e,f]... 
+	 */
+	public String makeFormula() {
+		
+		var variables = createValues();
+		
+		var formula = new ArrayList<List<SignedTerm>>();
+		
+		while(formula.size() < mNumClauses) {
+			
+			var disjunction = makeRandomDisjunction(variables);
+			if(evaluateDisjunction(disjunction, variables)) {
+				if(!contains(formula, disjunction)) {
+					formula.add(disjunction);
+				}
+			}
+		}
+
+		StringBuilder result = new StringBuilder();
+
+		for (var disjunction : formula) {
+			result.append("[");
+
+			boolean first = true;
+			for (var term : disjunction) {
+				if (first)
+					first = false;
+				else
+					result.append(',');
+
+				if(!term.positive)
+					result.append('!');
+				
+				result.append(makeVar(term.variable));
+			}
+
+			result.append("]");
+		}
+
+		return result.toString();
+	}
+
 	class SignedTerm {
 		SignedTerm(int variable, boolean positive) {
 			this.variable = variable;
@@ -87,77 +143,6 @@ public class FormulaFactory {
 		}
 
 		return false;
-	}
-
-	public String makeFormula() {
-		
-		var variables = createValues();
-		
-		var formula = new ArrayList<List<SignedTerm>>();
-		
-		while(formula.size() < mNumClauses) {
-			
-			var disjunction = makeRandomDisjunction(variables);
-			if(evaluateDisjunction(disjunction, variables)) {
-				if(!contains(formula, disjunction)) {
-					formula.add(disjunction);
-				}
-			}
-		}
-
-		StringBuilder result = new StringBuilder();
-
-		for (var disjunction : formula) {
-			result.append("[");
-
-			boolean first = true;
-			for (var term : disjunction) {
-				if (first)
-					first = false;
-				else
-					result.append(',');
-
-				if(!term.positive)
-					result.append('!');
-				
-				result.append(makeVar(term.variable));
-			}
-
-			result.append("]");
-		}
-		/*
-		StringBuilder result = new StringBuilder();
-
-		for (int clause = 0; clause < mNumClauses; ++clause) {
-			result.append("[");
-
-			int previousVarIndex = -1;
-
-			boolean first = true;
-			for (int term = 0; term < mLiteralsPerClause; ++term) {
-				if (first)
-					first = false;
-				else
-					result.append(',');
-
-				if (mRandom.nextInt(2) == 0)
-					result.append("!");
-
-				int varIndex;
-				do {
-					varIndex = mRandom.nextInt(mNumVariables);
-				} while (varIndex == previousVarIndex);
-
-				result.append(makeVar(varIndex));
-
-				previousVarIndex = varIndex;
-			}
-
-			result.append("]");
-		}
-		*/
-
-		return result.toString();
 	}
 
 	private List<Boolean> createValues() {
