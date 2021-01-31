@@ -3,17 +3,39 @@ package selfreference;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Convert a long value into english words using the american of british style (which affects the use of 'and').
+ */
 public class NumberToWords {
 
+	/**
+	 * The language style
+	 */
 	public enum Style{
+		/**
+		 * Avoid using 'and', e.g. 708 => seven hundred eight
+		 */
 		AMERICAN,
+		
+		/**
+		 * Use 'and', e.g. 708 => seven hundred and eight
+		 */
 		BRITISH
 	};
 	
+	/**
+	 * Constructor.
+	 * @param style The preferred language style 
+	 */
 	public NumberToWords(Style style) {
 		this.style = style;
 	}
 	
+	/**
+	 * Do the conversion.
+	 * @param n The number to convert - the full range of 'long' is allowed
+	 * @return The value of parameter 'n' in words
+	 */
 	public String convert(long n) {
 		
 		if(n==0) {
@@ -91,8 +113,26 @@ public class NumberToWords {
 	private static final String[] unitNames = new String[] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
 	private static final String[] teenNames = new String[] { "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };
 	private static final String[] tenNames = new String[] { "zero", "ten", "twenty", "thirty", "fourty", "fifty", "sixty", "seventy", "eighty", "ninety", };
-	private static final String[] tenPower3nNames = new String[] {"unit", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion", "sextillion"}; 
-
+	private static final String[] tenPower3nNames = new String[] {"unit", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion", "sextillion"};
+	
+	/*
+	If extending this class for BigInteger, the following large numbers can be added to tenPower3nNames, which go from 10^24 (septillion) to 10^63 (vigintillion)
+	septillion
+	octillion
+	nonillion
+	decillion
+	undecillion
+	duodecillion
+	tredecillion
+	quattuordecillion
+	quindecillion
+	sexdecillion
+	septendecillion
+	octodecillion
+	novemdecillion
+	vigintillion
+	*/
+	
 	private static final String minus = "minus";
 	private static final String zero = "zero";
 	private static final String and = "and";
