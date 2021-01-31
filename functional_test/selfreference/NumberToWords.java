@@ -17,42 +17,42 @@ public class NumberToWords {
 	public String convert(long n) {
 		
 		if(n==0) {
-			return "zero";
+			return zero;
 		}
 		
 		var tokens = new ArrayList<String>();
 		
 		if(n<0) {
-			tokens.add("minus");
+			tokens.add(minus);
 			n = -n;
 		}
 		
-		int[] groups = new int[groupNames.length];
+		int[] groups = new int[tenPower3nNames.length];
 		
 		for(int g = 0; g < groups.length; ++g) {
 			groups[g] = (int)(n % 1000);
 			n /= 1000;
 		}
 		
-		boolean lastAnd = false;
+		boolean finalAnd = false;
 		
 		for(int g = groups.length - 1; g >= 0; --g) {
 			if(groups[g] > 0) {
 				
 				if(g > 0)
-					lastAnd = true;
+					finalAnd = true;
 				
-				convert_1_999(tokens, groups[g], g > 0 ? false : lastAnd);
+				convert_1_999(tokens, groups[g], g > 0 ? false : finalAnd);
 				
 				if(g > 0)
-					tokens.add(groupNames[g]);
+					tokens.add(tenPower3nNames[g]);
 			}
 		}		
 		
 		return String.join(" ", tokens);
 	}
 	
-	private void convert_1_999(List<String> tokens, int n, boolean precedingAnd) {
+	private void convert_1_999(List<String> tokens, int n, boolean finalAnd) {
 		assert n >= 1 && n <= 999;
 
 		int hundreds = (n / 100);
@@ -62,12 +62,12 @@ public class NumberToWords {
 		int units = remainder % 10;
 
 		if (hundreds > 0) {
-			tokens.add(g_units[hundreds]);
+			tokens.add(unitNames[hundreds]);
 			tokens.add(hundred);
 		}
 		
 		if(style == Style.BRITISH) {
-			if (hundreds > 0 || precedingAnd) {
+			if (hundreds > 0 || finalAnd) {
 				if (tens > 0 || units > 0)
 					tokens.add(and);
 			}
@@ -75,27 +75,28 @@ public class NumberToWords {
 		
 		if (tens == 0) {
 			if (hundreds == 0 || units > 0) {
-				tokens.add(g_units[units]);
+				tokens.add(unitNames[units]);
 			}
 		} else if (tens == 1) {
-			tokens.add(g_teens[units]);
+			tokens.add(teenNames[units]);
 		} else if (tens > 1) {
-			tokens.add(g_tens[tens]);
+			tokens.add(tenNames[tens]);
 
 			if (units > 0) {
-				tokens.add(g_units[units]);
+				tokens.add(unitNames[units]);
 			}
 		}
 	}
 	
-	private static final String[] g_units = new String[] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
-	private static final String[] g_teens = new String[] { "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };
-	private static final String[] g_tens = new String[] { "zero", "ten", "twenty", "thirty", "fourty", "fifty", "sixty", "seventy", "eighty", "ninety", };
+	private static final String[] unitNames = new String[] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+	private static final String[] teenNames = new String[] { "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };
+	private static final String[] tenNames = new String[] { "zero", "ten", "twenty", "thirty", "fourty", "fifty", "sixty", "seventy", "eighty", "ninety", };
+	private static final String[] tenPower3nNames = new String[] {"unit", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion", "sextillion"}; 
 
+	private static final String minus = "minus";
+	private static final String zero = "zero";
 	private static final String and = "and";
 	private static final String hundred = "hundred";
-	
-	private static final String[] groupNames = new String[] {"", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion", "sextillion"}; 
 
 	private Style style;
 	
