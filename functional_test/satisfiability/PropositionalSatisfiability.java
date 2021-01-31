@@ -13,8 +13,16 @@ import algae.operators.crossover.MultipleCrossover;
 import algae.operators.mutation.MultipleMutation;
 import algae.population.UniquePopulationFactory;
 
+/**
+ * Solve a propositional satisfiability problem. 
+ */
 public class PropositionalSatisfiability {
-	static class Mapper implements IPhenotypeMapper {
+	
+	/**
+	 * Phenotype mapper that assigns values to each of the variables
+	 * based on values encoded in the genome. 
+	 */
+	private static class Mapper implements IPhenotypeMapper {
 		public Mapper(Conjunction conjunction) {
 			mVariables = conjunction.getVariables();
 		}
@@ -28,7 +36,11 @@ public class PropositionalSatisfiability {
 		final Set<String> mVariables;
 	}
 
-	static class Tester implements IFitnessTester {
+	/**
+	 * Fitness tester that takes the variable assignment and checks each
+	 * disjunction for correctness.
+	 */
+	private static class Tester implements IFitnessTester {
 		public Tester(Conjunction conjunction) {
 			mConjunction = conjunction;
 		}
@@ -72,7 +84,7 @@ public class PropositionalSatisfiability {
 		}
 	}
 
-	static Map<String, Boolean> computeMapping(Set<String> variables, Genome genome, int chromosomeIndex) {
+	private static Map<String, Boolean> computeMapping(Set<String> variables, Genome genome, int chromosomeIndex) {
 		IChromosome[] chromosomes = genome.chromosomes()[0];
 
 		var ch = (BitSetChromosome) chromosomes[chromosomeIndex];
@@ -89,9 +101,12 @@ public class PropositionalSatisfiability {
 		return mapping;
 	}
 
-	static final int NUM_VARIABLES = 120;
-	static final int LITERALS_PER_CLAUSE = 3;
-	static final int NUM_CLAUSES = 16000;
+	// Formula parameters (take care not to specify something that can never be satisfied).
+	private static final int NUM_VARIABLES = 120;
+	private static final int LITERALS_PER_CLAUSE = 3;
+	private static final int NUM_CLAUSES = 16000;
+	
+	private static final int MAX_GENERATIONS = 1000;
 
 	public static void main(String[] args) {
 		System.out.println("Creating formula...");
@@ -107,11 +122,8 @@ public class PropositionalSatisfiability {
 
 		int numVariables = conjunction.getVariables().size();
 
-		var factories = new IChromosomeFactory[] { new BitSetChromosomeFactory(numVariables) };
-
-		var mapper = new Mapper(conjunction);
-
-		var parameters = new Parameters(factories, mapper, new Tester(conjunction));
+		var parameters = new Parameters(new BitSetChromosomeFactory(numVariables), new Mapper(conjunction), new Tester(conjunction));
+		
 		parameters.setPopulationSize(1000);
 		parameters.setGenomeMultiplicity(2);
 		parameters.setCrossoverStrategy(CrossoverStrategy.CrossoverGametes);
@@ -130,7 +142,7 @@ public class PropositionalSatisfiability {
 
 			System.out.print('.');
 			
-			if (lifeCycle.generation() > 1000)
+			if (lifeCycle.generation() > MAX_GENERATIONS)
 				break;
 		}
 		System.out.println();
@@ -139,12 +151,15 @@ public class PropositionalSatisfiability {
 
 		if (solved)
 			System.out.println("**** SOLVED ****");
+		else
+			System.out.println("Not solved");
+			
 		System.out.println("Generations=" + lifeCycle.generation());
 
 		var pop = lifeCycle.getCurrentPopulation();
 
 		Set<Map<String, Boolean>> uniqueSolutions = new HashSet<Map<String, Boolean>>();
-		Set<Map<String, Boolean>> goodSolutions = new HashSet<Map<String, Boolean>>();
+		//Set<Map<String, Boolean>> goodSolutions = new HashSet<Map<String, Boolean>>();
 		for (int m = 0; m < pop.size(); ++m) {
 			var member = pop.getMember(m);
 			var fitness = (IntegerFitness) pop.getFitness(m);
@@ -153,15 +168,14 @@ public class PropositionalSatisfiability {
 			if (fitness.value() == 0) {
 				if (uniqueSolutions.add(mapping))
 					System.out.println("Satified with: " + mapping);
-			} else {
-				goodSolutions.add(mapping);
-				if (m > 10)
-					break;
-
-				System.out.println("Scored: " + fitness.value() + " with: " + mapping);
 			}
+			//else {
+			//		goodSolutions.add(mapping);
+			//	if (m > 10)
+			//		break;
+			//
+			//	System.out.println("Scored: " + fitness.value() + " with: " + mapping);
+			//}
 		}
-
 	}
-
 }

@@ -1,6 +1,7 @@
 chromosome
 chromosomes
 elite
+elitism
 fittest
 gamete
 gametes
