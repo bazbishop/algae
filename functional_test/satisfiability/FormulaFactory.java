@@ -7,11 +7,6 @@ import java.util.List;
 
 import algae.util.Rand;
 
-/**
- * Make a satisfiable propositional formula made up of a conjunction (logical AND)
- * of many disjunctions (logical OR). Each disjunction contains a boolean variables
- * each with a possible negation operator (!).
- */
 public class FormulaFactory {
 	
 	/**
