@@ -78,7 +78,7 @@ class TestParameters {
 		assertTrue(parameters.getSortPopulation());
 		parameters.setSortPopulation(false);
 		assertFalse(parameters.getSortPopulation());
-		
+
 		parameters.setSelector(selector);
 		assertEquals(selector, parameters.getSelector());
 

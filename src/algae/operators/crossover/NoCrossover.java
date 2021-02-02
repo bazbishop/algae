@@ -5,7 +5,7 @@ import algae.IChromosomeFactory;
 import algae.ICrossoverOperator;
 
 /**
- * Null crossover operator that can only work with one parent and simply returns a copy of the paranet chromosome.
+ * Null crossover operator that can only work with one parent and simply returns a copy of the parent chromosome.
  */
 public class NoCrossover implements ICrossoverOperator {
 
@@ -19,7 +19,7 @@ public class NoCrossover implements ICrossoverOperator {
 	public IChromosome apply(IChromosome[] input, IChromosomeFactory factory) {
 
 		assert input.length == 1;
-		
+
 		return input[0];
 	}
 }

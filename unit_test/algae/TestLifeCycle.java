@@ -129,7 +129,8 @@ public class TestLifeCycle {
 				if (i < 5) {
 					assertEquals(3, c.alleles()[0]);
 					assertEquals(3, f.value());
-				} else {
+				}
+				else {
 					assertEquals(2, c.alleles()[0]);
 					assertEquals(2, f.value());
 				}

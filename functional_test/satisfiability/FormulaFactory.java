@@ -8,12 +8,12 @@ import java.util.List;
 import algae.util.Rand;
 
 public class FormulaFactory {
-	
+
 	/**
 	 * Constructor
-	 * @param numVariables The total number of boolean variables to use
+	 * @param numVariables      The total number of boolean variables to use
 	 * @param literalsPerClause The number of literal (variables) per clause (disjunction)
-	 * @param numClauses The number of clauses (disjunctions)
+	 * @param numClauses        The number of clauses (disjunctions)
 	 */
 	public FormulaFactory(int numVariables, int literalsPerClause, int numClauses) {
 
@@ -21,22 +21,22 @@ public class FormulaFactory {
 		mLiteralsPerClause = literalsPerClause;
 		mNumClauses = numClauses;
 	}
-	
+
 	/**
 	 * Make a formula.
-	 * @return A formula of the form [a,b,!c][!d,!e,f]... 
+	 * @return A formula of the form [a,b,!c][!d,!e,f]...
 	 */
 	public String makeFormula() {
-		
+
 		var variables = createValues();
-		
+
 		var formula = new ArrayList<List<SignedTerm>>();
-		
-		while(formula.size() < mNumClauses) {
-			
+
+		while (formula.size() < mNumClauses) {
+
 			var disjunction = makeRandomDisjunction(variables);
-			if(evaluateDisjunction(disjunction, variables)) {
-				if(!contains(formula, disjunction)) {
+			if (evaluateDisjunction(disjunction, variables)) {
+				if (!contains(formula, disjunction)) {
 					formula.add(disjunction);
 				}
 			}
@@ -54,9 +54,9 @@ public class FormulaFactory {
 				else
 					result.append(',');
 
-				if(!term.positive)
+				if (!term.positive)
 					result.append('!');
-				
+
 				result.append(makeVar(term.variable));
 			}
 
@@ -71,30 +71,30 @@ public class FormulaFactory {
 			this.variable = variable;
 			this.positive = positive;
 		}
+
 		final int variable;
 		final boolean positive;
 	}
-	
+
 	private boolean evaluateDisjunction(List<SignedTerm> terms, List<Boolean> variables) {
 		boolean result = false;
-		
-		for(var term : terms) {
-			if(variables.get(term.variable) && term.positive)
+
+		for (var term : terms) {
+			if (variables.get(term.variable) && term.positive)
 				return true;
-			else if(! variables.get(term.variable) && ! term.positive)
+			else if (!variables.get(term.variable) && !term.positive)
 				return true;
-		}		
-		
+		}
+
 		return result;
 	}
-	
+
 	private List<SignedTerm> makeRandomDisjunction(List<Boolean> variables) {
 		var terms = new ArrayList<SignedTerm>();
-		
-		while(terms.size() < mLiteralsPerClause)
-		{
+
+		while (terms.size() < mLiteralsPerClause) {
 			int variable = Rand.nextInt(mNumVariables);
-			if(! contains(terms, variable)) {
+			if (!contains(terms, variable)) {
 				terms.add(new SignedTerm(variable, Rand.nextBoolean()));
 			}
 		}
@@ -103,37 +103,38 @@ public class FormulaFactory {
 			@Override
 			public int compare(SignedTerm o1, SignedTerm o2) {
 				return Integer.compare(o1.variable, o2.variable);
-			}});
-		
+			}
+		});
+
 		return terms;
 	}
 
 	// Check if a variable is in a disjunction
 	boolean contains(List<SignedTerm> disjunction, int variable) {
-		for(int t = 0; t < disjunction.size(); ++t) {
-			if(disjunction.get(t).variable == variable)
+		for (int t = 0; t < disjunction.size(); ++t) {
+			if (disjunction.get(t).variable == variable)
 				return true;
 		}
 		return false;
 	}
-	
+
 	// Check if a disjunction is in a formula
 	private boolean contains(ArrayList<List<SignedTerm>> formula, List<SignedTerm> disjunction) {
-		
-		for(var d : formula) {
+
+		for (var d : formula) {
 			boolean same = true;
-			for(int i = 0; i < d.size(); ++i) {
-				
+			for (int i = 0; i < d.size(); ++i) {
+
 				var fterm = d.get(i);
 				var gterm = disjunction.get(i);
-				
-				if(fterm.variable != gterm.variable)
+
+				if (fterm.variable != gterm.variable)
 					same = false;
-				if(fterm.positive != gterm.positive)
+				if (fterm.positive != gterm.positive)
 					same = false;
 			}
-			
-			if(same)
+
+			if (same)
 				return true;
 		}
 
@@ -142,11 +143,11 @@ public class FormulaFactory {
 
 	private List<Boolean> createValues() {
 		var variables = new ArrayList<Boolean>();
-		
-		for(int v = 0; v < mNumVariables; ++v) {
+
+		for (int v = 0; v < mNumVariables; ++v) {
 			variables.add(Rand.nextBoolean());
 		}
-		
+
 		return variables;
 	}
 

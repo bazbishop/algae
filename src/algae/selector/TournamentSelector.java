@@ -30,7 +30,8 @@ public class TournamentSelector implements ISelector {
 			if (population.isSorted()) {
 				if (nextIndex < index)
 					index = nextIndex;
-			} else {
+			}
+			else {
 				var current = population.getFitness(index);
 				var next = population.getFitness(nextIndex);
 				if (next.compareTo(current) > 0)

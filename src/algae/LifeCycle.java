@@ -226,7 +226,7 @@ public class LifeCycle {
 			}
 		}
 
-		if(parameters.getSortPopulation()) {
+		if (parameters.getSortPopulation()) {
 			mCurrentPopulation.sort();
 		}
 	}

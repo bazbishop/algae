@@ -818,7 +818,8 @@ public class MersenneTwisterFast implements Cloneable {
 		if (__haveNextNextGaussian) {
 			__haveNextNextGaussian = false;
 			return __nextNextGaussian;
-		} else {
+		}
+		else {
 			double v1, v2, s;
 			do {
 				int y;
