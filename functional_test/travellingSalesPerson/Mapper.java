@@ -1,4 +1,4 @@
-package salesman;
+package travellingSalesPerson;
 
 import algae.Genome;
 import algae.IPhenotypeMapper;

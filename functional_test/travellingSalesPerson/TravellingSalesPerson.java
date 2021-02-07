@@ -1,4 +1,4 @@
-package salesman;
+package travellingSalesPerson;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -9,7 +9,7 @@ import algae.Parameters;
 import algae.operators.mutation.MultipleMutation;
 import algae.population.SimplePopulationFactory;
 
-public class TravellingSalesman {
+public class TravellingSalesPerson {
 
 	//static final int NUM_CITIES = 50;
 	final static int MAX_GENERATIONS = 10000;

@@ -1,4 +1,4 @@
-package salesman;
+package travellingSalesPerson;
 
 import java.util.ArrayList;
 import java.util.HashSet;

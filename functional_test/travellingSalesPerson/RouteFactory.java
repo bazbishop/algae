@@ -1,4 +1,4 @@
-package salesman;
+package travellingSalesPerson;
 
 import algae.IChromosome;
 import algae.IChromosomeFactory;
