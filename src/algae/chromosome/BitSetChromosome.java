@@ -7,16 +7,25 @@ import algae.IChromosome;
 /**
  * A chromosome modelled by a BitSet
  */
-public class BitSetChromosome implements IChromosome {
+public class BitSetChromosome implements IChromosome, Cloneable {
 
 	/**
 	 * Constructor.
-	 * 
 	 * @param chromosomeLength The length of the chromosome
 	 */
 	public BitSetChromosome(int chromosomeLength) {
 		mChromosomeLength = chromosomeLength;
 		mBits = new BitSet();
+	}
+
+	/**
+	 * Private constructor for cloning.
+	 * @param chromosomeLength The length of the chromosome
+	 * @param bits The already configured bit set
+	 */
+	private BitSetChromosome(int chromosomeLength, BitSet bits) {
+		mChromosomeLength = chromosomeLength;
+		mBits = bits;
 	}
 
 	@Override
@@ -49,12 +58,18 @@ public class BitSetChromosome implements IChromosome {
 
 	/**
 	 * Return the alleles from this chromosome.
-	 * 
+	 *
 	 * @return The alleles
 	 */
 	@Override
 	public BitSet alleles() {
 		return mBits;
+	}
+
+	@Override
+	public BitSetChromosome clone() {
+
+		return new BitSetChromosome(mChromosomeLength, (BitSet) mBits.clone());
 	}
 
 	private final BitSet mBits;
