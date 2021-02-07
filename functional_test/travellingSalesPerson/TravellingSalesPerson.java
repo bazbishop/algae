@@ -11,15 +11,15 @@ import algae.population.SimplePopulationFactory;
 
 public class TravellingSalesPerson {
 
-	//static final int NUM_CITIES = 50;
+	static final int NUM_CITIES = 50;
 	final static int MAX_GENERATIONS = 10000;
 
 	public static void main(String[] args) {
 
-		//var world = new WorldMap(NUM_CITIES);
-		var x = new double[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 8, 7, 6, 5, 4, 3, 2, 1};
-		var y = new double[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		var world = new WorldMap(x, y);
+		var world = new WorldMap(NUM_CITIES);
+		//var x = new double[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 8, 7, 6, 5, 4, 3, 2, 1};
+		//var y = new double[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		//var world = new WorldMap(x, y);
 
 		simpleCheck(world);
 
