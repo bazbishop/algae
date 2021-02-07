@@ -7,7 +7,7 @@ import algae.IChromosome;
 /**
  * A chromosome modelled by a BitSet
  */
-public class BitSetChromosome implements IChromosome, Cloneable {
+public class BitSetChromosome implements IChromosome {
 
 	/**
 	 * Constructor.
@@ -58,7 +58,6 @@ public class BitSetChromosome implements IChromosome, Cloneable {
 
 	/**
 	 * Return the alleles from this chromosome.
-	 *
 	 * @return The alleles
 	 */
 	@Override
@@ -68,7 +67,6 @@ public class BitSetChromosome implements IChromosome, Cloneable {
 
 	@Override
 	public BitSetChromosome clone() {
-
 		return new BitSetChromosome(mChromosomeLength, (BitSet) mBits.clone());
 	}
 

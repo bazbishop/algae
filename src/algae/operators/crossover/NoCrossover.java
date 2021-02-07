@@ -20,6 +20,6 @@ public class NoCrossover implements ICrossoverOperator {
 
 		assert input.length == 1;
 
-		return input[0];
+		return input[0].clone();
 	}
 }

@@ -11,7 +11,6 @@ public class IntegerArrayChromosome implements IChromosome {
 
 	/**
 	 * Constructor.
-	 *
 	 * @param length The length of the chromosome
 	 */
 	public IntegerArrayChromosome(int length) {
@@ -25,7 +24,6 @@ public class IntegerArrayChromosome implements IChromosome {
 	private IntegerArrayChromosome(int[] values) {
 		mAlleles = values;
 	}
-
 
 	@Override
 	public String toString() {
@@ -67,7 +65,6 @@ public class IntegerArrayChromosome implements IChromosome {
 
 	/**
 	 * Get the alleles.
-	 *
 	 * @return The alleles as an integer array
 	 */
 	@Override
