@@ -11,11 +11,18 @@ public class IntegerArrayChromosome implements IChromosome {
 
 	/**
 	 * Constructor.
-	 * 
 	 * @param length The length of the chromosome
 	 */
 	public IntegerArrayChromosome(int length) {
 		mAlleles = new int[length];
+	}
+
+	/**
+	 * Private constructor for cloning.
+	 * @param values The alleles values
+	 */
+	private IntegerArrayChromosome(int[] values) {
+		mAlleles = values;
 	}
 
 	@Override
@@ -58,12 +65,17 @@ public class IntegerArrayChromosome implements IChromosome {
 
 	/**
 	 * Get the alleles.
-	 * 
 	 * @return The alleles as an integer array
 	 */
 	@Override
 	public int[] alleles() {
 		return mAlleles;
+	}
+
+	@Override
+	public IntegerArrayChromosome clone() {
+
+		return new IntegerArrayChromosome(mAlleles.clone());
 	}
 
 	private final int[] mAlleles;

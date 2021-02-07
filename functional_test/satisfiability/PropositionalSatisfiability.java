@@ -14,13 +14,12 @@ import algae.operators.mutation.MultipleMutation;
 import algae.population.UniquePopulationFactory;
 
 /**
- * Solve a propositional satisfiability problem. 
+ * Solve a propositional satisfiability problem.
  */
 public class PropositionalSatisfiability {
-	
+
 	/**
-	 * Phenotype mapper that assigns values to each of the variables
-	 * based on values encoded in the genome. 
+	 * Phenotype mapper that assigns values to each of the variables based on values encoded in the genome.
 	 */
 	private static class Mapper implements IPhenotypeMapper {
 		public Mapper(Conjunction conjunction) {
@@ -37,8 +36,7 @@ public class PropositionalSatisfiability {
 	}
 
 	/**
-	 * Fitness tester that takes the variable assignment and checks each
-	 * disjunction for correctness.
+	 * Fitness tester that takes the variable assignment and checks each disjunction for correctness.
 	 */
 	private static class Tester implements IFitnessTester {
 		public Tester(Conjunction conjunction) {
@@ -105,7 +103,7 @@ public class PropositionalSatisfiability {
 	private static final int NUM_VARIABLES = 120;
 	private static final int LITERALS_PER_CLAUSE = 3;
 	private static final int NUM_CLAUSES = 16000;
-	
+
 	private static final int MAX_GENERATIONS = 1000;
 
 	public static void main(String[] args) {
@@ -116,14 +114,14 @@ public class PropositionalSatisfiability {
 
 		System.out.println("Attempting to solve: ");
 		System.out.println(expression);
-		
+
 		Parser parser = new Parser();
 		Conjunction conjunction = parser.parse(expression);
 
 		int numVariables = conjunction.getVariables().size();
 
 		var parameters = new Parameters(new BitSetChromosomeFactory(numVariables), new Mapper(conjunction), new Tester(conjunction));
-		
+
 		parameters.setPopulationSize(1000);
 		parameters.setGenomeMultiplicity(2);
 		parameters.setCrossoverStrategy(CrossoverStrategy.CrossoverGametes);
@@ -141,7 +139,7 @@ public class PropositionalSatisfiability {
 			finished = lifeCycle.runGeneration();
 
 			System.out.print('.');
-			
+
 			if (lifeCycle.generation() > MAX_GENERATIONS)
 				break;
 		}
@@ -153,13 +151,13 @@ public class PropositionalSatisfiability {
 			System.out.println("**** SOLVED ****");
 		else
 			System.out.println("Not solved");
-			
+
 		System.out.println("Generations=" + lifeCycle.generation());
 
 		var pop = lifeCycle.getCurrentPopulation();
 
 		Set<Map<String, Boolean>> uniqueSolutions = new HashSet<Map<String, Boolean>>();
-		//Set<Map<String, Boolean>> goodSolutions = new HashSet<Map<String, Boolean>>();
+		// Set<Map<String, Boolean>> goodSolutions = new HashSet<Map<String, Boolean>>();
 		for (int m = 0; m < pop.size(); ++m) {
 			var member = pop.getMember(m);
 			var fitness = (IntegerFitness) pop.getFitness(m);
@@ -169,13 +167,13 @@ public class PropositionalSatisfiability {
 				if (uniqueSolutions.add(mapping))
 					System.out.println("Satified with: " + mapping);
 			}
-			//else {
-			//		goodSolutions.add(mapping);
-			//	if (m > 10)
-			//		break;
+			// else {
+			// goodSolutions.add(mapping);
+			// if (m > 10)
+			// break;
 			//
-			//	System.out.println("Scored: " + fitness.value() + " with: " + mapping);
-			//}
+			// System.out.println("Scored: " + fitness.value() + " with: " + mapping);
+			// }
 		}
 	}
 }

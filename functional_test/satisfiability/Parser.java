@@ -26,7 +26,8 @@ public class Parser {
 				if (literal.startsWith("!")) {
 					positive = false;
 					variable = literal.substring(1).trim();
-				} else {
+				}
+				else {
 					positive = true;
 					variable = literal;
 				}

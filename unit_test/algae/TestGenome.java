@@ -32,7 +32,8 @@ class TestGenome {
 						c.alleles()[j] = j + 1;
 
 					chromosomeSet[i] = c;
-				} else {
+				}
+				else {
 					var c = new BitSetChromosome(len);
 
 					for (int j = 0; j < len; ++j)

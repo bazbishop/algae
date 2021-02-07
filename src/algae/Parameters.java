@@ -316,19 +316,19 @@ public class Parameters {
 	// Can be defaulted
 
 	private int populationSize = 100;
-	
+
 	private int genomeMultiplicity = 2;
 	private int numberOfParents = 2;
 	private CrossoverStrategy crossoverStrategy = CrossoverStrategy.CrossoverAll;
-	
+
 	private int elitismCount = 0;
-	
+
 	private double maximumDiscardRatio = 1.0;
 	private IPopulationFactory populationFactory = new SimplePopulationFactory();
 
 	private boolean sortPopulation = true;
 	private ISelector selector = new RandomSelector();
-	
+
 	private IMutationOperator mutationOperator = new MultipleMutation(0.01);
 	private ICrossoverOperator crossoverOperator = new MultipleCrossover(0.02);
 

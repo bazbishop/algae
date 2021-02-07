@@ -7,7 +7,6 @@ public class LifeCycle {
 
 	/**
 	 * Constructor.
-	 * 
 	 * @param parameters Parameters controlling the evolution process
 	 */
 	public LifeCycle(Parameters parameters) {
@@ -31,7 +30,6 @@ public class LifeCycle {
 
 	/**
 	 * Initialise the population with random members and sort them according to fitness.
-	 * 
 	 * @return true if an optimal member exists
 	 */
 	public boolean initGeneration() {
@@ -46,7 +44,6 @@ public class LifeCycle {
 
 	/**
 	 * Breed a new generation and sort them according to fitness
-	 * 
 	 * @return true if an optimal member exists
 	 */
 	public boolean runGeneration() {
@@ -59,7 +56,6 @@ public class LifeCycle {
 
 	/**
 	 * Get the current population.
-	 * 
 	 * @return The list of members.
 	 */
 	public IPopulation getCurrentPopulation() {
@@ -68,7 +64,6 @@ public class LifeCycle {
 
 	/**
 	 * Get the value of the flag indicating whether an optimal member exists.
-	 * 
 	 * @return true if an optimal member exists
 	 */
 	public boolean isFinished() {
@@ -77,7 +72,6 @@ public class LifeCycle {
 
 	/**
 	 * Get the generation number.
-	 * 
 	 * @return The generation number - 0 means initialised, but no breeding
 	 */
 	public int generation() {
@@ -226,7 +220,7 @@ public class LifeCycle {
 			}
 		}
 
-		if(parameters.getSortPopulation()) {
+		if (parameters.getSortPopulation()) {
 			mCurrentPopulation.sort();
 		}
 	}

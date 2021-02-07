@@ -31,7 +31,8 @@ public class UniquePopulation implements IPopulation {
 		if (memberSet.add(genome)) {
 			memberList.add(member);
 			sorted = false;
-		} else {
+		}
+		else {
 			++countDiscarded;
 		}
 	}

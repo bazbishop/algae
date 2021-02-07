@@ -9,7 +9,7 @@ public class Rand {
 
 	/**
 	 * Get the next random boolean value.
-	 * 
+	 *
 	 * @return The random value.
 	 */
 	public static boolean nextBoolean() {
@@ -18,7 +18,7 @@ public class Rand {
 
 	/**
 	 * Get the next random double value.
-	 * 
+	 *
 	 * @return The random value in the range [0.0, 1.0).
 	 */
 	public static double nextDouble() {
@@ -27,7 +27,7 @@ public class Rand {
 
 	/**
 	 * Get the next random integer value.
-	 * 
+	 *
 	 * @param n The range limit - must be > 0
 	 * @return The random value in the range [0, n-1]
 	 */
@@ -39,7 +39,7 @@ public class Rand {
 
 	/**
 	 * Get the next random integer value that is different to the given value.
-	 * 
+	 *
 	 * @param n       The range limit - must be > 1
 	 * @param exclude Exclude this value from the result
 	 * @return The random value in the range [0, n-1]
@@ -58,7 +58,7 @@ public class Rand {
 
 	/**
 	 * Test for an event with the given probability.
-	 * 
+	 *
 	 * @param probability The probability in the range [0.0, 1.0]
 	 * @return true if the event occurs
 	 */
@@ -75,7 +75,7 @@ public class Rand {
 
 	/**
 	 * Test for an event with the given probability.
-	 * 
+	 *
 	 * @param percentage The percentage probability of the event happening in the range [0, 100]
 	 * @return
 	 */
@@ -88,5 +88,22 @@ public class Rand {
 			return true;
 
 		return nextInt(100) < percentage;
+	}
+
+	/**
+	 * Shuffle the integer array using the Fisher–Yates algorithm.
+	 * @param array The array to shuffle
+	 */
+	public static void shuffle(int[] array) {
+
+		int n = array.length;
+        for (int i = n-1; i > 0; i--) {
+
+            int j = Rand.nextInt(i+1);
+
+            int temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
 	}
 }
